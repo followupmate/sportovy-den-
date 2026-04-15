@@ -6,11 +6,11 @@ import { useState } from 'react';
 type BlockType = 'sport' | 'food' | 'wellness' | 'free' | 'info';
 
 const blockTypeConfig: Record<BlockType, { label: string; cls: string; dot: string }> = {
-  sport:    { label: 'Šport',      cls: 'bg-emerald-100 text-emerald-700', dot: 'bg-emerald-400' },
-  food:     { label: 'Jedlo',      cls: 'bg-orange-100 text-orange-700',   dot: 'bg-orange-400'  },
-  wellness: { label: 'Wellness',   cls: 'bg-sky-100 text-sky-700',         dot: 'bg-sky-400'     },
-  free:     { label: 'Voľný čas', cls: 'bg-violet-100 text-violet-700',   dot: 'bg-violet-400'  },
-  info:     { label: 'Príchod',   cls: 'bg-slate-100 text-slate-500',     dot: 'bg-slate-400'   },
+  sport:    { label: 'Šport',      cls: 'bg-blue-100 text-blue-700',      dot: 'bg-blue-400'    },
+  food:     { label: 'Jedlo',      cls: 'bg-amber-100 text-amber-700',    dot: 'bg-amber-400'   },
+  wellness: { label: 'Wellness',   cls: 'bg-emerald-100 text-emerald-700', dot: 'bg-emerald-400' },
+  free:     { label: 'Voľný čas', cls: 'bg-slate-100 text-slate-500',    dot: 'bg-slate-400'   },
+  info:     { label: 'Príchod',   cls: 'bg-slate-100 text-slate-500',    dot: 'bg-slate-400'   },
 };
 
 const dayBlocks = [
@@ -150,9 +150,9 @@ export default function Page() {
               { label: 'Check-in',  value: 'od 15:00',          sub: 'Check-out 10:00' },
               { label: 'Parkovanie', value: 'v areáli',         sub: 'x-bionic® sphere' },
             ].map((item) => (
-              <div key={item.label} className="rounded-2xl bg-white/10 p-3">
+              <div key={item.label} className="rounded-2xl bg-gradient-to-br from-slate-800 to-slate-700 p-3 shadow-md border-l-4 border-emerald-400">
                 <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">{item.label}</div>
-                <div className="mt-1 text-sm font-semibold leading-5">{item.value}</div>
+                <div className="mt-1 text-sm font-semibold leading-5 text-white">{item.value}</div>
                 <div className="text-xs text-slate-400">{item.sub}</div>
               </div>
             ))}
@@ -160,7 +160,7 @@ export default function Page() {
         </div>
       </header>
 
-      <div className="mx-auto max-w-md space-y-8 px-4 py-6">
+      <div className="mx-auto max-w-md space-y-16 px-4 py-6">
 
         {/* ── QUICK NAV ─────────────────────────────────────── */}
         <section>
@@ -180,7 +180,7 @@ export default function Page() {
 
         {/* ── PROGRAM TIMELINE ──────────────────────────────── */}
         <section id="program">
-          <h2 className="mb-3 text-lg font-bold text-slate-900">Program</h2>
+          <h2 className="mb-3 border-l-4 border-blue-600 pl-3 text-2xl font-bold text-slate-900">Program</h2>
 
           {/* Day tabs */}
           <div className="mb-4 flex rounded-xl bg-slate-200 p-1">
@@ -232,7 +232,7 @@ export default function Page() {
 
         {/* ── MAPA ──────────────────────────────────────────── */}
         <section id="mapa">
-          <h2 className="mb-3 text-lg font-bold text-slate-900">Mapa areálu</h2>
+          <h2 className="mb-3 border-l-4 border-blue-600 pl-3 text-2xl font-bold text-slate-900">Mapa areálu</h2>
 
           {/* Key points – horizontal scroll */}
           <div className="mb-3 flex gap-2 overflow-x-auto pb-1">
@@ -266,12 +266,12 @@ export default function Page() {
 
         {/* ── DISCIPLÍNY ────────────────────────────────────── */}
         <section id="discipliny">
-          <h2 className="mb-1 text-lg font-bold text-slate-900">Športové disciplíny</h2>
+          <h2 className="mb-1 border-l-4 border-blue-600 pl-3 text-2xl font-bold text-slate-900">Športové disciplíny</h2>
           <p className="mb-4 text-sm text-slate-500">Individuálne disciplíny — každý hráč, vlastný výkon.</p>
 
           <div className="space-y-3">
             {disciplines.map((item) => (
-              <div key={item.name} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+              <div key={item.name} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg">
                 <div className="flex items-start justify-between gap-2">
                   <h3 className="text-base font-semibold text-slate-900">{item.name}</h3>
                   <div className="flex shrink-0 flex-wrap justify-end gap-1">
@@ -279,7 +279,7 @@ export default function Page() {
                       {item.badge}
                     </span>
                     {item.pending && (
-                      <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
+                      <span className="rounded-full bg-slate-200 px-2 py-0.5 text-xs font-medium text-slate-500">
                         Čaká na potvrdenie
                       </span>
                     )}
@@ -301,16 +301,16 @@ export default function Page() {
 
         {/* ── TURNAJE ───────────────────────────────────────── */}
         <section id="turnaje">
-          <h2 className="mb-1 text-lg font-bold text-slate-900">Turnaje</h2>
+          <h2 className="mb-1 border-l-4 border-blue-600 pl-3 text-2xl font-bold text-slate-900">Turnaje</h2>
           <p className="mb-4 text-sm text-slate-500">Tímové turnaje organizuje agentúra priamo na mieste.</p>
 
           <div className="space-y-3">
             {tournaments.map((item) => (
-              <div key={item.name} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+              <div key={item.name} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg">
                 <div className="flex items-center justify-between gap-2">
                   <h3 className="text-base font-semibold text-slate-900">{item.name}</h3>
                   {item.pending && (
-                    <span className="shrink-0 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
+                    <span className="shrink-0 rounded-full bg-slate-200 px-2 py-0.5 text-xs font-medium text-slate-500">
                       Čaká na potvrdenie
                     </span>
                   )}
@@ -334,7 +334,7 @@ export default function Page() {
 
         {/* ── WELLNESS ──────────────────────────────────────── */}
         <section id="wellness">
-          <h2 className="mb-3 text-lg font-bold text-slate-900">Wellness & relax</h2>
+          <h2 className="mb-3 border-l-4 border-blue-600 pl-3 text-2xl font-bold text-slate-900">Wellness & relax</h2>
           <div className="space-y-2">
             {[
               { icon: '💧', title: 'Bazény & Wellness', text: 'Dostupné počas poobedného bloku (17:00–19:30). Pozície 11–14 na mape.' },
@@ -342,7 +342,9 @@ export default function Page() {
               { icon: '🍽️', title: 'Olym-Pic',          text: 'Reštaurácia — obedy a večera. Pozícia 7 na mape.'                     },
             ].map((item) => (
               <div key={item.title} className="flex items-start gap-3 rounded-2xl bg-slate-900 p-4">
-                <span className="text-xl">{item.icon}</span>
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50">
+                  <span className="text-xl">{item.icon}</span>
+                </div>
                 <div>
                   <h3 className="text-sm font-semibold text-white">{item.title}</h3>
                   <p className="mt-0.5 text-sm leading-5 text-slate-300">{item.text}</p>
@@ -354,7 +356,7 @@ export default function Page() {
 
         {/* ── PRAKTICKÉ INFO ────────────────────────────────── */}
         <section id="info">
-          <h2 className="mb-3 text-lg font-bold text-slate-900">Praktické info</h2>
+          <h2 className="mb-3 border-l-4 border-blue-600 pl-3 text-2xl font-bold text-slate-900">Praktické info</h2>
 
           {/* What to bring – highlighted box */}
           <div className="mb-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
@@ -383,7 +385,7 @@ export default function Page() {
                 <div className="flex items-start justify-between gap-2">
                   <h3 className="text-sm font-semibold text-slate-900">{item.title}</h3>
                   {item.pending && (
-                    <span className="shrink-0 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
+                    <span className="shrink-0 rounded-full bg-slate-200 px-2 py-0.5 text-xs font-medium text-slate-500">
                       Čaká na potvrdenie
                     </span>
                   )}
@@ -396,7 +398,7 @@ export default function Page() {
 
         {/* ── KONTAKT ───────────────────────────────────────── */}
         <section id="kontakt">
-          <h2 className="mb-3 text-lg font-bold text-slate-900">Kontakt</h2>
+          <h2 className="mb-3 border-l-4 border-blue-600 pl-3 text-2xl font-bold text-slate-900">Kontakt</h2>
           <div className="rounded-2xl bg-slate-900 p-4 text-white">
             <div className="mb-3 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
               Hlavný kontakt
