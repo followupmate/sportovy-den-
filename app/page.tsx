@@ -112,69 +112,66 @@ export default function Page() {
     <main className="min-h-screen bg-slate-50 pb-24">
 
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <header className="bg-slate-900 px-4 pt-8 pb-6 text-white">
+      <header className="bg-slate-900 px-4 pt-8 pb-7 text-white">
         <div className="mx-auto max-w-md">
-          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Firemný event</div>
-          <h1 className="mt-1.5 text-2xl font-bold leading-tight">Športový deň 2026</h1>
-          <p className="mt-1 text-sm leading-5 text-slate-300">
-            Tribe Home Experience · x-bionic® sphere, Šamorín · 14–15. 5. 2026
-          </p>
-
-          {/* CTA buttons */}
-          <div className="mt-4 flex gap-2">
-            <a
-              href="#program"
-              className="flex-1 rounded-xl bg-emerald-500 py-2.5 text-center text-sm font-semibold text-white"
-            >
-              Program
-            </a>
-            <a
-              href="#mapa"
-              className="flex-1 rounded-xl bg-white/10 py-2.5 text-center text-sm font-semibold text-white"
-            >
-              Mapa
-            </a>
-            <a
-              href="#kontakt"
-              className="flex-1 rounded-xl bg-white/10 py-2.5 text-center text-sm font-semibold text-white"
-            >
-              Kontakt
-            </a>
+          <div className="text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ color: '#00c9a7' }}>
+            Tribe Home Experience
           </div>
-
-          {/* 4 info cards */}
-          <div className="mt-4 grid grid-cols-2 gap-2">
-            {[
-              { label: 'Miesto',    value: 'x-bionic® sphere',  sub: 'Šamorín'       },
-              { label: 'Termín',    value: '14. – 15. 5. 2026', sub: '2 dni'         },
-              { label: 'Check-in',  value: 'od 15:00',          sub: 'Check-out 10:00' },
-              { label: 'Parkovanie', value: 'v areáli',         sub: 'x-bionic® sphere' },
-            ].map((item) => (
-              <div key={item.label} className="rounded-2xl bg-gradient-to-br from-slate-800 to-slate-700 p-3 shadow-md border-l-4 border-emerald-400">
-                <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">{item.label}</div>
-                <div className="mt-1 text-sm font-semibold leading-5 text-white">{item.value}</div>
-                <div className="text-xs text-slate-400">{item.sub}</div>
-              </div>
-            ))}
+          <h1 className="mt-2 text-2xl font-bold leading-tight">Športový deň 2026</h1>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs text-slate-200">
+              📅 14–15. mája 2026
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs text-slate-200">
+              📍 x-bionic® sphere, Šamorín
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs text-slate-200">
+              👥 101 účastníkov
+            </span>
           </div>
         </div>
       </header>
 
       <div className="mx-auto max-w-md space-y-16 px-4 py-6">
 
-        {/* ── QUICK NAV ─────────────────────────────────────── */}
+        {/* ── NAV CARDS ─────────────────────────────────────── */}
         <section>
-          <div className="grid grid-cols-3 gap-2">
-            {quickNav.map((item) => (
+          <div className="grid grid-cols-2 gap-3">
+            {[
+              { icon: '📅', circleBg: '#e0faf5', title: 'Program',  sub: 'Časový harmonogram',   href: '#program'        },
+              { icon: '🏆', circleBg: '#e8eaf6', title: 'Aktivity', sub: 'Disciplíny a turnaje',  href: '#discipliny'     },
+              { icon: '📍', circleBg: '#fff3e0', title: 'Kde',      sub: 'Mapa a miesta',         href: '#mapa'           },
+              { icon: '🎒', circleBg: '#fce4ec', title: 'Info',     sub: 'Čo si priniesť',        href: '#prakticke-info' },
+            ].map((card) => (
               <a
-                key={item.href}
-                href={item.href}
-                className="flex flex-col items-center gap-1 rounded-2xl border border-slate-200 bg-white py-3 px-2 text-center shadow-sm active:bg-slate-50"
+                key={card.href}
+                href={card.href}
+                className="flex flex-col gap-3 rounded-2xl bg-white p-5 shadow-[0_2px_8px_rgba(0,0,0,0.07)] transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_16px_rgba(0,0,0,0.12)] active:scale-[0.98]"
               >
-                <span className="text-xl">{item.icon}</span>
-                <span className="text-xs font-medium text-slate-700">{item.label}</span>
+                <div className="flex h-14 w-14 items-center justify-center rounded-full text-2xl" style={{ background: card.circleBg }}>
+                  {card.icon}
+                </div>
+                <div>
+                  <div className="text-base font-extrabold text-slate-900">{card.title}</div>
+                  <div className="mt-0.5 text-xs" style={{ color: '#7a8499' }}>{card.sub}</div>
+                </div>
               </a>
             ))}
+            {/* Card 5: Tímy — full width, disabled */}
+            <div className="col-span-2 flex items-center gap-4 rounded-2xl bg-white p-5 shadow-[0_2px_8px_rgba(0,0,0,0.07)] opacity-70">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full text-2xl" style={{ background: '#e8f5e9' }}>
+                👥
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-base font-extrabold text-slate-900">Tímy</span>
+                  <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold text-slate-500">
+                    Čoskoro k dispozícii
+                  </span>
+                </div>
+                <div className="mt-0.5 text-xs" style={{ color: '#7a8499' }}>Zoznam účastníkov a tímy</div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -355,7 +352,7 @@ export default function Page() {
         </section>
 
         {/* ── PRAKTICKÉ INFO ────────────────────────────────── */}
-        <section id="info">
+        <section id="prakticke-info">
           <h2 className="mb-3 border-l-4 border-blue-600 pl-3 text-2xl font-bold text-slate-900">Praktické info</h2>
 
           {/* What to bring – highlighted box */}
