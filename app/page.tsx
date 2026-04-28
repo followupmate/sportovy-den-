@@ -449,13 +449,13 @@ export default function Page() {
           </div>
 
           <div className="overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
-            <Image
-              src="/mapa-xbionic.jpg"
-              alt="Mapa areálu x-bionic sphere"
-              width={1536}
-              height={1314}
-              className="h-auto w-full"
-              priority
+            <iframe
+              title="x-bionic® sphere mapa"
+              className="w-full"
+              height={280}
+              src="https://maps.google.com/maps?q=x-bionic+sphere+Samorin+Slovakia&output=embed"
+              loading="lazy"
+              style={{ border: 0 }}
             />
           </div>
         </section>
