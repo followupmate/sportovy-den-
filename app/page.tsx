@@ -26,6 +26,60 @@ const IDownload = ({ c }: { c?: string }) => <Svg c={c}><path d="M21 15v4a2 2 0 
 
 type BlockType = 'sport' | 'food' | 'wellness' | 'free' | 'info';
 
+type LiveStatus =
+  | { phase: 'upcoming'; msLeft: number }
+  | { phase: 'active'; dayIndex: number; blockIndex: number }
+  | { phase: 'ended' };
+
+function formatCountdown(ms: number) {
+  const d = Math.floor(ms / 86_400_000);
+  const h = Math.floor((ms % 86_400_000) / 3_600_000);
+  const m = Math.floor((ms % 3_600_000) / 60_000);
+  return { d, h, m };
+}
+
+function computeLive(now: Date): LiveStatus {
+  const EVENT_START = new Date('2026-05-14T11:00:00');
+  const EVENT_END   = new Date('2026-05-15T13:00:00');
+  if (now < EVENT_START) return { phase: 'upcoming', msLeft: EVENT_START.getTime() - now.getTime() };
+  if (now >= EVENT_END)  return { phase: 'ended' };
+
+  const dayDates = ['2026-05-14', '2026-05-15'];
+  for (let di = 0; di < dayBlocks.length; di++) {
+    for (let bi = 0; bi < dayBlocks[di].blocks.length; bi++) {
+      const [startStr, endStr] = dayBlocks[di].blocks[bi].time.split(' – ');
+      const [sh, sm] = startStr.split(':').map(Number);
+      const [eh, em] = endStr.split(':').map(Number);
+      const base = new Date(dayDates[di]);
+      const blockStart = new Date(base); blockStart.setHours(sh, sm, 0, 0);
+      const blockEnd   = new Date(base); blockEnd.setHours(eh, em, 0, 0);
+      if (eh < sh) blockEnd.setDate(blockEnd.getDate() + 1); // overnight
+      if (now >= blockStart && now < blockEnd) return { phase: 'active', dayIndex: di, blockIndex: bi };
+    }
+  }
+  // gap between blocks — find next upcoming block
+  for (let di = 0; di < dayBlocks.length; di++) {
+    for (let bi = 0; bi < dayBlocks[di].blocks.length; bi++) {
+      const [startStr] = dayBlocks[di].blocks[bi].time.split(' – ');
+      const [sh, sm] = startStr.split(':').map(Number);
+      const blockStart = new Date(dayDates[di]); blockStart.setHours(sh, sm, 0, 0);
+      if (now < blockStart) return { phase: 'active', dayIndex: di, blockIndex: bi };
+    }
+  }
+  return { phase: 'ended' };
+}
+
+const icsContent = [
+  'BEGIN:VCALENDAR', 'VERSION:2.0',
+  'BEGIN:VEVENT',
+  'DTSTART:20260514T110000',
+  'DTEND:20260515T130000',
+  'SUMMARY:Športový deň 2026 — Tribe Home Experience',
+  'LOCATION:x-bionic® sphere\\, Šamorín',
+  'END:VEVENT', 'END:VCALENDAR',
+].join('\n');
+const icsDataUri = `data:text/calendar;charset=utf-8,${encodeURIComponent(icsContent)}`;
+
 const blockTypeConfig: Record<BlockType, { label: string; cls: string; dot: string; leftBorder: string }> = {
   sport:    { label: 'Šport',      cls: 'bg-blue-100 text-blue-700',       dot: 'bg-blue-400',    leftBorder: 'border-l-blue-400'    },
   food:     { label: 'Jedlo',      cls: 'bg-amber-100 text-amber-700',     dot: 'bg-amber-400',   leftBorder: 'border-l-amber-400'   },
