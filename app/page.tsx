@@ -539,13 +539,13 @@ export default function Page() {
           <h2 className="mb-3 border-l-4 border-brand pl-3 text-2xl font-bold text-brand-dark">Wellness & relax</h2>
           <div className="space-y-2">
             {[
-              { icon: '💧', title: 'Bazény & Wellness', text: 'Dostupné počas poobedného bloku (17:00–19:30). Pozície 11–14 na mape.' },
-              { icon: '💪', title: 'Gym',               text: 'Fitness centrum pre individuálny tréning. Pozícia 5 na mape.'          },
-              { icon: '🍽️', title: 'Olym-Pic',          text: 'Reštaurácia — obedy a večera. Pozícia 7 na mape.'                     },
+              { icon: <IWaves c="h-5 w-5 text-blue-500" />,    title: 'Bazény & Wellness', text: 'Dostupné počas poobedného bloku (17:00–19:30). Pozície 11–14 na mape.' },
+              { icon: <IDumbbell c="h-5 w-5 text-violet-500" />, title: 'Gym',              text: 'Fitness centrum pre individuálny tréning. Pozícia 5 na mape.'          },
+              { icon: <IUtensils c="h-5 w-5 text-amber-500" />,  title: 'Olym-Pic',         text: 'Reštaurácia — obedy a večera. Pozícia 7 na mape.'                     },
             ].map((item) => (
               <div key={item.title} className="flex items-start gap-3 rounded-2xl bg-slate-900 p-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50">
-                  <span className="text-xl">{item.icon}</span>
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10">
+                  {item.icon}
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold text-white">{item.title}</h3>
