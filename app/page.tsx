@@ -111,6 +111,24 @@ export default function Page() {
   return (
     <main className="min-h-screen bg-slate-50 pb-24">
 
+      {/* ── STICKY NAVBAR ────────────────────────────────────── */}
+      <nav className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur-sm shadow-sm">
+        <div className="mx-auto flex max-w-md items-center justify-between px-4 py-2.5">
+          <a href="#" className="flex items-center gap-2">
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand text-[10px] font-bold text-white">🏆</span>
+            <span className="text-sm font-bold text-brand-dark">Športový deň <span className="text-xs font-normal text-slate-400">2026</span></span>
+          </a>
+          <div className="hidden md:flex items-center gap-3 text-xs font-medium text-slate-600">
+            <a href="#program" className="hover:text-brand">Program</a>
+            <a href="#mapa" className="hover:text-brand">Mapa</a>
+            <a href="#discipliny" className="hover:text-brand">Disciplíny</a>
+            <a href="#wellness" className="hover:text-brand">Wellness</a>
+            <a href="#prakticke-info" className="hover:text-brand">Info</a>
+            <a href="#kontakt" className="hover:text-brand">Kontakt</a>
+          </div>
+        </div>
+      </nav>
+
       {/* ── HERO ─────────────────────────────────────────────── */}
       <header className="bg-brand-dark px-4 pt-8 pb-7 text-white">
         <div className="mx-auto max-w-md">
