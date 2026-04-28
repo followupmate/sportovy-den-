@@ -393,21 +393,30 @@ export default function Page() {
             <div className="space-y-3">
               {dayBlocks[activeDay].blocks.map((block, idx) => {
                 const cfg = blockTypeConfig[block.type];
+                const isLive = liveStatus?.phase === 'active' && liveStatus.dayIndex === activeDay && liveStatus.blockIndex === idx;
                 return (
                   <div key={idx} className="flex gap-3">
                     <div className={`relative z-10 mt-[14px] h-3 w-3 shrink-0 -translate-x-[3px] rounded-full ring-2 ring-white ${cfg.dot}`} />
-                    <div className="flex-1 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
+                    <div className={`flex-1 rounded-2xl border-l-4 border bg-white p-3 shadow-sm transition-all ${cfg.leftBorder} ${isLive ? 'border-brand/40 ring-2 ring-brand/20' : 'border-slate-200'}`}>
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0">
                           <div className="text-xs text-slate-400">{block.time}</div>
                           <div className="mt-0.5 text-sm font-semibold text-slate-900">{block.title}</div>
                           {block.location && (
-                            <div className="mt-0.5 text-xs text-slate-500">📍 {block.location}</div>
+                            <div className="mt-0.5 flex items-center gap-1 text-xs text-slate-500">
+                              <IMapPin c="h-3 w-3 text-slate-400" />{block.location}
+                            </div>
                           )}
                         </div>
-                        <span className={`mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ${cfg.cls}`}>
-                          {cfg.label}
-                        </span>
+                        <div className="flex shrink-0 flex-col items-end gap-1">
+                          <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${cfg.cls}`}>{cfg.label}</span>
+                          {isLive && (
+                            <span className="flex items-center gap-1 text-[10px] font-bold text-brand">
+                              <span className="relative flex h-1.5 w-1.5"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-75" /><span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand" /></span>
+                              Teraz
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
