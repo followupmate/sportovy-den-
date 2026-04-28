@@ -606,8 +606,8 @@ export default function Page() {
               Hlavný kontakt
             </div>
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-lg">
-                👤
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10">
+                <IUser c="h-5 w-5 text-white" />
               </div>
               <div>
                 <div className="font-semibold">Marek</div>
@@ -619,21 +619,21 @@ export default function Page() {
 
             <div className="mt-4 grid grid-cols-1 gap-2">
               <div className="flex items-center gap-2 rounded-xl bg-white/5 px-3 py-2">
-                <span className="text-base">🍽️</span>
+                <IUtensils c="h-4 w-4 text-slate-300" />
                 <div>
                   <div className="text-xs text-slate-400">Obed a večera</div>
                   <div className="text-sm font-medium">Olym-Pic · poz. 7</div>
                 </div>
               </div>
               <div className="flex items-center gap-2 rounded-xl bg-white/5 px-3 py-2">
-                <span className="text-base">🏃</span>
+                <IActivity c="h-4 w-4 text-slate-300" />
                 <div>
                   <div className="text-xs text-slate-400">Hlavná šport. plocha</div>
                   <div className="text-sm font-medium">Pozícia 29</div>
                 </div>
               </div>
               <div className="flex items-center gap-2 rounded-xl bg-white/5 px-3 py-2">
-                <span className="text-base">🚗</span>
+                <ICar c="h-4 w-4 text-slate-300" />
                 <div>
                   <div className="text-xs text-slate-400">Parkovanie</div>
                   <div className="text-sm font-medium">v areáli x-bionic® sphere</div>
@@ -651,25 +651,16 @@ export default function Page() {
       {/* ── STICKY BOTTOM BAR ─────────────────────────────── */}
       <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 bg-white/90 backdrop-blur-sm">
         <div className="mx-auto flex max-w-md">
-          <a
-            href="#program"
-            className="flex flex-1 flex-col items-center gap-0.5 py-3 text-slate-600 active:bg-slate-50"
-          >
-            <span className="text-lg">📅</span>
+          <a href="#program" className="flex flex-1 flex-col items-center gap-0.5 py-3 text-slate-600 active:bg-slate-50">
+            <ICalendar c="h-5 w-5" />
             <span className="text-[11px] font-medium">Program</span>
           </a>
-          <a
-            href="#mapa"
-            className="flex flex-1 flex-col items-center gap-0.5 py-3 text-slate-600 active:bg-slate-50"
-          >
-            <span className="text-lg">🗺️</span>
+          <a href="#mapa" className="flex flex-1 flex-col items-center gap-0.5 py-3 text-slate-600 active:bg-slate-50">
+            <IMap c="h-5 w-5" />
             <span className="text-[11px] font-medium">Mapa</span>
           </a>
-          <a
-            href="#kontakt"
-            className="flex flex-1 flex-col items-center gap-0.5 py-3 text-slate-600 active:bg-slate-50"
-          >
-            <span className="text-lg">📞</span>
+          <a href="#kontakt" className="flex flex-1 flex-col items-center gap-0.5 py-3 text-slate-600 active:bg-slate-50">
+            <IPhone c="h-5 w-5" />
             <span className="text-[11px] font-medium">Kontakt</span>
           </a>
         </div>
