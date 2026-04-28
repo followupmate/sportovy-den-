@@ -26,12 +26,12 @@ const IDownload = ({ c }: { c?: string }) => <Svg c={c}><path d="M21 15v4a2 2 0 
 
 type BlockType = 'sport' | 'food' | 'wellness' | 'free' | 'info';
 
-const blockTypeConfig: Record<BlockType, { label: string; cls: string; dot: string }> = {
-  sport:    { label: 'Šport',      cls: 'bg-blue-100 text-blue-700',      dot: 'bg-blue-400'    },
-  food:     { label: 'Jedlo',      cls: 'bg-amber-100 text-amber-700',    dot: 'bg-amber-400'   },
-  wellness: { label: 'Wellness',   cls: 'bg-emerald-100 text-emerald-700', dot: 'bg-emerald-400' },
-  free:     { label: 'Voľný čas', cls: 'bg-slate-100 text-slate-500',    dot: 'bg-slate-400'   },
-  info:     { label: 'Príchod',   cls: 'bg-slate-100 text-slate-500',    dot: 'bg-slate-400'   },
+const blockTypeConfig: Record<BlockType, { label: string; cls: string; dot: string; leftBorder: string }> = {
+  sport:    { label: 'Šport',      cls: 'bg-blue-100 text-blue-700',       dot: 'bg-blue-400',    leftBorder: 'border-l-blue-400'    },
+  food:     { label: 'Jedlo',      cls: 'bg-amber-100 text-amber-700',     dot: 'bg-amber-400',   leftBorder: 'border-l-amber-400'   },
+  wellness: { label: 'Wellness',   cls: 'bg-emerald-100 text-emerald-700', dot: 'bg-emerald-400', leftBorder: 'border-l-emerald-400' },
+  free:     { label: 'Voľný čas', cls: 'bg-slate-100 text-slate-500',     dot: 'bg-slate-400',   leftBorder: 'border-l-slate-300'   },
+  info:     { label: 'Príchod',   cls: 'bg-slate-100 text-slate-500',     dot: 'bg-slate-400',   leftBorder: 'border-l-slate-300'   },
 };
 
 const dayBlocks = [
