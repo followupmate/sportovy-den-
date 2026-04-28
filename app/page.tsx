@@ -182,6 +182,26 @@ const quickNav = [
 
 export default function Page() {
   const [activeDay, setActiveDay] = useState(0);
+  const [liveStatus, setLiveStatus] = useState<LiveStatus | null>(null);
+  const [discFilter, setDiscFilter] = useState('all');
+
+  useEffect(() => {
+    const update = () => setLiveStatus(computeLive(new Date()));
+    update();
+    const id = setInterval(update, 30_000);
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) => entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.replace('fade-hidden', 'fade-visible'); obs.unobserve(e.target); }
+      }),
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll('.fade-hidden').forEach(el => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
 
   return (
     <main className="min-h-screen bg-slate-50 pb-24">
@@ -267,6 +287,83 @@ export default function Page() {
             </div>
           </div>
         </section>
+
+        {/* ── LIVE STATUS ───────────────────────────────────── */}
+        {liveStatus !== null && (
+          <section>
+            {liveStatus.phase === 'upcoming' && (() => {
+              const { d, h, m } = formatCountdown(liveStatus.msLeft);
+              return (
+                <div className="rounded-2xl border border-brand/20 bg-gradient-to-r from-brand/5 to-brand/10 p-4">
+                  <div className="mb-3 flex items-center gap-2">
+                    <span className="relative flex h-2.5 w-2.5">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-60" />
+                      <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-brand" />
+                    </span>
+                    <span className="text-xs font-semibold uppercase tracking-wider text-brand">Do štartu eventu</span>
+                  </div>
+                  <div className="mb-4 grid grid-cols-3 gap-2 text-center">
+                    {[{ v: d, l: 'dní' }, { v: h, l: 'hodín' }, { v: m, l: 'minút' }].map(({ v, l }) => (
+                      <div key={l} className="rounded-xl bg-white/80 py-2">
+                        <div className="text-2xl font-bold text-brand-dark">{String(v).padStart(2, '0')}</div>
+                        <div className="text-[10px] text-slate-500">{l}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <a href={icsDataUri} download="sportovy-den-2026.ics"
+                    className="flex items-center justify-center gap-2 rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:opacity-90">
+                    <IDownload c="h-4 w-4" />
+                    Pridať do kalendára
+                  </a>
+                </div>
+              );
+            })()}
+
+            {liveStatus.phase === 'active' && (() => {
+              const cur = dayBlocks[liveStatus.dayIndex].blocks[liveStatus.blockIndex];
+              const next = dayBlocks[liveStatus.dayIndex].blocks[liveStatus.blockIndex + 1];
+              const later = dayBlocks[liveStatus.dayIndex].blocks[liveStatus.blockIndex + 2];
+              return (
+                <div className="rounded-2xl border border-brand/20 bg-white p-4 shadow-sm">
+                  <div className="mb-3 flex items-center gap-2">
+                    <span className="relative flex h-2.5 w-2.5">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-60" />
+                      <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-brand" />
+                    </span>
+                    <span className="text-xs font-semibold uppercase tracking-wider text-brand">Práve teraz</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    <div className="col-span-2 rounded-xl bg-brand/5 p-3">
+                      <div className="text-[10px] font-bold uppercase tracking-wider text-brand">Teraz</div>
+                      <div className="mt-1 text-sm font-semibold text-brand-dark">{cur.title}</div>
+                      <div className="mt-0.5 text-xs text-slate-500">{cur.time}</div>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      {next && (
+                        <div className="rounded-xl bg-slate-50 p-2">
+                          <div className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Nasleduje</div>
+                          <div className="mt-0.5 text-xs font-medium text-slate-700 leading-tight">{next.title}</div>
+                        </div>
+                      )}
+                      {later && (
+                        <div className="rounded-xl bg-slate-50 p-2 opacity-60">
+                          <div className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Neskôr</div>
+                          <div className="mt-0.5 text-xs font-medium text-slate-600 leading-tight">{later.title}</div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+
+            {liveStatus.phase === 'ended' && (
+              <div className="rounded-2xl border border-slate-200 bg-white p-4 text-center text-sm text-slate-500">
+                Event sa skončil — ďakujeme za účasť! 🎉
+              </div>
+            )}
+          </section>
+        )}
 
         {/* ── PROGRAM TIMELINE ──────────────────────────────── */}
         <section id="program">
