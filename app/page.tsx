@@ -366,7 +366,7 @@ export default function Page() {
         )}
 
         {/* ── PROGRAM TIMELINE ──────────────────────────────── */}
-        <section id="program">
+        <section id="program" className="fade-hidden">
           <h2 className="mb-3 border-l-4 border-brand pl-3 text-2xl font-bold text-brand-dark">Program</h2>
 
           {/* Day tabs */}
@@ -427,7 +427,7 @@ export default function Page() {
         </section>
 
         {/* ── MAPA ──────────────────────────────────────────── */}
-        <section id="mapa">
+        <section id="mapa" className="fade-hidden">
           <h2 className="mb-3 border-l-4 border-brand pl-3 text-2xl font-bold text-brand-dark">Mapa areálu</h2>
 
           {/* Key points – horizontal scroll */}
@@ -461,7 +461,7 @@ export default function Page() {
         </section>
 
         {/* ── DISCIPLÍNY ────────────────────────────────────── */}
-        <section id="discipliny">
+        <section id="discipliny" className="fade-hidden">
           <h2 className="mb-1 border-l-4 border-brand pl-3 text-2xl font-bold text-brand-dark">Športové disciplíny</h2>
           <p className="mb-4 text-sm text-slate-500">Individuálne disciplíny — každý hráč, vlastný výkon.</p>
 
@@ -502,7 +502,7 @@ export default function Page() {
         </section>
 
         {/* ── TURNAJE ───────────────────────────────────────── */}
-        <section id="turnaje">
+        <section id="turnaje" className="fade-hidden">
           <h2 className="mb-1 border-l-4 border-brand pl-3 text-2xl font-bold text-brand-dark">Turnaje</h2>
           <p className="mb-4 text-sm text-slate-500">Tímové turnaje organizuje agentúra priamo na mieste.</p>
 
@@ -535,7 +535,7 @@ export default function Page() {
         </section>
 
         {/* ── WELLNESS ──────────────────────────────────────── */}
-        <section id="wellness">
+        <section id="wellness" className="fade-hidden">
           <h2 className="mb-3 border-l-4 border-brand pl-3 text-2xl font-bold text-brand-dark">Wellness & relax</h2>
           <div className="space-y-2">
             {[
@@ -557,7 +557,7 @@ export default function Page() {
         </section>
 
         {/* ── PRAKTICKÉ INFO ────────────────────────────────── */}
-        <section id="prakticke-info">
+        <section id="prakticke-info" className="fade-hidden">
           <h2 className="mb-3 border-l-4 border-brand pl-3 text-2xl font-bold text-brand-dark">Praktické info</h2>
 
           {/* What to bring – highlighted box */}
@@ -599,7 +599,7 @@ export default function Page() {
         </section>
 
         {/* ── KONTAKT ───────────────────────────────────────── */}
-        <section id="kontakt">
+        <section id="kontakt" className="fade-hidden">
           <h2 className="mb-3 border-l-4 border-brand pl-3 text-2xl font-bold text-brand-dark">Kontakt</h2>
           <div className="rounded-2xl bg-slate-900 p-4 text-white">
             <div className="mb-3 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
