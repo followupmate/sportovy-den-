@@ -1,7 +1,28 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+const Svg = ({ c, children }: { c?: string; children: React.ReactNode }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}
+    strokeLinecap="round" strokeLinejoin="round" className={c ?? 'h-5 w-5'} aria-hidden="true">
+    {children}
+  </svg>
+);
+const ICalendar = ({ c }: { c?: string }) => <Svg c={c}><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></Svg>;
+const IMap      = ({ c }: { c?: string }) => <Svg c={c}><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></Svg>;
+const ITarget   = ({ c }: { c?: string }) => <Svg c={c}><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></Svg>;
+const ITrophy   = ({ c }: { c?: string }) => <Svg c={c}><polyline points="8 21 12 17 16 21"/><line x1="12" y1="17" x2="12" y2="11"/><path d="M7 4H4a2 2 0 0 0-2 2v1a5 5 0 0 0 5 5h1"/><path d="M17 4h3a2 2 0 0 1 2 2v1a5 5 0 0 1-5 5h-1"/><rect x="7" y="2" width="10" height="9" rx="1"/></Svg>;
+const IHeart    = ({ c }: { c?: string }) => <Svg c={c}><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></Svg>;
+const IPhone    = ({ c }: { c?: string }) => <Svg c={c}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></Svg>;
+const IWaves    = ({ c }: { c?: string }) => <Svg c={c}><path d="M2 12h2a2 2 0 0 1 2 2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 1 2-2h2a2 2 0 0 1 2 2 2 2 0 0 0 2 2"/><path d="M2 6h2a2 2 0 0 1 2 2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 1 2-2h2a2 2 0 0 1 2 2 2 2 0 0 0 2 2"/></Svg>;
+const IDumbbell = ({ c }: { c?: string }) => <Svg c={c}><path d="M6 5v14"/><path d="M18 5v14"/><path d="M2 9v6"/><path d="M22 9v6"/><rect x="4" y="7" width="4" height="10" rx="1"/><rect x="16" y="7" width="4" height="10" rx="1"/><line x1="6" y1="12" x2="18" y2="12"/></Svg>;
+const IUtensils = ({ c }: { c?: string }) => <Svg c={c}><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h1a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-1"/></Svg>;
+const IMapPin   = ({ c }: { c?: string }) => <Svg c={c}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></Svg>;
+const IUser     = ({ c }: { c?: string }) => <Svg c={c}><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></Svg>;
+const ICar      = ({ c }: { c?: string }) => <Svg c={c}><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></Svg>;
+const IActivity = ({ c }: { c?: string }) => <Svg c={c}><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></Svg>;
+const IDownload = ({ c }: { c?: string }) => <Svg c={c}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></Svg>;
 
 type BlockType = 'sport' | 'food' | 'wellness' | 'free' | 'info';
 
@@ -115,7 +136,7 @@ export default function Page() {
       <nav className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur-sm shadow-sm">
         <div className="mx-auto flex max-w-md items-center justify-between px-4 py-2.5">
           <a href="#" className="flex items-center gap-2">
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand text-[10px] font-bold text-white">🏆</span>
+            <ITrophy c="h-5 w-5 text-brand" />
             <span className="text-sm font-bold text-brand-dark">Športový deň <span className="text-xs font-normal text-slate-400">2026</span></span>
           </a>
           <div className="hidden md:flex items-center gap-3 text-xs font-medium text-slate-600">
