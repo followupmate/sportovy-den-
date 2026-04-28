@@ -11,5 +11,21 @@ html {
 }
 
 body {
-  @apply bg-slate-50 text-slate-900;
+  background: #F8F9FA;
+  color: #1A1A2E;
+}
+
+[id] {
+  scroll-margin-top: 56px;
+}
+
+.fade-hidden {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade-visible {
+  opacity: 1;
+  transform: none;
 }
