@@ -112,9 +112,9 @@ export default function Page() {
     <main className="min-h-screen bg-slate-50 pb-24">
 
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <header className="bg-slate-900 px-4 pt-8 pb-7 text-white">
+      <header className="bg-brand-dark px-4 pt-8 pb-7 text-white">
         <div className="mx-auto max-w-md">
-          <div className="text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ color: '#00c9a7' }}>
+          <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand">
             Tribe Home Experience
           </div>
           <h1 className="mt-2 text-2xl font-bold leading-tight">Športový deň 2026</h1>
