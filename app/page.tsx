@@ -305,6 +305,29 @@ export default function Page() {
 
         {/* ── PROGRAM TIMELINE ──────────────────────────────── */}
         <section id="program" className="fade-hidden">
+
+          {/* Hero banner */}
+          <div className="relative rounded-2xl overflow-hidden mb-6" style={{ minHeight: '200px' }}>
+            <div
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: "url('https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800')" }}
+            />
+            <div
+              className="absolute inset-0"
+              style={{ background: 'linear-gradient(to right, rgba(10,17,40,0.85) 40%, transparent)' }}
+            />
+            <div className="relative z-10 p-6 flex flex-col justify-end h-full" style={{ minHeight: '200px' }}>
+              <span className="inline-block mb-3 px-3 py-1 rounded-full text-white text-[10px] font-bold uppercase tracking-widest w-max" style={{ background: '#e20074' }}>
+                Premium Event
+              </span>
+              <h2 className="text-[32px] font-bold leading-tight text-white mb-2">Športový deň 2026</h2>
+              <div className="flex flex-wrap gap-4 text-white/70 text-sm">
+                <span>📅 14–15 May 2026</span>
+                <span>📍 x-bionic® sphere, Šamorín</span>
+              </div>
+            </div>
+          </div>
+
           <div className="flex justify-between items-end mb-5">
             <h2 className="font-headline-md text-headline-md text-on-surface">Program</h2>
             <span className="text-primary text-label-md">{dayBlocks[activeDay].blocks.length} blokov</span>
