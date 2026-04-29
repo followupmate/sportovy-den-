@@ -276,31 +276,34 @@ export default function Page() {
 
         {/* ── LIVE STATUS ───────────────────────────────────── */}
         {liveStatus !== null && (
-          <section>
+          <section className="fade-hidden">
             {liveStatus.phase === 'upcoming' && (() => {
               const { d, h, m } = formatCountdown(liveStatus.msLeft);
               return (
-                <div className="rounded-2xl border border-brand/20 bg-gradient-to-r from-brand/5 to-brand/10 p-4">
-                  <div className="mb-3 flex items-center gap-2">
-                    <span className="relative flex h-2.5 w-2.5">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-60" />
-                      <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-brand" />
-                    </span>
-                    <span className="text-xs font-semibold uppercase tracking-wider text-brand">Do štartu eventu</span>
+                <div className="glass-card rounded-2xl p-5 relative overflow-hidden">
+                  <div className="absolute -right-8 -top-8 w-32 h-32 bg-primary-container/20 blur-3xl rounded-full pointer-events-none" />
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-2 mb-4">
+                      <span className="relative flex h-2.5 w-2.5">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-pink-500 opacity-60" />
+                        <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-pink-500" />
+                      </span>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-pink-500">Do štartu eventu</span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-3 mb-5">
+                      {[{ v: d, l: 'dní' }, { v: h, l: 'hodín' }, { v: m, l: 'minút' }].map(({ v, l }) => (
+                        <div key={l} className="rounded-xl bg-white/5 py-3 text-center">
+                          <div className="text-2xl font-bold text-white">{String(v).padStart(2, '0')}</div>
+                          <div className="text-[10px] text-slate-500 mt-0.5">{l}</div>
+                        </div>
+                      ))}
+                    </div>
+                    <a href={icsDataUri} download="sportovy-den-2026.ics"
+                      className="flex items-center justify-center gap-2 rounded-xl bg-primary-container px-4 py-3 text-sm font-bold text-white hover:opacity-90 transition-opacity">
+                      <Icon name="download" className="text-[20px]" />
+                      Pridať do kalendára
+                    </a>
                   </div>
-                  <div className="mb-4 grid grid-cols-3 gap-2 text-center">
-                    {[{ v: d, l: 'dní' }, { v: h, l: 'hodín' }, { v: m, l: 'minút' }].map(({ v, l }) => (
-                      <div key={l} className="rounded-xl bg-white/80 py-2">
-                        <div className="text-2xl font-bold text-brand-dark">{String(v).padStart(2, '0')}</div>
-                        <div className="text-[10px] text-slate-500">{l}</div>
-                      </div>
-                    ))}
-                  </div>
-                  <a href={icsDataUri} download="sportovy-den-2026.ics"
-                    className="flex items-center justify-center gap-2 rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:opacity-90">
-                    <IDownload c="h-4 w-4" />
-                    Pridať do kalendára
-                  </a>
                 </div>
               );
             })()}
@@ -310,31 +313,31 @@ export default function Page() {
               const next = dayBlocks[liveStatus.dayIndex].blocks[liveStatus.blockIndex + 1];
               const later = dayBlocks[liveStatus.dayIndex].blocks[liveStatus.blockIndex + 2];
               return (
-                <div className="rounded-2xl border border-brand/20 bg-white p-4 shadow-sm">
-                  <div className="mb-3 flex items-center gap-2">
+                <div className="glass-card rounded-2xl p-5">
+                  <div className="flex items-center gap-2 mb-4">
                     <span className="relative flex h-2.5 w-2.5">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-60" />
-                      <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-brand" />
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-pink-500 opacity-60" />
+                      <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-pink-500" />
                     </span>
-                    <span className="text-xs font-semibold uppercase tracking-wider text-brand">Práve teraz</span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-pink-500">Práve teraz</span>
                   </div>
-                  <div className="grid grid-cols-3 gap-2">
-                    <div className="col-span-2 rounded-xl bg-brand/5 p-3">
-                      <div className="text-[10px] font-bold uppercase tracking-wider text-brand">Teraz</div>
-                      <div className="mt-1 text-sm font-semibold text-brand-dark">{cur.title}</div>
-                      <div className="mt-0.5 text-xs text-slate-500">{cur.time}</div>
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="col-span-2 rounded-xl bg-primary-container/10 p-3 border border-primary-container/20">
+                      <div className="text-[10px] font-bold uppercase tracking-wider text-pink-500">Teraz</div>
+                      <div className="mt-1 font-semibold text-white">{cur.title}</div>
+                      <div className="mt-0.5 text-xs text-slate-400">{cur.time}</div>
                     </div>
                     <div className="flex flex-col gap-2">
                       {next && (
-                        <div className="rounded-xl bg-slate-50 p-2">
-                          <div className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Nasleduje</div>
-                          <div className="mt-0.5 text-xs font-medium text-slate-700 leading-tight">{next.title}</div>
+                        <div className="rounded-xl bg-white/5 p-2">
+                          <div className="text-[9px] font-bold uppercase tracking-wider text-slate-500">Ďalší</div>
+                          <div className="mt-0.5 text-xs font-medium text-slate-300 leading-tight">{next.title}</div>
                         </div>
                       )}
                       {later && (
-                        <div className="rounded-xl bg-slate-50 p-2 opacity-60">
-                          <div className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Neskôr</div>
-                          <div className="mt-0.5 text-xs font-medium text-slate-600 leading-tight">{later.title}</div>
+                        <div className="rounded-xl bg-white/5 p-2 opacity-50">
+                          <div className="text-[9px] font-bold uppercase tracking-wider text-slate-500">Neskôr</div>
+                          <div className="mt-0.5 text-xs font-medium text-slate-400 leading-tight">{later.title}</div>
                         </div>
                       )}
                     </div>
@@ -344,7 +347,7 @@ export default function Page() {
             })()}
 
             {liveStatus.phase === 'ended' && (
-              <div className="rounded-2xl border border-slate-200 bg-white p-4 text-center text-sm text-slate-500">
+              <div className="glass-card rounded-2xl p-4 text-center text-sm text-slate-400">
                 Event sa skončil — ďakujeme za účasť! 🎉
               </div>
             )}
