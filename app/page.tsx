@@ -233,65 +233,42 @@ export default function Page() {
         </button>
       </header>
 
-      {/* ── HERO ─────────────────────────────────────────────── */}
-      <header className="bg-brand-dark px-4 pt-8 pb-7 text-white">
-        <div className="mx-auto max-w-md">
-          <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand">
-            Tribe Home Experience
-          </div>
-          <h1 className="mt-2 text-2xl font-bold leading-tight">Športový deň 2026</h1>
-          <div className="mt-3 flex flex-wrap gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs text-slate-200">
-              📅 14–15. mája 2026
-            </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs text-slate-200">
-              📍 x-bionic® sphere, Šamorín
-            </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs text-slate-200">
-              👥 101 účastníkov
-            </span>
-          </div>
-        </div>
-      </header>
-
       <main className="pt-20 pb-28 px-5 max-w-md mx-auto space-y-10">
 
-        {/* ── NAV CARDS ─────────────────────────────────────── */}
-        <section>
+        {/* ── INFO BENTO ────────────────────────────────────── */}
+        <section className="fade-hidden">
           <div className="grid grid-cols-2 gap-3">
-            {[
-              { icon: '📅', circleBg: '#e0faf5', title: 'Program',  sub: 'Časový harmonogram',   href: '#program'        },
-              { icon: '🏆', circleBg: '#e8eaf6', title: 'Aktivity', sub: 'Disciplíny a turnaje',  href: '#discipliny'     },
-              { icon: '📍', circleBg: '#fff3e0', title: 'Kde',      sub: 'Mapa a miesta',         href: '#mapa'           },
-              { icon: '🎒', circleBg: '#fce4ec', title: 'Info',     sub: 'Čo si priniesť',        href: '#prakticke-info' },
-            ].map((card) => (
-              <a
-                key={card.href}
-                href={card.href}
-                className="flex flex-col gap-3 rounded-2xl bg-white p-5 shadow-[0_2px_8px_rgba(0,0,0,0.07)] transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_16px_rgba(0,0,0,0.12)] active:scale-[0.98]"
-              >
-                <div className="flex h-14 w-14 items-center justify-center rounded-full text-2xl" style={{ background: card.circleBg }}>
-                  {card.icon}
-                </div>
-                <div>
-                  <div className="text-base font-extrabold text-slate-900">{card.title}</div>
-                  <div className="mt-0.5 text-xs" style={{ color: '#7a8499' }}>{card.sub}</div>
-                </div>
-              </a>
-            ))}
-            {/* Card 5: Tímy — full width, disabled */}
-            <div className="col-span-2 flex items-center gap-4 rounded-2xl bg-white p-5 shadow-[0_2px_8px_rgba(0,0,0,0.07)] opacity-70">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full text-2xl" style={{ background: '#e8f5e9' }}>
-                👥
+            {/* Location — full width */}
+            <div className="col-span-2 glass-panel p-4 rounded-xl flex gap-4 items-center hover:border-pink-500/30 transition-all cursor-pointer">
+              <div className="p-2 bg-pink-500/10 rounded-lg flex-shrink-0">
+                <Icon name="map" className="text-pink-500" />
               </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-base font-extrabold text-slate-900">Tímy</span>
-                  <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold text-slate-500">
-                    Čoskoro k dispozícii
-                  </span>
-                </div>
-                <div className="mt-0.5 text-xs" style={{ color: '#7a8499' }}>Zoznam účastníkov a tímy</div>
+              <div>
+                <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Miesto</p>
+                <h3 className="font-bold text-white">x-bionic® sphere</h3>
+                <p className="text-body-sm text-on-surface-variant">Dubová 33, Šamorín · 101 účastníkov</p>
+              </div>
+            </div>
+            {/* Dates */}
+            <div className="glass-panel p-4 rounded-xl flex flex-col gap-3 hover:border-pink-500/30 transition-all cursor-pointer">
+              <div className="p-2 bg-pink-500/10 rounded-lg w-max">
+                <Icon name="event" className="text-pink-500" />
+              </div>
+              <div>
+                <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Dátum</p>
+                <h3 className="font-bold text-white">14–15 mája</h3>
+                <p className="text-body-sm text-on-surface-variant">2026</p>
+              </div>
+            </div>
+            {/* Parking */}
+            <div className="glass-panel p-4 rounded-xl flex flex-col gap-3 hover:border-pink-500/30 transition-all cursor-pointer">
+              <div className="p-2 bg-pink-500/10 rounded-lg w-max">
+                <Icon name="local_parking" className="text-pink-500" />
+              </div>
+              <div>
+                <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Parkovanie</p>
+                <h3 className="font-bold text-white">V areáli</h3>
+                <p className="text-body-sm text-on-surface-variant">Zdarma pre hostí</p>
               </div>
             </div>
           </div>
