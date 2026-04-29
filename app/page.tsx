@@ -115,43 +115,12 @@ const dayBlocks = [
 ];
 
 const disciplines = [
-  {
-    name: 'Lukostreľba',
-    description: 'Individuálna disciplína zameraná na presnosť.',
-    rules: ['Krátka inštruktáž pred začiatkom.', 'Každý má určený počet pokusov.', 'Dodržiavať pokyny obsluhy.'],
-    badge: 'Presnosť',
-  },
-  {
-    name: 'Streľba zo vzduchovky',
-    description: 'Presnostná disciplína pre jednotlivcov.',
-    rules: ['Bezpečnosť je priorita.', 'Počíta sa výsledný zásah alebo súčet bodov.', 'Poradie určuje obsluha stanovišťa.'],
-    badge: 'Presnosť',
-  },
-  {
-    name: 'Airsoft strelnica',
-    description: 'Zábavná strelecká aktivita v kontrolovanom priestore.',
-    rules: ['Použiť ochranné pomôcky podľa pokynov.', 'Strieľa sa len na určený cieľ.', 'Riadi sa pokynmi obsluhy.'],
-    badge: 'Outdoor',
-  },
-  {
-    name: 'Penalty',
-    description: 'Futbalová disciplína na presnosť zakončenia.',
-    rules: ['Každý má určený počet pokusov.', 'Počíta sa počet úspešných zásahov.', 'Nasleduje sa podľa poradia na stanovišti.'],
-    badge: 'Presnosť',
-  },
-  {
-    name: 'Hod oštepom',
-    description: 'Silovo-technická disciplína v outdoor priestore.',
-    rules: ['Počíta sa najlepší pokus.', 'Vstup do sektora len na pokyn obsluhy.', 'Dodržiavať bezpečnostné rozostupy.'],
-    badge: 'Sila',
-  },
-  {
-    name: 'Discgolf',
-    description: 'Voľnejšia individuálna disciplína s dôrazom na presnosť hodu.',
-    rules: ['Formát doplniť po potvrdení agentúrou.', 'Počet pokusov doplniť neskôr.'],
-    badge: 'Outdoor',
-    pending: true,
-  },
+  { name: 'Lukostreľba',        description: 'Zameraj a zasiahni stred terča.',   badge: 'Presnosť', icon: 'target',        color: 'primary'   },
+  { name: 'Vzduchovka',         description: 'Športová streľba na pevný terč.',   badge: 'Presnosť', icon: 'crossword',     color: 'primary'   },
+  { name: 'Airsoft',            description: 'Dynamická strelnica v teréne.',      badge: 'Outdoor',  icon: 'shield',        color: 'secondary' },
+  { name: 'Penalty',            description: 'Prekonaj brankára v súboji.',        badge: 'Presnosť', icon: 'sports_soccer', color: 'primary'   },
+  { name: 'Hod oštepom',        description: 'Klasická atletická disciplína.',     badge: 'Sila',     icon: 'fitness_center',color: 'neutral'   },
+  { name: 'Discgolf',           description: 'Trať s košmi v areáli parku.',       badge: 'Outdoor',  icon: 'sports',        color: 'secondary', pending: true },
 ];
 
 const tournaments = [
@@ -418,31 +387,25 @@ export default function Page() {
 
         {/* ── MAPA ──────────────────────────────────────────── */}
         <section id="mapa" className="fade-hidden">
-          <h2 className="mb-3 border-l-4 border-brand pl-3 text-2xl font-bold text-brand-dark">Mapa areálu</h2>
+          <h2 className="font-headline-md text-headline-md text-on-surface mb-5">Mapa areálu</h2>
 
-          {/* Key points – horizontal scroll */}
-          <div className="mb-3 flex gap-2 overflow-x-auto pb-1">
+          <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar mb-4">
             {mapPoints.map((pt) => (
-              <div
-                key={pt.label}
-                className="flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1.5 shadow-sm"
-              >
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-slate-900 text-[10px] font-bold text-white">
+              <div key={pt.label} className="flex-shrink-0 glass-panel px-3 py-2 rounded-full flex items-center gap-2">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary-container text-[10px] font-bold text-white">
                   {pt.number.length <= 2 ? pt.number : '·'}
                 </span>
-                <span className="text-xs font-medium text-slate-700">{pt.label}</span>
-                {pt.number.length > 2 && (
-                  <span className="text-xs text-slate-500">({pt.number})</span>
-                )}
+                <span className="text-xs font-medium text-slate-300">{pt.label}</span>
+                {pt.number.length > 2 && <span className="text-xs text-slate-500">({pt.number})</span>}
               </div>
             ))}
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+          <div className="rounded-2xl overflow-hidden border border-white/10">
             <iframe
               title="x-bionic® sphere mapa"
               className="w-full"
-              height={280}
+              height={260}
               src="https://maps.google.com/maps?q=x-bionic+sphere+Samorin+Slovakia&output=embed"
               loading="lazy"
               style={{ border: 0 }}
@@ -452,42 +415,50 @@ export default function Page() {
 
         {/* ── DISCIPLÍNY ────────────────────────────────────── */}
         <section id="discipliny" className="fade-hidden">
-          <h2 className="mb-1 border-l-4 border-brand pl-3 text-2xl font-bold text-brand-dark">Športové disciplíny</h2>
-          <p className="mb-4 text-sm text-slate-500">Individuálne disciplíny — každý hráč, vlastný výkon.</p>
+          <div className="flex justify-between items-end mb-5">
+            <h2 className="font-headline-md text-headline-md text-on-surface">Individuálne disciplíny</h2>
+            <span className="text-primary text-label-md">{disciplines.length} aktivít</span>
+          </div>
 
-          <div className="mb-3 flex flex-wrap gap-2">
+          <div className="flex gap-2 flex-wrap mb-4">
             {['all', 'Presnosť', 'Outdoor', 'Sila'].map((f) => (
               <button key={f} onClick={() => setDiscFilter(f)}
-                className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${discFilter === f ? 'bg-brand text-white' : 'border border-slate-200 bg-white text-slate-600 hover:border-brand/40'}`}>
+                className={`rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-wider transition-colors ${
+                  discFilter === f ? 'bg-primary-container text-white' : 'glass-panel text-on-surface-variant hover:bg-white/5'
+                }`}>
                 {f === 'all' ? 'Všetky' : f}
               </button>
             ))}
           </div>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            {disciplines.filter((d) => discFilter === 'all' || d.badge === discFilter).map((item) => (
-              <div key={item.name} className="self-start rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg">
-                <div className="flex items-start justify-between gap-2">
-                  <h3 className="text-base font-semibold text-slate-900">{item.name}</h3>
-                  <div className="flex shrink-0 flex-wrap justify-end gap-1">
-                    <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700">{item.badge}</span>
-                    {item.pending && (
-                      <span className="flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-500">
-                        <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400" />
-                        Čaká
-                      </span>
-                    )}
+
+          <div className="grid grid-cols-2 gap-4">
+            {disciplines.filter((d) => discFilter === 'all' || d.badge === discFilter).map((item) => {
+              const colMap = {
+                primary:   { bg: 'bg-primary-container/20', text: 'text-primary',   badge: 'bg-primary/20 text-primary'     },
+                secondary: { bg: 'bg-secondary-container/30', text: 'text-secondary', badge: 'bg-secondary-container/40 text-secondary' },
+                neutral:   { bg: 'bg-on-primary-fixed-variant/20', text: 'text-on-surface-variant', badge: 'bg-surface-variant text-on-surface-variant' },
+              };
+              const col = colMap[item.color as keyof typeof colMap];
+              return (
+                <div key={item.name} className="bg-surface-container-low border border-white/10 p-4 rounded-xl hover:bg-white/5 transition-all">
+                  <div className="flex justify-between items-start mb-4">
+                    <div className={`w-10 h-10 rounded-lg ${col.bg} flex items-center justify-center ${col.text}`}>
+                      <Icon name={item.icon} />
+                    </div>
+                    <div className="flex flex-col items-end gap-1">
+                      <span className={`${col.badge} text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter`}>{item.badge}</span>
+                      {item.pending && (
+                        <span className="flex items-center gap-1 text-[10px] text-slate-500">
+                          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400" />Čaká
+                        </span>
+                      )}
+                    </div>
                   </div>
+                  <h3 className="font-headline-sm text-headline-sm text-white mb-1">{item.name}</h3>
+                  <p className="text-slate-500 text-label-md">{item.description}</p>
                 </div>
-                <p className="mt-1 text-sm text-slate-600">{item.description}</p>
-                <ul className="mt-3 space-y-1">
-                  {item.rules.map((rule) => (
-                    <li key={rule} className="flex items-start gap-2 text-sm text-slate-600">
-                      <span className="mt-0.5 shrink-0 text-slate-300">›</span>{rule}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 
