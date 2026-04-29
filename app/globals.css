@@ -10,10 +10,13 @@ html {
   scroll-behavior: smooth;
 }
 
+body, * {
+  font-family: 'Manrope', sans-serif;
+}
+
 body {
   background: #111415;
   color: #e1e3e4;
-  font-family: 'Manrope', sans-serif;
   -webkit-font-smoothing: antialiased;
   min-height: 100dvh;
 }
