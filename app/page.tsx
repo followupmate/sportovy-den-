@@ -95,12 +95,12 @@ const dayBlocks = [
 ];
 
 const disciplines = [
-  { name: 'Lukostreľba',        description: 'Zameraj a zasiahni stred terča.',   badge: 'Presnosť', icon: 'target',        color: 'primary'   },
-  { name: 'Vzduchovka',         description: 'Športová streľba na pevný terč.',   badge: 'Presnosť', icon: 'crossword',     color: 'primary'   },
-  { name: 'Airsoft',            description: 'Dynamická strelnica v teréne.',      badge: 'Outdoor',  icon: 'shield',        color: 'secondary' },
-  { name: 'Penalty',            description: 'Prekonaj brankára v súboji.',        badge: 'Presnosť', icon: 'sports_soccer', color: 'primary'   },
-  { name: 'Hod oštepom',        description: 'Klasická atletická disciplína.',     badge: 'Sila',     icon: 'fitness_center',color: 'neutral'   },
-  { name: 'Discgolf',           description: 'Trať s košmi v areáli parku.',       badge: 'Outdoor',  icon: 'sports',        color: 'secondary', pending: true },
+  { name: 'Lukostreľba',  description: 'Zameraj a zasiahni stred terča.',  badge: 'Presnosť', icon: 'target',         color: 'primary',   image: 'https://images.unsplash.com/photo-1555597673-b21d5c935865?w=400' },
+  { name: 'Vzduchovka',   description: 'Športová streľba na pevný terč.',  badge: 'Presnosť', icon: 'crossword',      color: 'primary',   image: 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=400' },
+  { name: 'Airsoft',      description: 'Dynamická strelnica v teréne.',     badge: 'Outdoor',  icon: 'shield',         color: 'secondary', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400' },
+  { name: 'Penalty',      description: 'Prekonaj brankára v súboji.',       badge: 'Presnosť', icon: 'sports_soccer',  color: 'primary',   image: 'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=400' },
+  { name: 'Hod oštepom',  description: 'Klasická atletická disciplína.',    badge: 'Sila',     icon: 'fitness_center', color: 'neutral',   image: 'https://images.unsplash.com/photo-1591491634026-6cc1d8a0c542?w=400' },
+  { name: 'Discgolf',     description: 'Trať s košmi v areáli parku.',      badge: 'Outdoor',  icon: 'sports',         color: 'secondary', image: 'https://images.unsplash.com/photo-1547041547050-1b6add6db0ef?w=400', pending: true },
 ];
 
 const tournaments = [
@@ -443,22 +443,40 @@ export default function Page() {
               };
               const col = colMap[item.color as keyof typeof colMap];
               return (
-                <div key={item.name} className="bg-surface-container-low border border-white/10 p-4 rounded-xl hover:bg-white/5 transition-all">
-                  <div className="flex justify-between items-start mb-4">
-                    <div className={`w-10 h-10 rounded-lg ${col.bg} flex items-center justify-center ${col.text}`}>
-                      <Icon name={item.icon} />
+                <div
+                  key={item.name}
+                  className="relative border border-white/10 rounded-xl overflow-hidden transition-all hover:border-white/20"
+                  style={{ minHeight: '160px' }}
+                >
+                  {/* Background image + overlay */}
+                  <div
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: `url('${item.image}')` }}
+                  />
+                  <div
+                    className="absolute inset-0"
+                    style={{ background: 'linear-gradient(rgba(10,17,40,0.7), rgba(10,17,40,0.7))' }}
+                  />
+                  {/* Content */}
+                  <div className="relative z-10 p-4 flex flex-col justify-between h-full" style={{ minHeight: '160px' }}>
+                    <div className="flex justify-between items-start mb-4">
+                      <div className={`w-10 h-10 rounded-lg ${col.bg} flex items-center justify-center ${col.text}`}>
+                        <Icon name={item.icon} />
+                      </div>
+                      <div className="flex flex-col items-end gap-1">
+                        <span className={`${col.badge} text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter`}>{item.badge}</span>
+                        {item.pending && (
+                          <span className="flex items-center gap-1 text-[10px] text-slate-400">
+                            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400" />Čaká
+                          </span>
+                        )}
+                      </div>
                     </div>
-                    <div className="flex flex-col items-end gap-1">
-                      <span className={`${col.badge} text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter`}>{item.badge}</span>
-                      {item.pending && (
-                        <span className="flex items-center gap-1 text-[10px] text-slate-500">
-                          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400" />Čaká
-                        </span>
-                      )}
+                    <div>
+                      <h3 className="font-headline-sm text-headline-sm text-white mb-1">{item.name}</h3>
+                      <p className="text-slate-400 text-label-md">{item.description}</p>
                     </div>
                   </div>
-                  <h3 className="font-headline-sm text-headline-sm text-white mb-1">{item.name}</h3>
-                  <p className="text-slate-500 text-label-md">{item.description}</p>
                 </div>
               );
             })}
