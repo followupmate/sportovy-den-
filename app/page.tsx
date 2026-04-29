@@ -229,6 +229,131 @@ export default function Page() {
           </div>
         </section>
 
+        {/* ── HORIZONTAL PILL TABS ─────────────────────────── */}
+        <section className="fade-hidden -mx-5 px-4">
+          <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
+            {navItems.map((item) => {
+              const isActive = activeSection === item.href.slice(1);
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="flex-shrink-0 px-5 py-2.5 rounded-full text-sm font-bold transition-colors"
+                  style={isActive
+                    ? { background: 'transparent', color: '#e20074', border: '1.5px solid #e20074' }
+                    : { background: 'rgba(29,32,33,0.7)', color: '#e3bdc5', border: '1px solid rgba(255,255,255,0.08)' }
+                  }
+                >
+                  {item.label}
+                </a>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* ── INFO CARDS ────────────────────────────────────── */}
+        <section className="fade-hidden space-y-3">
+          {/* Location — full width */}
+          <div className="glass-panel p-4 rounded-2xl flex justify-between items-start hover:border-pink-500/30 transition-all cursor-pointer" style={{ minHeight: '80px' }}>
+            <div className="flex gap-3 items-start">
+              <div className="p-2 bg-pink-500/10 rounded-lg flex-shrink-0">
+                <Icon name="map" className="text-pink-500" />
+              </div>
+              <div>
+                <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold mb-1">Location</p>
+                <h3 className="font-bold text-white">x-bionic® sphere</h3>
+                <p className="text-body-sm text-on-surface-variant">Dubová 33, Šamorín</p>
+              </div>
+            </div>
+            <Icon name="north_east" className="text-white/20 text-[20px] mt-1" />
+          </div>
+
+          {/* Dates + Check-in — 2 column */}
+          <div className="grid grid-cols-2 gap-3">
+            <div className="glass-panel p-4 rounded-2xl flex flex-col gap-3 hover:border-pink-500/30 transition-all cursor-pointer">
+              <div className="p-2 bg-pink-500/10 rounded-lg w-max">
+                <Icon name="event" className="text-pink-500" />
+              </div>
+              <div>
+                <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Dates</p>
+                <h3 className="font-bold text-white mt-1">14–15 May</h3>
+                <p className="text-body-sm text-on-surface-variant">2026</p>
+              </div>
+            </div>
+            <div className="glass-panel p-4 rounded-2xl flex flex-col gap-3 hover:border-pink-500/30 transition-all cursor-pointer">
+              <div className="p-2 bg-pink-500/10 rounded-lg w-max">
+                <Icon name="login" className="text-pink-500" />
+              </div>
+              <div>
+                <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Check-in</p>
+                <h3 className="font-bold text-white mt-1">From 15:00</h3>
+                <p className="text-body-sm text-on-surface-variant">Main Lobby</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Parking — full width */}
+          <div className="glass-panel p-4 rounded-2xl flex gap-3 items-center hover:border-pink-500/30 transition-all cursor-pointer">
+            <div className="p-2 bg-pink-500/10 rounded-lg flex-shrink-0">
+              <Icon name="local_parking" className="text-pink-500" />
+            </div>
+            <div>
+              <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Parking</p>
+              <h3 className="font-bold text-white">On site</h3>
+              <p className="text-body-sm text-on-surface-variant">Free for guests</p>
+            </div>
+          </div>
+        </section>
+
+        {/* ── MAP PLACEHOLDER ───────────────────────────────── */}
+        <section className="fade-hidden">
+          <div
+            className="relative overflow-hidden flex items-center justify-center"
+            style={{ height: '160px', borderRadius: '16px', background: '#1a2238' }}
+          >
+            {/* Subtle grid pattern */}
+            <div className="absolute inset-0 opacity-10"
+              style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
+            <a
+              href="https://maps.google.com/?q=x-bionic+sphere+Samorin"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative z-10 flex items-center gap-2 text-white font-bold px-6 py-3 rounded-full shadow-2xl hover:scale-105 transition-transform"
+              style={{ background: '#e20074' }}
+            >
+              <Icon name="explore" className="text-[20px]" />
+              Open Interactive Map
+            </a>
+          </div>
+        </section>
+
+        {/* ── HLAVNÉ DISCIPLÍNY PREVIEW ─────────────────────── */}
+        <section className="fade-hidden">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="font-headline-md text-headline-md text-on-surface">Hlavné disciplíny</h2>
+            <a href="#discipliny" className="text-sm font-bold hover:underline" style={{ color: '#e20074' }}>Zobraziť všetko</a>
+          </div>
+          <div className="space-y-3">
+            {[
+              { icon: 'pool',         bg: '#0d4f6c', title: 'Plavecká štafeta',  meta: '14. Mája · 09:00 · Olympic Pool' },
+              { icon: 'sports_score', bg: '#4a1d5c', title: 'Futbalový turnaj',  meta: '15. Mája · 13:00 · Hlavné ihrisko' },
+            ].map((item) => (
+              <div key={item.title} className="glass-panel rounded-2xl flex gap-4 items-center p-4">
+                <div
+                  className="flex-shrink-0 flex items-center justify-center rounded-xl"
+                  style={{ width: '64px', height: '64px', background: item.bg, borderRadius: '12px' }}
+                >
+                  <Icon name={item.icon} className="text-white text-[28px]" />
+                </div>
+                <div>
+                  <h4 className="font-headline-sm text-white text-[16px]">{item.title}</h4>
+                  <p className="text-body-sm text-on-surface-variant mt-0.5">{item.meta}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* ── LIVE STATUS ───────────────────────────────────── */}
         {liveStatus !== null && (
           <section className="fade-hidden">
