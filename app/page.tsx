@@ -104,9 +104,9 @@ const disciplines = [
 ];
 
 const tournaments = [
-  { name: 'Futbal',     location: 'Main Field',     time: '14:00', note: 'Presný rozpis bude riešený na mieste agentúrou.', pending: true },
-  { name: 'Volejbal',   location: 'Sand Arena',     time: '15:30', note: 'Poznámka: prosíme natiahnuť sieť.',               pending: true },
-  { name: 'Streetball', location: 'Concrete Court', time: '17:00', note: 'Výsledky sledovať priamo na mieste.',             pending: true },
+  { name: 'Futbal',     location: 'Main Field',     time: '14:00', note: 'Presný rozpis bude riešený na mieste agentúrou.', pending: true, image: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600' },
+  { name: 'Volejbal',   location: 'Sand Arena',     time: '15:30', note: 'Poznámka: prosíme natiahnuť sieť.',               pending: true, image: 'https://images.unsplash.com/photo-1547347298-4074fc3086f0?w=600' },
+  { name: 'Streetball', location: 'Concrete Court', time: '17:00', note: 'Výsledky sledovať priamo na mieste.',             pending: true, image: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600' },
 ];
 
 const teamTasks = [
@@ -489,17 +489,30 @@ export default function Page() {
 
           <div className="space-y-4 mb-8">
             {tournaments.map((item) => (
-              <div key={item.name} className="glass-card rounded-2xl p-5 flex items-center justify-between hover:border-pink-500/20 transition-all">
-                <div>
-                  <h3 className="font-headline-sm text-white">{item.name}</h3>
-                  <p className="text-primary font-bold text-label-md uppercase tracking-widest mt-1">
-                    {item.location} · {item.time}
-                  </p>
-                  <p className="text-slate-500 text-xs mt-1 italic">{item.note}</p>
+              <div key={item.name} className="relative overflow-hidden rounded-2xl border border-white/5 h-32 flex items-center">
+                {/* Background image */}
+                <div
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{ backgroundImage: `url('${item.image}')` }}
+                />
+                {/* Dark overlay */}
+                <div
+                  className="absolute inset-0"
+                  style={{ background: 'linear-gradient(rgba(10,17,40,0.75), rgba(10,17,40,0.75))' }}
+                />
+                {/* Content */}
+                <div className="relative z-10 px-5 flex items-center justify-between w-full">
+                  <div>
+                    <h3 className="font-headline-sm text-white">{item.name}</h3>
+                    <p className="text-primary font-bold text-label-md uppercase tracking-widest mt-1">
+                      {item.location} · {item.time}
+                    </p>
+                    <p className="text-slate-400 text-xs mt-1 italic">{item.note}</p>
+                  </div>
+                  <button className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-primary-container transition-colors flex-shrink-0 ml-4">
+                    <Icon name="chevron_right" className="text-white" />
+                  </button>
                 </div>
-                <button className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary-container transition-colors flex-shrink-0 ml-4">
-                  <Icon name="chevron_right" className="text-white" />
-                </button>
               </div>
             ))}
           </div>
