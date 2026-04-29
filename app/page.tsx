@@ -210,13 +210,19 @@ export default function Page() {
               style={{ background: 'linear-gradient(to right, #0a1128 45%, transparent 100%)' }}
             />
 
-            {/* Athlete image — right side */}
-            <img
-              src="https://cdn.pixabay.com/photo/2017/07/08/01/47/runner-2482788_640.png"
-              alt="athlete"
-              className="absolute bottom-0 right-0 z-10 pointer-events-none"
-              style={{ height: '190px', objectFit: 'contain' }}
-            />
+            {/* Athlete SVG */}
+            <svg viewBox="0 0 120 220" xmlns="http://www.w3.org/2000/svg"
+              style={{ position: 'absolute', right: 0, bottom: 0, height: '200px', opacity: 0.9, zIndex: 1, filter: 'drop-shadow(0 0 12px rgba(226,0,116,0.4))' }}>
+              <circle cx="82" cy="26" r="15" fill="#ffb1c6"/>
+              <line x1="82" y1="41" x2="82" y2="50" stroke="#ffb1c6" strokeWidth="6" strokeLinecap="round"/>
+              <path d="M82 50 Q78 72 70 95" stroke="#e20074" strokeWidth="9" fill="none" strokeLinecap="round"/>
+              <path d="M82 58 L112 38 L118 28" stroke="#ffb1c6" strokeWidth="6" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M80 62 L52 80 L46 90" stroke="#bfc5e4" strokeWidth="6" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M74 95 L92 140 L104 175 L96 185" stroke="#ffb1c6" strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M70 95 L52 138 L42 172 L50 182" stroke="#bfc5e4" strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M96 185 L110 188" stroke="#e20074" strokeWidth="5" strokeLinecap="round"/>
+              <path d="M50 182 L36 186" stroke="#aa8890" strokeWidth="5" strokeLinecap="round"/>
+            </svg>
 
             {/* Text content */}
             <div className="relative z-20 pt-8">
