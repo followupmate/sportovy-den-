@@ -6,26 +6,6 @@ const Icon = ({ name, className }: { name: string; className?: string }) => (
   <span className={`material-symbols-outlined select-none leading-none ${className ?? ''}`}>{name}</span>
 );
 
-const Svg = ({ c, children }: { c?: string; children: React.ReactNode }) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}
-    strokeLinecap="round" strokeLinejoin="round" className={c ?? 'h-5 w-5'} aria-hidden="true">
-    {children}
-  </svg>
-);
-const ICalendar = ({ c }: { c?: string }) => <Svg c={c}><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></Svg>;
-const IMap      = ({ c }: { c?: string }) => <Svg c={c}><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></Svg>;
-const ITarget   = ({ c }: { c?: string }) => <Svg c={c}><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></Svg>;
-const ITrophy   = ({ c }: { c?: string }) => <Svg c={c}><polyline points="8 21 12 17 16 21"/><line x1="12" y1="17" x2="12" y2="11"/><path d="M7 4H4a2 2 0 0 0-2 2v1a5 5 0 0 0 5 5h1"/><path d="M17 4h3a2 2 0 0 1 2 2v1a5 5 0 0 1-5 5h-1"/><rect x="7" y="2" width="10" height="9" rx="1"/></Svg>;
-const IHeart    = ({ c }: { c?: string }) => <Svg c={c}><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></Svg>;
-const IPhone    = ({ c }: { c?: string }) => <Svg c={c}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></Svg>;
-const IWaves    = ({ c }: { c?: string }) => <Svg c={c}><path d="M2 12h2a2 2 0 0 1 2 2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 1 2-2h2a2 2 0 0 1 2 2 2 2 0 0 0 2 2"/><path d="M2 6h2a2 2 0 0 1 2 2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 1 2-2h2a2 2 0 0 1 2 2 2 2 0 0 0 2 2"/></Svg>;
-const IDumbbell = ({ c }: { c?: string }) => <Svg c={c}><path d="M6 5v14"/><path d="M18 5v14"/><path d="M2 9v6"/><path d="M22 9v6"/><rect x="4" y="7" width="4" height="10" rx="1"/><rect x="16" y="7" width="4" height="10" rx="1"/><line x1="6" y1="12" x2="18" y2="12"/></Svg>;
-const IUtensils = ({ c }: { c?: string }) => <Svg c={c}><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h1a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-1"/></Svg>;
-const IMapPin   = ({ c }: { c?: string }) => <Svg c={c}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></Svg>;
-const IUser     = ({ c }: { c?: string }) => <Svg c={c}><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></Svg>;
-const ICar      = ({ c }: { c?: string }) => <Svg c={c}><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></Svg>;
-const IActivity = ({ c }: { c?: string }) => <Svg c={c}><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></Svg>;
-const IDownload = ({ c }: { c?: string }) => <Svg c={c}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></Svg>;
 
 type BlockType = 'sport' | 'food' | 'wellness' | 'free' | 'info';
 
@@ -124,9 +104,9 @@ const disciplines = [
 ];
 
 const tournaments = [
-  { name: 'Futbal',     note: 'Presný rozpis a nasadenie budú riešené na mieste agentúrou.', pending: true },
-  { name: 'Volejbal',   note: 'Poznámka: prosíme natiahnuť sieť.',                           pending: true },
-  { name: 'Streetball', note: 'Presný rozpis a výsledky sledovať priamo na mieste.',         pending: true },
+  { name: 'Futbal',     location: 'Main Field',     time: '14:00', note: 'Presný rozpis bude riešený na mieste agentúrou.', pending: true },
+  { name: 'Volejbal',   location: 'Sand Arena',     time: '15:30', note: 'Poznámka: prosíme natiahnuť sieť.',               pending: true },
+  { name: 'Streetball', location: 'Concrete Court', time: '17:00', note: 'Výsledky sledovať priamo na mieste.',             pending: true },
 ];
 
 const teamTasks = [
@@ -464,31 +444,30 @@ export default function Page() {
 
         {/* ── TURNAJE ───────────────────────────────────────── */}
         <section id="turnaje" className="fade-hidden">
-          <h2 className="mb-1 border-l-4 border-brand pl-3 text-2xl font-bold text-brand-dark">Turnaje</h2>
-          <p className="mb-4 text-sm text-slate-500">Tímové turnaje organizuje agentúra priamo na mieste.</p>
+          <h2 className="font-headline-md text-headline-md text-on-surface mb-5">Tímové turnaje</h2>
 
-          <div className="space-y-3">
+          <div className="space-y-4 mb-8">
             {tournaments.map((item) => (
-              <div key={item.name} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg">
-                <div className="flex items-center justify-between gap-2">
-                  <h3 className="text-base font-semibold text-slate-900">{item.name}</h3>
-                  {item.pending && (
-                    <span className="shrink-0 rounded-full bg-slate-200 px-2 py-0.5 text-xs font-medium text-slate-500">
-                      Čaká na potvrdenie
-                    </span>
-                  )}
+              <div key={item.name} className="glass-card rounded-2xl p-5 flex items-center justify-between hover:border-pink-500/20 transition-all">
+                <div>
+                  <h3 className="font-headline-sm text-white">{item.name}</h3>
+                  <p className="text-primary font-bold text-label-md uppercase tracking-widest mt-1">
+                    {item.location} · {item.time}
+                  </p>
+                  <p className="text-slate-500 text-xs mt-1 italic">{item.note}</p>
                 </div>
-                <p className="mt-1.5 text-sm text-slate-500 italic">{item.note}</p>
+                <button className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary-container transition-colors flex-shrink-0 ml-4">
+                  <Icon name="chevron_right" className="text-white" />
+                </button>
               </div>
             ))}
           </div>
 
-          {/* Team tasks */}
-          <h3 className="mb-3 mt-6 text-base font-semibold text-slate-900">Tímové úlohy</h3>
+          <h3 className="font-headline-sm text-on-surface mb-4">Tímové úlohy</h3>
           <div className="grid grid-cols-2 gap-3">
             {teamTasks.map((item) => (
-              <div key={item.name} className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
-                <h4 className="text-sm font-semibold text-slate-900">{item.name}</h4>
+              <div key={item.name} className="bg-surface-container-low border border-white/10 p-4 rounded-xl">
+                <h4 className="text-sm font-semibold text-white">{item.name}</h4>
                 <p className="mt-1 text-xs text-slate-500">{item.description}</p>
               </div>
             ))}
@@ -497,20 +476,20 @@ export default function Page() {
 
         {/* ── WELLNESS ──────────────────────────────────────── */}
         <section id="wellness" className="fade-hidden">
-          <h2 className="mb-3 border-l-4 border-brand pl-3 text-2xl font-bold text-brand-dark">Wellness & relax</h2>
-          <div className="space-y-2">
+          <h2 className="font-headline-md text-headline-md text-on-surface mb-5">Wellness & Relax</h2>
+          <div className="space-y-3">
             {[
-              { icon: <IWaves c="h-5 w-5 text-blue-500" />,    title: 'Bazény & Wellness', text: 'Dostupné počas poobedného bloku (17:00–19:30). Pozície 11–14 na mape.' },
-              { icon: <IDumbbell c="h-5 w-5 text-violet-500" />, title: 'Gym',              text: 'Fitness centrum pre individuálny tréning. Pozícia 5 na mape.'          },
-              { icon: <IUtensils c="h-5 w-5 text-amber-500" />,  title: 'Olym-Pic',         text: 'Reštaurácia — obedy a večera. Pozícia 7 na mape.'                     },
+              { icon: 'pool',          iconCls: 'text-blue-400',   bgCls: 'bg-blue-500/10',   title: 'Bazény & Wellness', text: 'Dostupné počas poobedného bloku (17:00–19:30). Pozície 11–14 na mape.' },
+              { icon: 'fitness_center', iconCls: 'text-purple-400', bgCls: 'bg-purple-500/10', title: 'Gym',               text: 'Fitness centrum pre individuálny tréning. Pozícia 5 na mape.'          },
+              { icon: 'restaurant',    iconCls: 'text-amber-400',  bgCls: 'bg-amber-500/10',  title: 'Olym-Pic',          text: 'Reštaurácia — obedy a večera. Pozícia 7 na mape.'                     },
             ].map((item) => (
-              <div key={item.title} className="flex items-start gap-3 rounded-2xl bg-slate-900 p-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10">
-                  {item.icon}
+              <div key={item.title} className="glass-card rounded-xl p-4 flex items-start gap-4 hover:border-pink-500/20 transition-all">
+                <div className={`w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center ${item.bgCls}`}>
+                  <Icon name={item.icon} className={`text-[24px] ${item.iconCls}`} />
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold text-white">{item.title}</h3>
-                  <p className="mt-0.5 text-sm leading-5 text-slate-300">{item.text}</p>
+                  <h3 className="font-semibold text-white">{item.title}</h3>
+                  <p className="mt-1 text-body-sm text-on-surface-variant">{item.text}</p>
                 </div>
               </div>
             ))}
@@ -519,19 +498,17 @@ export default function Page() {
 
         {/* ── PRAKTICKÉ INFO ────────────────────────────────── */}
         <section id="prakticke-info" className="fade-hidden">
-          <h2 className="mb-3 border-l-4 border-brand pl-3 text-2xl font-bold text-brand-dark">Praktické info</h2>
+          <h2 className="font-headline-md text-headline-md text-on-surface mb-5">Praktické info</h2>
 
-          {/* What to bring – highlighted box */}
-          <div className="mb-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
-            <h3 className="text-sm font-semibold text-emerald-900">Čo si priniesť</h3>
-            <ul className="mt-2 space-y-1.5">
-              {[
-                'Športové oblečenie a vhodná obuv',
-                'Veci do bazéna / wellness',
-                'Oblečenie na večerný program',
-              ].map((item) => (
-                <li key={item} className="flex items-center gap-2 text-sm text-emerald-800">
-                  <span className="text-emerald-500">✓</span>
+          <div className="glass-card rounded-xl p-5 mb-4 border-l-4 border-l-primary-container">
+            <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+              <Icon name="backpack" className="text-primary-container text-[20px]" />
+              Čo si priniesť
+            </h3>
+            <ul className="space-y-2">
+              {['Športové oblečenie a vhodná obuv', 'Veci do bazéna / wellness', 'Oblečenie na večerný program'].map((item) => (
+                <li key={item} className="flex items-center gap-2 text-sm text-slate-300">
+                  <Icon name="check_circle" className="text-[16px] text-primary-container" />
                   {item}
                 </li>
               ))}
@@ -540,20 +517,19 @@ export default function Page() {
 
           <div className="space-y-3">
             {[
-              { title: 'Primárna športová zóna', text: 'Pozícia 29 a zelená plocha za ňou.' },
-              { title: 'Rozmiestnenie disciplín', text: 'Presné rozloženie disciplín bude doplnené po potvrdení od agentúry.', pending: true },
-              { title: 'Turnaje a organizácia',   text: 'Turnajovú časť zabezpečuje externá agentúra. Web slúži na orientáciu.', pending: true },
+              { icon: 'location_on', title: 'Primárna športová zóna', text: 'Pozícia 29 a zelená plocha za ňou.' },
+              { icon: 'info',        title: 'Rozmiestnenie disciplín', text: 'Presné rozloženie bude doplnené po potvrdení od agentúry.', pending: true },
+              { icon: 'group',       title: 'Turnaje a organizácia',   text: 'Turnajovú časť zabezpečuje externá agentúra.', pending: true },
             ].map((item) => (
-              <div key={item.title} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                <div className="flex items-start justify-between gap-2">
-                  <h3 className="text-sm font-semibold text-slate-900">{item.title}</h3>
-                  {item.pending && (
-                    <span className="shrink-0 rounded-full bg-slate-200 px-2 py-0.5 text-xs font-medium text-slate-500">
-                      Čaká na potvrdenie
-                    </span>
-                  )}
+              <div key={item.title} className="glass-card rounded-xl p-4 flex gap-3">
+                <Icon name={item.icon} className="text-[20px] text-primary-container flex-shrink-0 mt-0.5" />
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-sm font-semibold text-white">{item.title}</h3>
+                    {item.pending && <span className="text-[10px] bg-slate-700 text-slate-400 px-2 py-0.5 rounded-full">Čaká</span>}
+                  </div>
+                  <p className="mt-0.5 text-body-sm text-on-surface-variant">{item.text}</p>
                 </div>
-                <p className="mt-1 text-sm text-slate-600">{item.text}</p>
               </div>
             ))}
           </div>
@@ -561,45 +537,32 @@ export default function Page() {
 
         {/* ── KONTAKT ───────────────────────────────────────── */}
         <section id="kontakt" className="fade-hidden">
-          <h2 className="mb-3 border-l-4 border-brand pl-3 text-2xl font-bold text-brand-dark">Kontakt</h2>
-          <div className="rounded-2xl bg-slate-900 p-4 text-white">
-            <div className="mb-3 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
-              Hlavný kontakt
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10">
-                <IUser c="h-5 w-5 text-white" />
+          <h2 className="font-headline-md text-headline-md text-on-surface mb-5">Kontakt</h2>
+          <div className="glass-card rounded-2xl p-5">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-4">Hlavný kontakt</p>
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center">
+                <Icon name="person" className="text-white text-[20px]" />
               </div>
               <div>
-                <div className="font-semibold">Marek</div>
-                <a href="tel:0915991413" className="text-sm text-slate-300">
-                  0915 991 413
-                </a>
+                <div className="font-semibold text-white">Marek</div>
+                <a href="tel:0915991413" className="text-sm text-slate-400 hover:text-pink-400 transition-colors">0915 991 413</a>
               </div>
             </div>
-
-            <div className="mt-4 grid grid-cols-1 gap-2">
-              <div className="flex items-center gap-2 rounded-xl bg-white/5 px-3 py-2">
-                <IUtensils c="h-4 w-4 text-slate-300" />
-                <div>
-                  <div className="text-xs text-slate-400">Obed a večera</div>
-                  <div className="text-sm font-medium">Olym-Pic · poz. 7</div>
+            <div className="space-y-2">
+              {[
+                { icon: 'restaurant',    label: 'Obed a večera',        value: 'Olym-Pic · poz. 7'           },
+                { icon: 'sports',        label: 'Hlavná šport. plocha', value: 'Pozícia 29'                  },
+                { icon: 'local_parking', label: 'Parkovanie',           value: 'v areáli x-bionic® sphere'   },
+              ].map((item) => (
+                <div key={item.label} className="flex items-center gap-3 bg-white/5 rounded-xl px-3 py-2.5">
+                  <Icon name={item.icon} className="text-[20px] text-slate-400" />
+                  <div>
+                    <div className="text-xs text-slate-500">{item.label}</div>
+                    <div className="text-sm font-medium text-white">{item.value}</div>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-2 rounded-xl bg-white/5 px-3 py-2">
-                <IActivity c="h-4 w-4 text-slate-300" />
-                <div>
-                  <div className="text-xs text-slate-400">Hlavná šport. plocha</div>
-                  <div className="text-sm font-medium">Pozícia 29</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 rounded-xl bg-white/5 px-3 py-2">
-                <ICar c="h-4 w-4 text-slate-300" />
-                <div>
-                  <div className="text-xs text-slate-400">Parkovanie</div>
-                  <div className="text-sm font-medium">v areáli x-bionic® sphere</div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
