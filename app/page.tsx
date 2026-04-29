@@ -184,41 +184,47 @@ export default function Page() {
 
       <main className="pt-20 pb-28 px-5 max-w-md mx-auto space-y-10">
 
-        {/* ── INFO BENTO ────────────────────────────────────── */}
-        <section className="fade-hidden">
-          <div className="grid grid-cols-2 gap-3">
-            {/* Location — full width */}
-            <div className="col-span-2 glass-panel p-4 rounded-xl flex gap-4 items-center hover:border-pink-500/30 transition-all cursor-pointer">
-              <div className="p-2 bg-pink-500/10 rounded-lg flex-shrink-0">
-                <Icon name="map" className="text-pink-500" />
-              </div>
-              <div>
-                <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Miesto</p>
-                <h3 className="font-bold text-white">x-bionic® sphere</h3>
-                <p className="text-body-sm text-on-surface-variant">Dubová 33, Šamorín · 101 účastníkov</p>
-              </div>
-            </div>
-            {/* Dates */}
-            <div className="glass-panel p-4 rounded-xl flex flex-col gap-3 hover:border-pink-500/30 transition-all cursor-pointer">
-              <div className="p-2 bg-pink-500/10 rounded-lg w-max">
-                <Icon name="event" className="text-pink-500" />
-              </div>
-              <div>
-                <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Dátum</p>
-                <h3 className="font-bold text-white">14–15 mája</h3>
-                <p className="text-body-sm text-on-surface-variant">2026</p>
-              </div>
-            </div>
-            {/* Parking */}
-            <div className="glass-panel p-4 rounded-xl flex flex-col gap-3 hover:border-pink-500/30 transition-all cursor-pointer">
-              <div className="p-2 bg-pink-500/10 rounded-lg w-max">
-                <Icon name="local_parking" className="text-pink-500" />
-              </div>
-              <div>
-                <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Parkovanie</p>
-                <h3 className="font-bold text-white">V areáli</h3>
-                <p className="text-body-sm text-on-surface-variant">Zdarma pre hostí</p>
-              </div>
+        {/* ── HERO BANNER ───────────────────────────────────── */}
+        <section className="fade-hidden -mx-5">
+          <div
+            className="relative overflow-hidden"
+            style={{
+              borderRadius: '16px',
+              background: 'linear-gradient(135deg, #0a1128 0%, #1a1040 100%)',
+              minHeight: '200px',
+              margin: '0 16px',
+              padding: '20px',
+            }}
+          >
+            {/* Premium badge */}
+            <span
+              className="absolute top-3 left-3 z-20 text-white font-bold uppercase tracking-[0.05em]"
+              style={{ background: '#e20074', fontSize: '11px', padding: '4px 12px', borderRadius: '999px' }}
+            >
+              PREMIUM EVENT
+            </span>
+
+            {/* Left-to-right gradient so text stays readable */}
+            <div
+              className="absolute inset-0 z-10 pointer-events-none"
+              style={{ background: 'linear-gradient(to right, #0a1128 45%, transparent 100%)' }}
+            />
+
+            {/* Athlete image — right side */}
+            <img
+              src="https://cdn.pixabay.com/photo/2017/07/08/01/47/runner-2482788_640.png"
+              alt="athlete"
+              className="absolute bottom-0 right-0 z-10 pointer-events-none"
+              style={{ height: '190px', objectFit: 'contain' }}
+            />
+
+            {/* Text content */}
+            <div className="relative z-20 pt-8">
+              <h1 style={{ fontFamily: 'Manrope', fontSize: '32px', fontWeight: 700, color: 'white', lineHeight: 1.1, marginBottom: '12px' }}>
+                Športový deň<br />2026
+              </h1>
+              <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)', margin: '3px 0' }}>📅 14–15 May 2026</p>
+              <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)', margin: '3px 0' }}>📍 x-bionic® sphere, Šamorín</p>
             </div>
           </div>
         </section>
