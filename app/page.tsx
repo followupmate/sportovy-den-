@@ -83,12 +83,12 @@ const icsContent = [
 ].join('\n');
 const icsDataUri = `data:text/calendar;charset=utf-8,${encodeURIComponent(icsContent)}`;
 
-const blockTypeConfig: Record<BlockType, { label: string; cls: string; dot: string; leftBorder: string }> = {
-  sport:    { label: 'Šport',      cls: 'bg-blue-100 text-blue-700',       dot: 'bg-blue-400',    leftBorder: 'border-l-blue-400'    },
-  food:     { label: 'Jedlo',      cls: 'bg-amber-100 text-amber-700',     dot: 'bg-amber-400',   leftBorder: 'border-l-amber-400'   },
-  wellness: { label: 'Wellness',   cls: 'bg-emerald-100 text-emerald-700', dot: 'bg-emerald-400', leftBorder: 'border-l-emerald-400' },
-  free:     { label: 'Voľný čas', cls: 'bg-slate-100 text-slate-500',     dot: 'bg-slate-400',   leftBorder: 'border-l-slate-300'   },
-  info:     { label: 'Príchod',   cls: 'bg-slate-100 text-slate-500',     dot: 'bg-slate-400',   leftBorder: 'border-l-slate-300'   },
+const blockTypeConfig: Record<BlockType, { label: string; badgeCls: string; icon: string; accent: string }> = {
+  info:     { label: 'Check-in',   badgeCls: 'bg-pink-500/10 text-pink-500 border border-pink-500/20',     icon: 'how_to_reg',    accent: '' },
+  food:     { label: 'Jedlo',      badgeCls: 'bg-blue-500/10 text-blue-400 border border-blue-500/20',     icon: 'restaurant',    accent: '' },
+  sport:    { label: 'Šport',      badgeCls: 'bg-green-500/10 text-green-400 border border-green-500/20',  icon: 'sports_kabaddi',accent: 'border-l-4 border-l-primary-container' },
+  wellness: { label: 'Wellness',   badgeCls: 'bg-purple-500/10 text-purple-400 border border-purple-500/20', icon: 'spa',          accent: '' },
+  free:     { label: 'Voľný čas', badgeCls: 'bg-orange-500/10 text-orange-400 border border-orange-500/20', icon: 'nightlife',    accent: '' },
 };
 
 const dayBlocks = [
@@ -356,62 +356,63 @@ export default function Page() {
 
         {/* ── PROGRAM TIMELINE ──────────────────────────────── */}
         <section id="program" className="fade-hidden">
-          <h2 className="mb-3 border-l-4 border-brand pl-3 text-2xl font-bold text-brand-dark">Program</h2>
+          <div className="flex justify-between items-end mb-5">
+            <h2 className="font-headline-md text-headline-md text-on-surface">Program</h2>
+            <span className="text-primary text-label-md">{dayBlocks[activeDay].blocks.length} blokov</span>
+          </div>
 
           {/* Day tabs */}
-          <div className="mb-4 flex rounded-xl bg-slate-200 p-1">
+          <div className="flex gap-3 p-1 bg-slate-900/50 rounded-xl border border-white/5 mb-6">
             {dayBlocks.map((day, i) => (
               <button
                 key={day.day}
                 onClick={() => setActiveDay(i)}
-                className={`flex flex-1 items-center justify-center gap-1.5 rounded-lg py-2 text-sm font-medium transition-colors ${
+                className={`flex-1 py-3 px-4 rounded-lg font-label-lg text-center transition-all active:scale-95 ${
                   activeDay === i
-                    ? 'bg-white text-slate-900 shadow-sm'
-                    : 'text-slate-500'
+                    ? 'bg-primary-container text-on-primary-container shadow-lg'
+                    : 'text-slate-400 hover:bg-white/5'
                 }`}
               >
-                <span>{day.day}</span>
-                <span className="text-xs opacity-60">{day.date}</span>
+                {day.day} <span className="opacity-60 text-xs">{day.date}</span>
               </button>
             ))}
           </div>
 
           {/* Timeline */}
-          <div className="relative pl-6">
-            <div className="absolute left-[9px] top-4 bottom-4 w-[2px] bg-slate-200" />
-            <div className="space-y-3">
-              {dayBlocks[activeDay].blocks.map((block, idx) => {
-                const cfg = blockTypeConfig[block.type];
-                const isLive = liveStatus?.phase === 'active' && liveStatus.dayIndex === activeDay && liveStatus.blockIndex === idx;
-                return (
-                  <div key={idx} className="flex gap-3">
-                    <div className={`relative z-10 mt-[14px] h-3 w-3 shrink-0 -translate-x-[3px] rounded-full ring-2 ring-white ${cfg.dot}`} />
-                    <div className={`flex-1 rounded-2xl border-l-4 border bg-white p-3 shadow-sm transition-all ${cfg.leftBorder} ${isLive ? 'border-brand/40 ring-2 ring-brand/20' : 'border-slate-200'}`}>
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="min-w-0">
-                          <div className="text-xs text-slate-400">{block.time}</div>
-                          <div className="mt-0.5 text-sm font-semibold text-slate-900">{block.title}</div>
-                          {block.location && (
-                            <div className="mt-0.5 flex items-center gap-1 text-xs text-slate-500">
-                              <IMapPin c="h-3 w-3 text-slate-400" />{block.location}
-                            </div>
-                          )}
-                        </div>
-                        <div className="flex shrink-0 flex-col items-end gap-1">
-                          <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${cfg.cls}`}>{cfg.label}</span>
-                          {isLive && (
-                            <span className="flex items-center gap-1 text-[10px] font-bold text-brand">
-                              <span className="relative flex h-1.5 w-1.5"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-75" /><span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand" /></span>
-                              Teraz
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
+          <div className="space-y-4 relative timeline-line">
+            {dayBlocks[activeDay].blocks.map((block, idx) => {
+              const cfg = blockTypeConfig[block.type];
+              const isLive = liveStatus?.phase === 'active' && liveStatus.dayIndex === activeDay && liveStatus.blockIndex === idx;
+              return (
+                <div key={idx} className="relative flex gap-4 items-start">
+                  <div className={`relative z-10 w-10 h-10 flex-shrink-0 rounded-full border-2 border-primary-container bg-slate-950 flex items-center justify-center ${isLive ? 'shadow-[0_0_15px_rgba(226,0,116,0.4)]' : ''}`}>
+                    <Icon name={cfg.icon} className="text-primary-container text-[20px]" />
                   </div>
-                );
-              })}
-            </div>
+                  <div className={`flex-1 glass-card rounded-xl p-4 transition-all hover:border-pink-500/20 ${cfg.accent} ${isLive ? 'border-primary-container/30' : ''}`}>
+                    <div className="flex justify-between items-start mb-1">
+                      <span className="font-label-md text-primary-container">{block.time.split(' – ')[0]}</span>
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${cfg.badgeCls}`}>{cfg.label}</span>
+                    </div>
+                    <h3 className="font-semibold text-slate-50">{block.title}</h3>
+                    {block.location && (
+                      <div className="flex items-center gap-1 mt-2 text-slate-400">
+                        <Icon name="location_on" className="text-[16px]" />
+                        <span className="text-body-sm">{block.location}</span>
+                      </div>
+                    )}
+                    {isLive && (
+                      <div className="mt-2 flex items-center gap-1.5">
+                        <span className="relative flex h-1.5 w-1.5">
+                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-pink-500 opacity-75" />
+                          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-pink-500" />
+                        </span>
+                        <span className="text-[10px] font-bold text-pink-500 uppercase tracking-wider">Práve teraz</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
 
