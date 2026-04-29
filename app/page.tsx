@@ -1,7 +1,10 @@
 'use client';
 
-import Image from 'next/image';
 import { useState, useEffect } from 'react';
+
+const Icon = ({ name, className }: { name: string; className?: string }) => (
+  <span className={`material-symbols-outlined select-none leading-none ${className ?? ''}`}>{name}</span>
+);
 
 const Svg = ({ c, children }: { c?: string; children: React.ReactNode }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}
@@ -171,19 +174,19 @@ const mapPoints = [
   { label: 'Wellness',    number: '11–14' },
 ];
 
-const quickNav = [
-  { label: 'Program',    href: '#program',    icon: '📅' },
-  { label: 'Mapa',       href: '#mapa',       icon: '🗺️' },
-  { label: 'Disciplíny', href: '#discipliny', icon: '🎯' },
-  { label: 'Turnaje',    href: '#turnaje',    icon: '🏆' },
-  { label: 'Wellness',   href: '#wellness',   icon: '💆' },
-  { label: 'Kontakt',    href: '#kontakt',    icon: '📞' },
+const navItems = [
+  { label: 'Program',    href: '#program',    icon: 'calendar_today' },
+  { label: 'Mapa',       href: '#mapa',       icon: 'map'            },
+  { label: 'Disciplíny', href: '#discipliny', icon: 'sports_kabaddi' },
+  { label: 'Turnaje',    href: '#turnaje',    icon: 'emoji_events'   },
+  { label: 'Wellness',   href: '#wellness',   icon: 'spa'            },
 ];
 
 export default function Page() {
   const [activeDay, setActiveDay] = useState(0);
   const [liveStatus, setLiveStatus] = useState<LiveStatus | null>(null);
   const [discFilter, setDiscFilter] = useState('all');
+  const [activeSection, setActiveSection] = useState('program');
 
   useEffect(() => {
     const update = () => setLiveStatus(computeLive(new Date()));
@@ -203,26 +206,32 @@ export default function Page() {
     return () => obs.disconnect();
   }, []);
 
-  return (
-    <main className="min-h-screen bg-slate-50 pb-24">
+  useEffect(() => {
+    const ids = navItems.map(n => n.href.slice(1));
+    const obs = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) setActiveSection(e.target.id); }),
+      { rootMargin: '-40% 0px -40% 0px', threshold: 0 }
+    );
+    ids.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
+    return () => obs.disconnect();
+  }, []);
 
-      {/* ── STICKY NAVBAR ────────────────────────────────────── */}
-      <nav className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur-sm shadow-sm">
-        <div className="mx-auto flex max-w-md items-center justify-between px-4 py-2.5">
-          <a href="#" className="flex items-center gap-2">
-            <ITrophy c="h-5 w-5 text-brand" />
-            <span className="text-sm font-bold text-brand-dark">Športový deň <span className="text-xs font-normal text-slate-400">2026</span></span>
-          </a>
-          <div className="hidden md:flex items-center gap-3 text-xs font-medium text-slate-600">
-            <a href="#program" className="hover:text-brand">Program</a>
-            <a href="#mapa" className="hover:text-brand">Mapa</a>
-            <a href="#discipliny" className="hover:text-brand">Disciplíny</a>
-            <a href="#wellness" className="hover:text-brand">Wellness</a>
-            <a href="#prakticke-info" className="hover:text-brand">Info</a>
-            <a href="#kontakt" className="hover:text-brand">Kontakt</a>
+  return (
+    <div className="min-h-screen bg-surface font-body-md text-on-surface">
+
+      {/* ── HEADER ────────────────────────────────────────────── */}
+      <header className="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/10 shadow-lg flex justify-between items-center px-5 h-16">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border border-white/20">
+            <Icon name="person" className="text-[20px] text-white" />
           </div>
+          <span className="text-sm font-bold text-slate-400">Tribe Member</span>
         </div>
-      </nav>
+        <h1 className="text-base font-extrabold tracking-tighter text-slate-50 uppercase">Športový deň 2026</h1>
+        <button className="text-slate-400 hover:bg-white/5 transition-colors p-2 rounded-full">
+          <Icon name="menu" />
+        </button>
+      </header>
 
       {/* ── HERO ─────────────────────────────────────────────── */}
       <header className="bg-brand-dark px-4 pt-8 pb-7 text-white">
@@ -245,7 +254,7 @@ export default function Page() {
         </div>
       </header>
 
-      <div className="mx-auto max-w-md space-y-16 px-4 py-6">
+      <main className="pt-20 pb-28 px-5 max-w-md mx-auto space-y-10">
 
         {/* ── NAV CARDS ─────────────────────────────────────── */}
         <section>
@@ -643,28 +652,30 @@ export default function Page() {
           </div>
         </section>
 
-        <footer className="pt-2 text-center text-xs text-slate-400">
+        <footer className="pt-2 text-center text-xs text-slate-600">
           Športový deň 2026 · Tribe Home Experience
         </footer>
-      </div>
+      </main>
 
-      {/* ── STICKY BOTTOM BAR ─────────────────────────────── */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 bg-white/90 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-md">
-          <a href="#program" className="flex flex-1 flex-col items-center gap-0.5 py-3 text-slate-600 active:bg-slate-50">
-            <ICalendar c="h-5 w-5" />
-            <span className="text-[11px] font-medium">Program</span>
-          </a>
-          <a href="#mapa" className="flex flex-1 flex-col items-center gap-0.5 py-3 text-slate-600 active:bg-slate-50">
-            <IMap c="h-5 w-5" />
-            <span className="text-[11px] font-medium">Mapa</span>
-          </a>
-          <a href="#kontakt" className="flex flex-1 flex-col items-center gap-0.5 py-3 text-slate-600 active:bg-slate-50">
-            <IPhone c="h-5 w-5" />
-            <span className="text-[11px] font-medium">Kontakt</span>
-          </a>
-        </div>
-      </div>
-    </main>
+      {/* ── BOTTOM NAV ────────────────────────────────────── */}
+      <nav className="fixed bottom-0 w-full rounded-t-2xl z-50 bg-slate-950/85 backdrop-blur-xl border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] flex justify-around items-center h-20 px-2 pb-safe">
+        {navItems.map((item) => {
+          const isActive = activeSection === item.href.slice(1);
+          return (
+            <a
+              key={item.href}
+              href={item.href}
+              className={`flex flex-col items-center justify-center transition-all duration-300 ${isActive ? 'text-pink-500 scale-110' : 'text-slate-500 hover:text-pink-400'}`}
+            >
+              <span className="relative">
+                <Icon name={item.icon} />
+                {isActive && <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-pink-500 rounded-full" />}
+              </span>
+              <span className="text-[10px] font-semibold uppercase tracking-widest mt-1">{item.label}</span>
+            </a>
+          );
+        })}
+      </nav>
+    </div>
   );
 }
