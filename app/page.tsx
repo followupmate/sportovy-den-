@@ -95,18 +95,18 @@ const dayBlocks = [
 ];
 
 const disciplines = [
-  { name: 'Lukostreľba',        description: 'Zameraj a zasiahni stred terča.',   badge: 'Presnosť', icon: 'target',        color: 'primary'   },
-  { name: 'Vzduchovka',         description: 'Športová streľba na pevný terč.',   badge: 'Presnosť', icon: 'crossword',     color: 'primary'   },
-  { name: 'Airsoft',            description: 'Dynamická strelnica v teréne.',      badge: 'Outdoor',  icon: 'shield',        color: 'secondary' },
-  { name: 'Penalty',            description: 'Prekonaj brankára v súboji.',        badge: 'Presnosť', icon: 'sports_soccer', color: 'primary'   },
-  { name: 'Hod oštepom',        description: 'Klasická atletická disciplína.',     badge: 'Sila',     icon: 'fitness_center',color: 'neutral'   },
-  { name: 'Discgolf',           description: 'Trať s košmi v areáli parku.',       badge: 'Outdoor',  icon: 'sports',        color: 'secondary', pending: true },
+  { name: 'Lukostreľba',  description: 'Zameraj a zasiahni stred terča.',  badge: 'Presnosť', icon: 'target',         color: 'primary',   image: 'https://images.unsplash.com/photo-1555597673-b21d5c935865?w=400' },
+  { name: 'Vzduchovka',   description: 'Športová streľba na pevný terč.',  badge: 'Presnosť', icon: 'crossword',      color: 'primary',   image: 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=400' },
+  { name: 'Airsoft',      description: 'Dynamická strelnica v teréne.',     badge: 'Outdoor',  icon: 'shield',         color: 'secondary', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400' },
+  { name: 'Penalty',      description: 'Prekonaj brankára v súboji.',       badge: 'Presnosť', icon: 'sports_soccer',  color: 'primary',   image: 'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=400' },
+  { name: 'Hod oštepom',  description: 'Klasická atletická disciplína.',    badge: 'Sila',     icon: 'fitness_center', color: 'neutral',   image: 'https://images.unsplash.com/photo-1591491634026-6cc1d8a0c542?w=400' },
+  { name: 'Discgolf',     description: 'Trať s košmi v areáli parku.',      badge: 'Outdoor',  icon: 'sports',         color: 'secondary', image: 'https://images.unsplash.com/photo-1547041547050-1b6add6db0ef?w=400', pending: true },
 ];
 
 const tournaments = [
-  { name: 'Futbal',     location: 'Main Field',     time: '14:00', note: 'Presný rozpis bude riešený na mieste agentúrou.', pending: true },
-  { name: 'Volejbal',   location: 'Sand Arena',     time: '15:30', note: 'Poznámka: prosíme natiahnuť sieť.',               pending: true },
-  { name: 'Streetball', location: 'Concrete Court', time: '17:00', note: 'Výsledky sledovať priamo na mieste.',             pending: true },
+  { name: 'Futbal',     location: 'Main Field',     time: '14:00', note: 'Presný rozpis bude riešený na mieste agentúrou.', pending: true, image: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600' },
+  { name: 'Volejbal',   location: 'Sand Arena',     time: '15:30', note: 'Poznámka: prosíme natiahnuť sieť.',               pending: true, image: 'https://images.unsplash.com/photo-1547347298-4074fc3086f0?w=600' },
+  { name: 'Streetball', location: 'Concrete Court', time: '17:00', note: 'Výsledky sledovať priamo na mieste.',             pending: true, image: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600' },
 ];
 
 const teamTasks = [
@@ -305,6 +305,29 @@ export default function Page() {
 
         {/* ── PROGRAM TIMELINE ──────────────────────────────── */}
         <section id="program" className="fade-hidden">
+
+          {/* Hero banner */}
+          <div className="relative rounded-2xl overflow-hidden mb-6" style={{ minHeight: '200px' }}>
+            <div
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: "url('https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800')" }}
+            />
+            <div
+              className="absolute inset-0"
+              style={{ background: 'linear-gradient(to right, rgba(10,17,40,0.85) 40%, transparent)' }}
+            />
+            <div className="relative z-10 p-6 flex flex-col justify-end h-full" style={{ minHeight: '200px' }}>
+              <span className="inline-block mb-3 px-3 py-1 rounded-full text-white text-[10px] font-bold uppercase tracking-widest w-max" style={{ background: '#e20074' }}>
+                Premium Event
+              </span>
+              <h2 className="text-[32px] font-bold leading-tight text-white mb-2">Športový deň 2026</h2>
+              <div className="flex flex-wrap gap-4 text-white/70 text-sm">
+                <span>📅 14–15 May 2026</span>
+                <span>📍 x-bionic® sphere, Šamorín</span>
+              </div>
+            </div>
+          </div>
+
           <div className="flex justify-between items-end mb-5">
             <h2 className="font-headline-md text-headline-md text-on-surface">Program</h2>
             <span className="text-primary text-label-md">{dayBlocks[activeDay].blocks.length} blokov</span>
@@ -420,22 +443,40 @@ export default function Page() {
               };
               const col = colMap[item.color as keyof typeof colMap];
               return (
-                <div key={item.name} className="bg-surface-container-low border border-white/10 p-4 rounded-xl hover:bg-white/5 transition-all">
-                  <div className="flex justify-between items-start mb-4">
-                    <div className={`w-10 h-10 rounded-lg ${col.bg} flex items-center justify-center ${col.text}`}>
-                      <Icon name={item.icon} />
+                <div
+                  key={item.name}
+                  className="relative border border-white/10 rounded-xl overflow-hidden transition-all hover:border-white/20"
+                  style={{ minHeight: '160px' }}
+                >
+                  {/* Background image + overlay */}
+                  <div
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: `url('${item.image}')` }}
+                  />
+                  <div
+                    className="absolute inset-0"
+                    style={{ background: 'linear-gradient(rgba(10,17,40,0.7), rgba(10,17,40,0.7))' }}
+                  />
+                  {/* Content */}
+                  <div className="relative z-10 p-4 flex flex-col justify-between h-full" style={{ minHeight: '160px' }}>
+                    <div className="flex justify-between items-start mb-4">
+                      <div className={`w-10 h-10 rounded-lg ${col.bg} flex items-center justify-center ${col.text}`}>
+                        <Icon name={item.icon} />
+                      </div>
+                      <div className="flex flex-col items-end gap-1">
+                        <span className={`${col.badge} text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter`}>{item.badge}</span>
+                        {item.pending && (
+                          <span className="flex items-center gap-1 text-[10px] text-slate-400">
+                            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400" />Čaká
+                          </span>
+                        )}
+                      </div>
                     </div>
-                    <div className="flex flex-col items-end gap-1">
-                      <span className={`${col.badge} text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter`}>{item.badge}</span>
-                      {item.pending && (
-                        <span className="flex items-center gap-1 text-[10px] text-slate-500">
-                          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400" />Čaká
-                        </span>
-                      )}
+                    <div>
+                      <h3 className="font-headline-sm text-headline-sm text-white mb-1">{item.name}</h3>
+                      <p className="text-slate-400 text-label-md">{item.description}</p>
                     </div>
                   </div>
-                  <h3 className="font-headline-sm text-headline-sm text-white mb-1">{item.name}</h3>
-                  <p className="text-slate-500 text-label-md">{item.description}</p>
                 </div>
               );
             })}
@@ -448,17 +489,30 @@ export default function Page() {
 
           <div className="space-y-4 mb-8">
             {tournaments.map((item) => (
-              <div key={item.name} className="glass-card rounded-2xl p-5 flex items-center justify-between hover:border-pink-500/20 transition-all">
-                <div>
-                  <h3 className="font-headline-sm text-white">{item.name}</h3>
-                  <p className="text-primary font-bold text-label-md uppercase tracking-widest mt-1">
-                    {item.location} · {item.time}
-                  </p>
-                  <p className="text-slate-500 text-xs mt-1 italic">{item.note}</p>
+              <div key={item.name} className="relative overflow-hidden rounded-2xl border border-white/5 h-32 flex items-center">
+                {/* Background image */}
+                <div
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{ backgroundImage: `url('${item.image}')` }}
+                />
+                {/* Dark overlay */}
+                <div
+                  className="absolute inset-0"
+                  style={{ background: 'linear-gradient(rgba(10,17,40,0.75), rgba(10,17,40,0.75))' }}
+                />
+                {/* Content */}
+                <div className="relative z-10 px-5 flex items-center justify-between w-full">
+                  <div>
+                    <h3 className="font-headline-sm text-white">{item.name}</h3>
+                    <p className="text-primary font-bold text-label-md uppercase tracking-widest mt-1">
+                      {item.location} · {item.time}
+                    </p>
+                    <p className="text-slate-400 text-xs mt-1 italic">{item.note}</p>
+                  </div>
+                  <button className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-primary-container transition-colors flex-shrink-0 ml-4">
+                    <Icon name="chevron_right" className="text-white" />
+                  </button>
                 </div>
-                <button className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary-container transition-colors flex-shrink-0 ml-4">
-                  <Icon name="chevron_right" className="text-white" />
-                </button>
               </div>
             ))}
           </div>
@@ -573,7 +627,10 @@ export default function Page() {
       </main>
 
       {/* ── BOTTOM NAV ────────────────────────────────────── */}
-      <nav className="fixed bottom-0 w-full rounded-t-2xl z-50 bg-slate-950/85 backdrop-blur-xl border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] flex justify-around items-center h-20 px-2 pb-safe">
+      <nav
+        className="fixed bottom-0 w-full rounded-t-2xl z-50 border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] flex justify-around items-center h-20 px-2 pb-safe"
+        style={{ background: 'rgba(17,20,21,0.85)', backdropFilter: 'blur(20px)' }}
+      >
         {navItems.map((item) => {
           const isActive = activeSection === item.href.slice(1);
           return (
