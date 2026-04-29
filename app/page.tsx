@@ -627,7 +627,10 @@ export default function Page() {
       </main>
 
       {/* ── BOTTOM NAV ────────────────────────────────────── */}
-      <nav className="fixed bottom-0 w-full rounded-t-2xl z-50 bg-slate-950/85 backdrop-blur-xl border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] flex justify-around items-center h-20 px-2 pb-safe">
+      <nav
+        className="fixed bottom-0 w-full rounded-t-2xl z-50 border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] flex justify-around items-center h-20 px-2 pb-safe"
+        style={{ background: 'rgba(17,20,21,0.85)', backdropFilter: 'blur(20px)' }}
+      >
         {navItems.map((item) => {
           const isActive = activeSection === item.href.slice(1);
           return (
