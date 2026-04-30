@@ -774,6 +774,7 @@ export default function Page() {
             <div className="space-y-2">
               {[
                 { icon: 'restaurant',    label: 'Obed a večera',        value: 'Olym-Pic · poz. 7'           },
+                { icon: 'local_bar',     label: 'Večerný program',      value: "Legends' Bar · poz. 8"       },
                 { icon: 'sports',        label: 'Hlavná šport. plocha', value: 'Pozícia 29'                  },
                 { icon: 'local_parking', label: 'Parkovanie',           value: 'v areáli x-bionic® sphere'   },
               ].map((item) => (
