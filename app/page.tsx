@@ -153,6 +153,17 @@ export default function Page() {
     return next;
   });
 
+  const expandSection = (href: string) => {
+    const map: Record<string, string[]> = {
+      '#discipliny':     ['discipliny'],
+      '#turnaje':        ['turnaje'],
+      '#wellness':       ['wellness'],
+      '#prakticke-info': ['prakticke-info'],
+    };
+    const ids = map[href];
+    if (ids) setExpanded(prev => { const next = new Set(prev); ids.forEach(id => next.add(id)); return next; });
+  };
+
   useEffect(() => {
     const update = () => setLiveStatus(computeLive(new Date()));
     update();
@@ -186,9 +197,9 @@ export default function Page() {
 
       {/* ── HEADER ────────────────────────────────────────────── */}
       <header className="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/10 shadow-lg flex justify-between items-center px-5 h-16">
-        <span className="text-white font-bold uppercase tracking-[0.05em]" style={{ background: '#e20074', fontSize: '11px', padding: '4px 12px', borderRadius: '999px' }}>
-          HOME EXPERIENCE TRIBE
-        </span>
+        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-white hover:bg-white/5 transition-colors p-2 rounded-full">
+          <Icon name="home" className="text-[22px]" />
+        </button>
         <button onClick={() => setMenuOpen(true)} className="text-pink-500 hover:bg-white/5 transition-colors p-2 rounded-full">
           <Icon name="menu" />
         </button>
@@ -213,7 +224,7 @@ export default function Page() {
                 <a
                   key={item.href}
                   href={item.href}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={() => { expandSection(item.href); setMenuOpen(false); }}
                   className="flex items-center gap-4 px-4 py-3.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
                 >
                   <Icon name={item.icon} className="text-pink-500 text-[22px]" />
@@ -240,7 +251,10 @@ export default function Page() {
             }}
           >
             {/* Text content */}
-            <div className="relative z-20 pt-10">
+            <div className="relative z-20 pt-6">
+              <span className="inline-block mb-4 text-white font-bold uppercase tracking-[0.05em]" style={{ background: '#e20074', fontSize: '11px', padding: '4px 12px', borderRadius: '999px' }}>
+                HOME EXPERIENCE TRIBE
+              </span>
               <h1 style={{ fontFamily: 'Manrope', fontSize: '42px', fontWeight: 800, color: 'white', lineHeight: 1.05, marginBottom: '16px' }}>
                 Športový deň<br />2026
               </h1>
@@ -265,6 +279,7 @@ export default function Page() {
                 <a
                   key={item.href}
                   href={item.href}
+                  onClick={() => expandSection(item.href)}
                   className="flex-shrink-0 px-5 py-2.5 rounded-full text-sm font-bold transition-colors"
                   style={isActive
                     ? { background: 'transparent', color: '#e20074', border: '1.5px solid #e20074' }
@@ -735,6 +750,24 @@ export default function Page() {
                 </ul>
               </div>
 
+              {/* Quick-reference locations */}
+              <div className="space-y-2">
+                {[
+                  { icon: 'restaurant',    label: 'Obed a večera',        value: 'Olym-Pic · poz. 7'           },
+                  { icon: 'local_bar',     label: 'Večerný program',      value: "Legends' Bar · poz. 8"       },
+                  { icon: 'sports',        label: 'Hlavná šport. plocha', value: 'Pozícia 29'                  },
+                  { icon: 'local_parking', label: 'Parkovanie',           value: 'v areáli x-bionic® sphere'   },
+                ].map((item) => (
+                  <div key={item.label} className="flex items-center gap-3 bg-white/5 rounded-xl px-3 py-2.5">
+                    <Icon name={item.icon} className="text-[20px] text-primary-container" />
+                    <div>
+                      <div className="text-xs text-slate-500">{item.label}</div>
+                      <div className="text-sm font-medium text-white">{item.value}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
               <div className="space-y-3">
                 {[
                   { icon: 'location_on', title: 'Primárna športová zóna', text: 'Pozícia 29 a zelená plocha za ňou.' },
@@ -762,7 +795,7 @@ export default function Page() {
           <h2 className="font-headline-md text-headline-md text-on-surface mb-5">Kontakt</h2>
           <div className="glass-card rounded-2xl p-5">
             <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-4">Hlavný kontakt</p>
-            <div className="flex items-center gap-3 mb-5">
+            <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center">
                 <Icon name="person" className="text-white text-[20px]" />
               </div>
@@ -770,22 +803,6 @@ export default function Page() {
                 <div className="font-semibold text-white">Marek</div>
                 <a href="tel:0915991413" className="text-sm text-slate-400 hover:text-pink-400 transition-colors">0915 991 413</a>
               </div>
-            </div>
-            <div className="space-y-2">
-              {[
-                { icon: 'restaurant',    label: 'Obed a večera',        value: 'Olym-Pic · poz. 7'           },
-                { icon: 'local_bar',     label: 'Večerný program',      value: "Legends' Bar · poz. 8"       },
-                { icon: 'sports',        label: 'Hlavná šport. plocha', value: 'Pozícia 29'                  },
-                { icon: 'local_parking', label: 'Parkovanie',           value: 'v areáli x-bionic® sphere'   },
-              ].map((item) => (
-                <div key={item.label} className="flex items-center gap-3 bg-white/5 rounded-xl px-3 py-2.5">
-                  <Icon name={item.icon} className="text-[20px] text-slate-400" />
-                  <div>
-                    <div className="text-xs text-slate-500">{item.label}</div>
-                    <div className="text-sm font-medium text-white">{item.value}</div>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         </section>
