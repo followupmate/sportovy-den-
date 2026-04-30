@@ -611,17 +611,9 @@ export default function Page() {
                     <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${item.image}')` }} />
                     <div className="absolute inset-0" style={{ background: 'linear-gradient(rgba(10,17,40,0.7), rgba(10,17,40,0.7))' }} />
                     <div className="relative z-10 p-4 flex flex-col justify-between h-full" style={{ minHeight: '160px' }}>
-                      <div className="flex justify-between items-start mb-4">
+                      <div className="mb-4">
                         <div className={`w-10 h-10 rounded-lg ${col.bg} flex items-center justify-center ${col.text}`}>
                           <Icon name={item.icon} />
-                        </div>
-                        <div className="flex flex-col items-end gap-1">
-                          <span className={`${col.badge} text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter`}>{item.badge}</span>
-                          {item.pending && (
-                            <span className="flex items-center gap-1 text-[10px] text-slate-400">
-                              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400" />Čaká
-                            </span>
-                          )}
                         </div>
                       </div>
                       <div>
@@ -734,22 +726,7 @@ export default function Page() {
             <Icon name="chevron_right" className={`text-pink-500 text-[22px] transition-transform duration-300 ${expanded.has('prakticke-info') ? 'rotate-90' : ''}`} />
           </button>
           {expanded.has('prakticke-info') && (
-            <div className="mt-5 space-y-4">
-              <div className="glass-card rounded-xl p-5 border-l-4 border-l-primary-container">
-                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
-                  <Icon name="backpack" className="text-primary-container text-[20px]" />
-                  Čo si priniesť
-                </h3>
-                <ul className="space-y-2">
-                  {['Športové oblečenie a vhodná obuv', 'Veci do bazéna / wellness', 'Oblečenie na večerný program'].map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-sm text-slate-300">
-                      <Icon name="check_circle" className="text-[16px] text-primary-container" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
+            <div className="mt-5">
               {/* Unified info list */}
               <div className="space-y-2">
                 {[
@@ -771,7 +748,6 @@ export default function Page() {
                   </div>
                 ))}
               </div>
-            </div>
           )}
         </section>
 
