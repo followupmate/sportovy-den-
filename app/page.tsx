@@ -611,17 +611,9 @@ export default function Page() {
                     <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${item.image}')` }} />
                     <div className="absolute inset-0" style={{ background: 'linear-gradient(rgba(10,17,40,0.7), rgba(10,17,40,0.7))' }} />
                     <div className="relative z-10 p-4 flex flex-col justify-between h-full" style={{ minHeight: '160px' }}>
-                      <div className="flex justify-between items-start mb-4">
+                      <div className="mb-4">
                         <div className={`w-10 h-10 rounded-lg ${col.bg} flex items-center justify-center ${col.text}`}>
                           <Icon name={item.icon} />
-                        </div>
-                        <div className="flex flex-col items-end gap-1">
-                          <span className={`${col.badge} text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter`}>{item.badge}</span>
-                          {item.pending && (
-                            <span className="flex items-center gap-1 text-[10px] text-slate-400">
-                              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400" />Čaká
-                            </span>
-                          )}
                         </div>
                       </div>
                       <div>
@@ -750,38 +742,23 @@ export default function Page() {
                 </ul>
               </div>
 
-              {/* Quick-reference locations */}
+              {/* Unified info list */}
               <div className="space-y-2">
                 {[
-                  { icon: 'restaurant',    label: 'Obed a večera',        value: 'Olym-Pic · poz. 7'           },
-                  { icon: 'local_bar',     label: 'Večerný program',      value: "Legends' Bar · poz. 8"       },
-                  { icon: 'sports',        label: 'Hlavná šport. plocha', value: 'Pozícia 29'                  },
-                  { icon: 'local_parking', label: 'Parkovanie',           value: 'v areáli x-bionic® sphere'   },
+                  { icon: 'restaurant',    label: 'Obed a večera',           value: 'Olym-Pic · poz. 7',                                                    pending: false },
+                  { icon: 'local_bar',     label: 'Večerný program',         value: "Legends' Bar · poz. 8",                                                pending: false },
+                  { icon: 'sports',        label: 'Hlavná športová plocha',  value: 'Pozícia 29',                                                           pending: false },
+                  { icon: 'local_parking', label: 'Parkovanie',              value: 'v areáli x-bionic® sphere',                                            pending: false },
+                  { icon: 'group',         label: 'Turnaje a organizácia',   value: 'Turnajovú časť zabezpečuje externá agentúra.',                         pending: true  },
                 ].map((item) => (
-                  <div key={item.label} className="flex items-center gap-3 bg-white/5 rounded-xl px-3 py-2.5">
-                    <Icon name={item.icon} className="text-[20px] text-primary-container" />
-                    <div>
-                      <div className="text-xs text-slate-500">{item.label}</div>
-                      <div className="text-sm font-medium text-white">{item.value}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="space-y-3">
-                {[
-                  { icon: 'location_on', title: 'Primárna športová zóna', text: 'Pozícia 29 a zelená plocha za ňou.' },
-                  { icon: 'info',        title: 'Rozmiestnenie disciplín', text: 'Presné rozloženie bude doplnené po potvrdení od agentúry.', pending: true },
-                  { icon: 'group',       title: 'Turnaje a organizácia',   text: 'Turnajovú časť zabezpečuje externá agentúra.', pending: true },
-                ].map((item) => (
-                  <div key={item.title} className="glass-card rounded-xl p-4 flex gap-3">
-                    <Icon name={item.icon} className="text-[20px] text-primary-container flex-shrink-0 mt-0.5" />
-                    <div>
+                  <div key={item.label} className="glass-card rounded-xl p-4 flex items-center gap-3">
+                    <Icon name={item.icon} className="text-[20px] text-primary-container flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <h3 className="text-sm font-semibold text-white">{item.title}</h3>
-                        {item.pending && <span className="text-[10px] bg-slate-700 text-slate-400 px-2 py-0.5 rounded-full">Čaká</span>}
+                        <span className="text-xs text-slate-500">{item.label}</span>
+                        {item.pending && <span className="text-[10px] bg-slate-700 text-slate-400 px-2 py-0.5 rounded-full flex-shrink-0">Čaká</span>}
                       </div>
-                      <p className="mt-0.5 text-body-sm text-on-surface-variant">{item.text}</p>
+                      <div className="text-sm font-medium text-white mt-0.5">{item.value}</div>
                     </div>
                   </div>
                 ))}
