@@ -133,11 +133,11 @@ const navItems = [
 
 const menuItems = [
   { label: 'Program',        href: '#program',        icon: 'calendar_today' },
+  { label: 'Praktické info', href: '#prakticke-info', icon: 'info'           },
   { label: 'Mapa',           href: '#mapa',           icon: 'map'            },
   { label: 'Disciplíny',     href: '#discipliny',     icon: 'sports_kabaddi' },
   { label: 'Turnaje',        href: '#turnaje',        icon: 'emoji_events'   },
   { label: 'Wellness',       href: '#wellness',       icon: 'spa'            },
-  { label: 'Praktické info', href: '#prakticke-info', icon: 'info'           },
 ];
 
 export default function Page() {
@@ -186,10 +186,9 @@ export default function Page() {
 
       {/* ── HEADER ────────────────────────────────────────────── */}
       <header className="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/10 shadow-lg flex justify-between items-center px-5 h-16">
-        <div className="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border border-white/20">
-          <Icon name="person" className="text-[20px] text-white" />
-        </div>
-        <h1 className="text-base font-extrabold tracking-tighter text-slate-50 uppercase">Športový deň 2026</h1>
+        <span className="px-4 py-1.5 rounded-full text-white text-sm font-extrabold uppercase tracking-tight" style={{ background: '#e20074' }}>
+          Športový deň 2026
+        </span>
         <button onClick={() => setMenuOpen(true)} className="text-pink-500 hover:bg-white/5 transition-colors p-2 rounded-full">
           <Icon name="menu" />
         </button>
@@ -240,10 +239,10 @@ export default function Page() {
               padding: '28px',
             }}
           >
-            {/* Badge */}
+            {/* Badge — left-aligned with the text content below */}
             <span
-              className="absolute top-3 left-3 z-20 text-white font-bold uppercase tracking-[0.05em]"
-              style={{ background: '#e20074', fontSize: '11px', padding: '4px 12px', borderRadius: '999px' }}
+              className="absolute top-7 z-20 text-white font-bold uppercase tracking-[0.05em]"
+              style={{ background: '#e20074', fontSize: '11px', padding: '4px 12px', borderRadius: '999px', left: '28px' }}
             >
               HOME EXPERIENCE TRIBE
             </span>
