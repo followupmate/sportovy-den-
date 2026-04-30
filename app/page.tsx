@@ -124,11 +124,11 @@ const mapPoints = [
 ];
 
 const navItems = [
-  { label: 'Program',    href: '#program',    icon: 'calendar_today' },
-  { label: 'Mapa',       href: '#mapa',       icon: 'map'            },
-  { label: 'Disciplíny', href: '#discipliny', icon: 'sports_kabaddi' },
-  { label: 'Turnaje',    href: '#turnaje',    icon: 'emoji_events'   },
-  { label: 'Wellness',   href: '#wellness',   icon: 'spa'            },
+  { label: 'Program',    href: '#program',        icon: 'calendar_today' },
+  { label: 'Mapa',       href: '#mapa',           icon: 'map'            },
+  { label: 'Disciplíny', href: '#discipliny',     icon: 'sports_kabaddi' },
+  { label: 'Info',       href: '#prakticke-info', icon: 'info'           },
+  { label: 'Wellness',   href: '#wellness',       icon: 'spa'            },
 ];
 
 const menuItems = [
