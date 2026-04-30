@@ -186,9 +186,7 @@ export default function Page() {
 
       {/* ── HEADER ────────────────────────────────────────────── */}
       <header className="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/10 shadow-lg flex justify-between items-center px-5 h-16">
-        <span className="px-4 py-1.5 rounded-full text-white text-sm font-extrabold uppercase tracking-tight" style={{ background: '#e20074' }}>
-          Športový deň 2026
-        </span>
+        <h1 className="text-base font-extrabold tracking-tighter text-slate-50 uppercase">Športový deň 2026</h1>
         <button onClick={() => setMenuOpen(true)} className="text-pink-500 hover:bg-white/5 transition-colors p-2 rounded-full">
           <Icon name="menu" />
         </button>
