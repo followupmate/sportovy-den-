@@ -757,7 +757,6 @@ export default function Page() {
                   { icon: 'local_bar',     label: 'Večerný program',         value: "Legends' Bar · poz. 8",                                                pending: false },
                   { icon: 'sports',        label: 'Hlavná športová plocha',  value: 'Pozícia 29',                                                           pending: false },
                   { icon: 'local_parking', label: 'Parkovanie',              value: 'v areáli x-bionic® sphere',                                            pending: false },
-                  { icon: 'info',          label: 'Rozmiestnenie disciplín', value: 'Presné rozloženie bude doplnené po potvrdení od agentúry.',             pending: true  },
                   { icon: 'group',         label: 'Turnaje a organizácia',   value: 'Turnajovú časť zabezpečuje externá agentúra.',                         pending: true  },
                 ].map((item) => (
                   <div key={item.label} className="glass-card rounded-xl p-4 flex items-center gap-3">
