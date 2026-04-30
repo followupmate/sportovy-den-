@@ -714,41 +714,47 @@ export default function Page() {
 
         {/* ── PRAKTICKÉ INFO ────────────────────────────────── */}
         <section id="prakticke-info" className="fade-hidden">
-          <h2 className="font-headline-md text-headline-md text-on-surface mb-5">Praktické info</h2>
-
-          <div className="glass-card rounded-xl p-5 mb-4 border-l-4 border-l-primary-container">
-            <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
-              <Icon name="backpack" className="text-primary-container text-[20px]" />
-              Čo si priniesť
-            </h3>
-            <ul className="space-y-2">
-              {['Športové oblečenie a vhodná obuv', 'Veci do bazéna / wellness', 'Oblečenie na večerný program'].map((item) => (
-                <li key={item} className="flex items-center gap-2 text-sm text-slate-300">
-                  <Icon name="check_circle" className="text-[16px] text-primary-container" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="space-y-3">
-            {[
-              { icon: 'location_on', title: 'Primárna športová zóna', text: 'Pozícia 29 a zelená plocha za ňou.' },
-              { icon: 'info',        title: 'Rozmiestnenie disciplín', text: 'Presné rozloženie bude doplnené po potvrdení od agentúry.', pending: true },
-              { icon: 'group',       title: 'Turnaje a organizácia',   text: 'Turnajovú časť zabezpečuje externá agentúra.', pending: true },
-            ].map((item) => (
-              <div key={item.title} className="glass-card rounded-xl p-4 flex gap-3">
-                <Icon name={item.icon} className="text-[20px] text-primary-container flex-shrink-0 mt-0.5" />
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-sm font-semibold text-white">{item.title}</h3>
-                    {item.pending && <span className="text-[10px] bg-slate-700 text-slate-400 px-2 py-0.5 rounded-full">Čaká</span>}
-                  </div>
-                  <p className="mt-0.5 text-body-sm text-on-surface-variant">{item.text}</p>
-                </div>
+          <button onClick={() => toggleSection('prakticke-info')} className="w-full flex justify-between items-center py-1">
+            <h2 className="font-headline-md text-headline-md text-on-surface">Praktické info</h2>
+            <Icon name="chevron_right" className={`text-pink-500 text-[22px] transition-transform duration-300 ${expanded.has('prakticke-info') ? 'rotate-90' : ''}`} />
+          </button>
+          {expanded.has('prakticke-info') && (
+            <div className="mt-5 space-y-4">
+              <div className="glass-card rounded-xl p-5 border-l-4 border-l-primary-container">
+                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                  <Icon name="backpack" className="text-primary-container text-[20px]" />
+                  Čo si priniesť
+                </h3>
+                <ul className="space-y-2">
+                  {['Športové oblečenie a vhodná obuv', 'Veci do bazéna / wellness', 'Oblečenie na večerný program'].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-sm text-slate-300">
+                      <Icon name="check_circle" className="text-[16px] text-primary-container" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
-            ))}
-          </div>
+
+              <div className="space-y-3">
+                {[
+                  { icon: 'location_on', title: 'Primárna športová zóna', text: 'Pozícia 29 a zelená plocha za ňou.' },
+                  { icon: 'info',        title: 'Rozmiestnenie disciplín', text: 'Presné rozloženie bude doplnené po potvrdení od agentúry.', pending: true },
+                  { icon: 'group',       title: 'Turnaje a organizácia',   text: 'Turnajovú časť zabezpečuje externá agentúra.', pending: true },
+                ].map((item) => (
+                  <div key={item.title} className="glass-card rounded-xl p-4 flex gap-3">
+                    <Icon name={item.icon} className="text-[20px] text-primary-container flex-shrink-0 mt-0.5" />
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-sm font-semibold text-white">{item.title}</h3>
+                        {item.pending && <span className="text-[10px] bg-slate-700 text-slate-400 px-2 py-0.5 rounded-full">Čaká</span>}
+                      </div>
+                      <p className="mt-0.5 text-body-sm text-on-surface-variant">{item.text}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </section>
 
         {/* ── KONTAKT ───────────────────────────────────────── */}
