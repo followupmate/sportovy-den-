@@ -364,7 +364,7 @@ export default function Page() {
 
         {/* ── LIVE STATUS ───────────────────────────────────── */}
         {liveStatus !== null && (
-          <section className="fade-hidden">
+          <section>
             {liveStatus.phase === 'upcoming' && (() => {
               const { d, h, m } = formatCountdown(liveStatus.msLeft);
               return (
