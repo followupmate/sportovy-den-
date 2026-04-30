@@ -749,7 +749,7 @@ export default function Page() {
                   { icon: 'local_bar',     label: 'Večerný program',         value: "Legends' Bar · poz. 8",                                                pending: false },
                   { icon: 'sports',        label: 'Hlavná športová plocha',  value: 'Pozícia 29',                                                           pending: false },
                   { icon: 'local_parking', label: 'Parkovanie',              value: 'v areáli x-bionic® sphere',                                            pending: false },
-                  { icon: 'group',         label: 'Turnaje a organizácia',   value: 'Turnajovú časť zabezpečuje externá agentúra.',                         pending: true  },
+                  { icon: 'group',         label: 'Turnaje a organizácia',   value: 'Individuálne disciplíny, tímové turnaje a tímové úlohy zabezpečuje externá agentúra.', pending: true  },
                 ].map((item) => (
                   <div key={item.label} className="glass-card rounded-xl p-4 flex items-center gap-3">
                     <Icon name={item.icon} className="text-[20px] text-primary-container flex-shrink-0" />
