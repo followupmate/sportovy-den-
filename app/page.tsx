@@ -726,7 +726,22 @@ export default function Page() {
             <Icon name="chevron_right" className={`text-pink-500 text-[22px] transition-transform duration-300 ${expanded.has('prakticke-info') ? 'rotate-90' : ''}`} />
           </button>
           {expanded.has('prakticke-info') && (
-            <div className="mt-5">
+            <div className="mt-5 space-y-4">
+              <div className="glass-card rounded-xl p-5 border-l-4 border-l-primary-container">
+                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                  <Icon name="backpack" className="text-primary-container text-[20px]" />
+                  Čo si priniesť
+                </h3>
+                <ul className="space-y-2">
+                  {['Športové oblečenie a vhodná obuv', 'Veci do bazéna / wellness', 'Oblečenie na večerný program'].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-sm text-slate-300">
+                      <Icon name="check_circle" className="text-[16px] text-primary-container" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
               {/* Unified info list */}
               <div className="space-y-2">
                 {[
