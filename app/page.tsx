@@ -546,14 +546,14 @@ export default function Page() {
           {/* Navigation links */}
           <div className="mt-3 grid grid-cols-2 gap-3">
             <a
-              href="https://www.google.com/maps/dir/?api=1&destination=x-bionic+sphere,+%C5%A0amor%C3%ADn,+Slovakia"
+              href="https://www.x-bionicsphere.com/restauracie/legends-bar/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm text-white transition-opacity hover:opacity-90"
-              style={{ background: '#e20074' }}
+              className="flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm transition-colors"
+              style={{ background: 'rgba(29,32,33,0.7)', border: '1px solid rgba(255,255,255,0.08)', color: '#e3bdc5' }}
             >
-              <Icon name="navigation" className="text-[18px]" />
-              Navigovať sem
+              <Icon name="local_bar" className="text-[18px] text-pink-500" />
+              Legends&apos; Bar
             </a>
             <a
               href="https://www.x-bionicsphere.com/restauracie/olym-pick/"
@@ -566,14 +566,14 @@ export default function Page() {
               Olym-Pic
             </a>
             <a
-              href="https://www.x-bionicsphere.com/restauracie/legends-bar/"
+              href="https://www.google.com/maps/dir/?api=1&destination=x-bionic+sphere,+%C5%A0amor%C3%ADn,+Slovakia"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm transition-colors col-span-2"
-              style={{ background: 'rgba(29,32,33,0.7)', border: '1px solid rgba(255,255,255,0.08)', color: '#e3bdc5' }}
+              className="col-span-2 flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm text-white transition-opacity hover:opacity-90"
+              style={{ background: '#e20074' }}
             >
-              <Icon name="local_bar" className="text-[18px] text-pink-500" />
-              Legends&apos; Bar
+              <Icon name="navigation" className="text-[18px]" />
+              Navigovať sem
             </a>
           </div>
         </section>
