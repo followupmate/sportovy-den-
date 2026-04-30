@@ -104,9 +104,9 @@ const disciplines = [
 ];
 
 const tournaments = [
-  { name: 'Futbal',     location: 'Main Field',     time: '14:00', note: 'Presný rozpis bude riešený na mieste agentúrou.', pending: true, image: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600' },
-  { name: 'Volejbal',   location: 'Sand Arena',     time: '15:30', note: 'Poznámka: prosíme natiahnuť sieť.',               pending: true, image: 'https://images.unsplash.com/photo-1547347298-4074fc3086f0?w=600' },
-  { name: 'Streetball', location: 'Concrete Court', time: '17:00', note: 'Výsledky sledovať priamo na mieste.',             pending: true, image: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600' },
+  { name: 'Futbal',     location: 'Main Field',     note: 'Presný rozpis bude riešený na mieste s agentúrou.', pending: true, image: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600' },
+  { name: 'Volejbal',   location: 'Main Field',     note: 'Presný rozpis bude riešený na mieste s agentúrou.', pending: true, image: 'https://images.unsplash.com/photo-1547347298-4074fc3086f0?w=600' },
+  { name: 'Streetball', location: 'Concrete Court', note: 'Presný rozpis bude riešený na mieste s agentúrou.', pending: true, image: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600' },
 ];
 
 const teamTasks = [
@@ -641,7 +641,7 @@ export default function Page() {
                     <div className="relative z-10 px-5 w-full">
                       <h3 className="font-headline-sm text-white">{item.name}</h3>
                       <p className="text-primary font-bold text-label-md uppercase tracking-widest mt-1">
-                        {item.location} · {item.time}
+                        {item.location}
                       </p>
                       <p className="text-slate-400 text-xs mt-1 italic">{item.note}</p>
                     </div>
