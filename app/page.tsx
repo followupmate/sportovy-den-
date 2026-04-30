@@ -186,7 +186,9 @@ export default function Page() {
 
       {/* ── HEADER ────────────────────────────────────────────── */}
       <header className="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/10 shadow-lg flex justify-between items-center px-5 h-16">
-        <h1 className="text-base font-extrabold tracking-tighter text-slate-50 uppercase">Športový deň 2026</h1>
+        <span className="text-white font-bold uppercase tracking-[0.05em]" style={{ background: '#e20074', fontSize: '11px', padding: '4px 12px', borderRadius: '999px' }}>
+          HOME EXPERIENCE TRIBE
+        </span>
         <button onClick={() => setMenuOpen(true)} className="text-pink-500 hover:bg-white/5 transition-colors p-2 rounded-full">
           <Icon name="menu" />
         </button>
@@ -237,14 +239,6 @@ export default function Page() {
               padding: '28px',
             }}
           >
-            {/* Badge — left-aligned with the text content below */}
-            <span
-              className="absolute top-7 z-20 text-white font-bold uppercase tracking-[0.05em]"
-              style={{ background: '#e20074', fontSize: '11px', padding: '4px 12px', borderRadius: '999px', left: '28px' }}
-            >
-              HOME EXPERIENCE TRIBE
-            </span>
-
             {/* Text content */}
             <div className="relative z-20 pt-10">
               <h1 style={{ fontFamily: 'Manrope', fontSize: '42px', fontWeight: 800, color: 'white', lineHeight: 1.05, marginBottom: '16px' }}>
