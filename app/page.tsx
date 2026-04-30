@@ -88,7 +88,7 @@ const dayBlocks = [
     day: 'Deň 2',
     date: '15.5.',
     blocks: [
-      { time: '09:00 – 12:00', title: 'Bicykel / beh / prechádzka', type: 'sport' as BlockType, location: 'Danubiana' },
+      { time: '09:00 – 12:00', title: 'Bicykel / beh / prechádzka', type: 'sport' as BlockType, location: 'Danubiana', icon: 'directions_bike' },
       { time: '12:00',          title: 'Ukončenie a presun domov',   type: 'info'  as BlockType                       },
     ],
   },
@@ -467,7 +467,7 @@ export default function Page() {
               return (
                 <div key={idx} className="relative flex gap-4 items-start">
                   <div className={`relative z-10 w-10 h-10 flex-shrink-0 rounded-full border-2 border-primary-container bg-slate-950 flex items-center justify-center ${isLive ? 'shadow-[0_0_15px_rgba(226,0,116,0.4)]' : ''}`}>
-                    <Icon name={cfg.icon} className="text-primary-container text-[20px]" />
+                    <Icon name={'icon' in block ? (block as {icon: string}).icon : cfg.icon} className="text-primary-container text-[20px]" />
                   </div>
                   <div className={`flex-1 glass-card rounded-xl p-4 transition-all hover:border-pink-500/20 ${cfg.accent} ${isLive ? 'border-primary-container/30' : ''}`}>
                     <div className="flex justify-between items-start mb-1">
