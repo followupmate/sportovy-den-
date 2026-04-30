@@ -185,13 +185,13 @@ export default function Page() {
     <div className="min-h-screen bg-surface font-body-md text-on-surface">
 
       {/* ── HEADER ────────────────────────────────────────────── */}
-      <header className="fixed top-0 w-full z-50 bg-slate-950/75 backdrop-blur-md border-b border-white/8 flex justify-between items-center px-4 h-12">
-        <div className="w-7 h-7 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border border-white/15 flex-shrink-0">
-          <Icon name="person" className="text-[18px] text-white" />
+      <header className="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/10 shadow-lg flex justify-between items-center px-5 h-16">
+        <div className="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border border-white/20">
+          <Icon name="person" className="text-[20px] text-white" />
         </div>
-        <h1 className="text-sm font-extrabold tracking-tight text-slate-50 uppercase">Športový deň 2026</h1>
-        <button onClick={() => setMenuOpen(true)} className="text-pink-500 hover:bg-white/5 transition-colors p-1.5 rounded-full flex-shrink-0">
-          <Icon name="menu" className="text-[22px]" />
+        <h1 className="text-base font-extrabold tracking-tighter text-slate-50 uppercase">Športový deň 2026</h1>
+        <button onClick={() => setMenuOpen(true)} className="text-pink-500 hover:bg-white/5 transition-colors p-2 rounded-full">
+          <Icon name="menu" />
         </button>
       </header>
 
@@ -226,7 +226,7 @@ export default function Page() {
         </div>
       )}
 
-      <main className="pt-14 pb-28 px-5 max-w-md mx-auto space-y-10">
+      <main className="pt-20 pb-28 px-5 max-w-md mx-auto space-y-10">
 
         {/* ── HERO BANNER ───────────────────────────────────── */}
         <section className="fade-hidden -mx-5">
@@ -248,28 +248,8 @@ export default function Page() {
               HOME EXPERIENCE TRIBE
             </span>
 
-            {/* Text-protection gradient — covers 60% of width */}
-            <div
-              className="absolute inset-0 z-10 pointer-events-none"
-              style={{ background: 'linear-gradient(to right, #0a1128 58%, rgba(10,17,40,0.6) 75%, transparent 100%)' }}
-            />
-
-            {/* Athlete SVG — pushed right, subdued */}
-            <svg viewBox="0 0 120 220" xmlns="http://www.w3.org/2000/svg"
-              style={{ position: 'absolute', right: '-18px', bottom: 0, height: '200px', opacity: 0.35, zIndex: 1, filter: 'drop-shadow(0 0 6px rgba(226,0,116,0.2))' }}>
-              <circle cx="82" cy="26" r="15" fill="#ffb1c6"/>
-              <line x1="82" y1="41" x2="82" y2="50" stroke="#ffb1c6" strokeWidth="6" strokeLinecap="round"/>
-              <path d="M82 50 Q78 72 70 95" stroke="#e20074" strokeWidth="9" fill="none" strokeLinecap="round"/>
-              <path d="M82 58 L112 38 L118 28" stroke="#ffb1c6" strokeWidth="6" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M80 62 L52 80 L46 90" stroke="#bfc5e4" strokeWidth="6" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M74 95 L92 140 L104 175 L96 185" stroke="#ffb1c6" strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M70 95 L52 138 L42 172 L50 182" stroke="#bfc5e4" strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M96 185 L110 188" stroke="#e20074" strokeWidth="5" strokeLinecap="round"/>
-              <path d="M50 182 L36 186" stroke="#aa8890" strokeWidth="5" strokeLinecap="round"/>
-            </svg>
-
-            {/* Text content — constrained to left 62% so illustration never overlaps */}
-            <div className="relative z-20 pt-10" style={{ maxWidth: '62%' }}>
+            {/* Text content */}
+            <div className="relative z-20 pt-10">
               <h1 style={{ fontFamily: 'Manrope', fontSize: '42px', fontWeight: 800, color: 'white', lineHeight: 1.05, marginBottom: '16px' }}>
                 Športový deň<br />2026
               </h1>
