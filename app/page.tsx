@@ -112,7 +112,7 @@ const tournaments = [
 const teamTasks = [
   { name: 'Bludisko',         description: 'Spoločná tímová úloha.',                       icon: 'route',           color: 'primary'   },
   { name: 'Lyže pre piatich', description: 'Koordinačná aktivita vyžadujúca spoluprácu.', icon: 'downhill_skiing', color: 'secondary' },
-  { name: 'Letné sane',       description: 'Zábavná tímová úloha s pohybovým prvkom.',     icon: 'sled',            color: 'primary'   },
+  { name: 'Letné sane',       description: 'Zábavná tímová úloha s pohybovým prvkom.',     icon: 'sledding',        color: 'primary'   },
   { name: 'Amazonka',         description: 'Spoločná aktivita / výzva pre tímy.',           icon: 'forest',          color: 'secondary' },
 ];
 
@@ -146,6 +146,12 @@ export default function Page() {
   const [activeSection, setActiveSection] = useState('program');
   const [menuOpen, setMenuOpen] = useState(false);
   const [mapTab, setMapTab] = useState<'areal' | 'budovy'>('areal');
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  const toggleSection = (id: string) => setExpanded(prev => {
+    const next = new Set(prev);
+    if (next.has(id)) next.delete(id); else next.add(id);
+    return next;
+  });
 
   useEffect(() => {
     const update = () => setLiveStatus(computeLive(new Date()));
@@ -584,132 +590,145 @@ export default function Page() {
 
         {/* ── DISCIPLÍNY ────────────────────────────────────── */}
         <section id="discipliny" className="fade-hidden">
-          <div className="flex justify-between items-end mb-5">
+          <button onClick={() => toggleSection('discipliny')} className="w-full flex justify-between items-center py-1">
             <h2 className="font-headline-md text-headline-md text-on-surface">Individuálne disciplíny</h2>
-            <span className="text-primary text-label-md">{disciplines.length} aktivít</span>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            {disciplines.map((item) => {
-              const colMap = {
-                primary:   { bg: 'bg-primary-container/20', text: 'text-primary',   badge: 'bg-primary/20 text-primary'     },
-                secondary: { bg: 'bg-secondary-container/30', text: 'text-secondary', badge: 'bg-secondary-container/40 text-secondary' },
-                neutral:   { bg: 'bg-on-primary-fixed-variant/20', text: 'text-on-surface-variant', badge: 'bg-surface-variant text-on-surface-variant' },
-              };
-              const col = colMap[item.color as keyof typeof colMap];
-              return (
-                <div
-                  key={item.name}
-                  className="relative border border-white/10 rounded-xl overflow-hidden transition-all hover:border-white/20"
-                  style={{ minHeight: '160px' }}
-                >
-                  {/* Background image + overlay */}
+            <div className="flex items-center gap-2">
+              <span className="text-primary text-label-md">{disciplines.length}</span>
+              <Icon name="chevron_right" className={`text-pink-500 text-[22px] transition-transform duration-300 ${expanded.has('discipliny') ? 'rotate-90' : ''}`} />
+            </div>
+          </button>
+          {expanded.has('discipliny') && (
+            <div className="grid grid-cols-2 gap-4 mt-5">
+              {disciplines.map((item) => {
+                const colMap = {
+                  primary:   { bg: 'bg-primary-container/20', text: 'text-primary',   badge: 'bg-primary/20 text-primary'     },
+                  secondary: { bg: 'bg-secondary-container/30', text: 'text-secondary', badge: 'bg-secondary-container/40 text-secondary' },
+                  neutral:   { bg: 'bg-on-primary-fixed-variant/20', text: 'text-on-surface-variant', badge: 'bg-surface-variant text-on-surface-variant' },
+                };
+                const col = colMap[item.color as keyof typeof colMap];
+                return (
                   <div
-                    className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: `url('${item.image}')` }}
-                  />
-                  <div
-                    className="absolute inset-0"
-                    style={{ background: 'linear-gradient(rgba(10,17,40,0.7), rgba(10,17,40,0.7))' }}
-                  />
-                  {/* Content */}
-                  <div className="relative z-10 p-4 flex flex-col justify-between h-full" style={{ minHeight: '160px' }}>
-                    <div className="flex justify-between items-start mb-4">
-                      <div className={`w-10 h-10 rounded-lg ${col.bg} flex items-center justify-center ${col.text}`}>
-                        <Icon name={item.icon} />
+                    key={item.name}
+                    className="relative border border-white/10 rounded-xl overflow-hidden transition-all hover:border-white/20"
+                    style={{ minHeight: '160px' }}
+                  >
+                    <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${item.image}')` }} />
+                    <div className="absolute inset-0" style={{ background: 'linear-gradient(rgba(10,17,40,0.7), rgba(10,17,40,0.7))' }} />
+                    <div className="relative z-10 p-4 flex flex-col justify-between h-full" style={{ minHeight: '160px' }}>
+                      <div className="flex justify-between items-start mb-4">
+                        <div className={`w-10 h-10 rounded-lg ${col.bg} flex items-center justify-center ${col.text}`}>
+                          <Icon name={item.icon} />
+                        </div>
+                        <div className="flex flex-col items-end gap-1">
+                          <span className={`${col.badge} text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter`}>{item.badge}</span>
+                          {item.pending && (
+                            <span className="flex items-center gap-1 text-[10px] text-slate-400">
+                              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400" />Čaká
+                            </span>
+                          )}
+                        </div>
                       </div>
-                      <div className="flex flex-col items-end gap-1">
-                        <span className={`${col.badge} text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter`}>{item.badge}</span>
-                        {item.pending && (
-                          <span className="flex items-center gap-1 text-[10px] text-slate-400">
-                            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400" />Čaká
-                          </span>
-                        )}
+                      <div>
+                        <h3 className="font-headline-sm text-headline-sm text-white mb-1">{item.name}</h3>
+                        <p className="text-slate-400 text-label-md">{item.description}</p>
                       </div>
-                    </div>
-                    <div>
-                      <h3 className="font-headline-sm text-headline-sm text-white mb-1">{item.name}</h3>
-                      <p className="text-slate-400 text-label-md">{item.description}</p>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
         </section>
 
         {/* ── TURNAJE ───────────────────────────────────────── */}
-        <section id="turnaje" className="fade-hidden">
-          <h2 className="font-headline-md text-headline-md text-on-surface mb-5">Tímové turnaje</h2>
-
-          <div className="space-y-4 mb-8">
-            {tournaments.map((item) => (
-              <div key={item.name} className="relative overflow-hidden rounded-2xl border border-white/5 h-32 flex items-center">
-                {/* Background image */}
-                <div
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{ backgroundImage: `url('${item.image}')` }}
-                />
-                {/* Dark overlay */}
-                <div
-                  className="absolute inset-0"
-                  style={{ background: 'linear-gradient(rgba(10,17,40,0.75), rgba(10,17,40,0.75))' }}
-                />
-                {/* Content */}
-                <div className="relative z-10 px-5 w-full">
-                  <h3 className="font-headline-sm text-white">{item.name}</h3>
-                  <p className="text-primary font-bold text-label-md uppercase tracking-widest mt-1">
-                    {item.location} · {item.time}
-                  </p>
-                  <p className="text-slate-400 text-xs mt-1 italic">{item.note}</p>
-                </div>
+        <section id="turnaje" className="fade-hidden space-y-6">
+          {/* Tímové turnaje accordion */}
+          <div>
+            <button onClick={() => toggleSection('turnaje')} className="w-full flex justify-between items-center py-1">
+              <h2 className="font-headline-md text-headline-md text-on-surface">Tímové turnaje</h2>
+              <div className="flex items-center gap-2">
+                <span className="text-primary text-label-md">{tournaments.length}</span>
+                <Icon name="chevron_right" className={`text-pink-500 text-[22px] transition-transform duration-300 ${expanded.has('turnaje') ? 'rotate-90' : ''}`} />
               </div>
-            ))}
+            </button>
+            {expanded.has('turnaje') && (
+              <div className="space-y-4 mt-5">
+                {tournaments.map((item) => (
+                  <div key={item.name} className="relative overflow-hidden rounded-2xl border border-white/5 h-32 flex items-center">
+                    <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${item.image}')` }} />
+                    <div className="absolute inset-0" style={{ background: 'linear-gradient(rgba(10,17,40,0.75), rgba(10,17,40,0.75))' }} />
+                    <div className="relative z-10 px-5 w-full">
+                      <h3 className="font-headline-sm text-white">{item.name}</h3>
+                      <p className="text-primary font-bold text-label-md uppercase tracking-widest mt-1">
+                        {item.location} · {item.time}
+                      </p>
+                      <p className="text-slate-400 text-xs mt-1 italic">{item.note}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
-          <h3 className="font-headline-sm text-on-surface mb-4">Tímové úlohy</h3>
-          <div className="grid grid-cols-2 gap-4">
-            {teamTasks.map((item) => {
-              const colMap = {
-                primary:   { bg: 'bg-primary-container/20', icon: 'text-primary' },
-                secondary: { bg: 'bg-secondary-container/30', icon: 'text-secondary' },
-              };
-              const col = colMap[item.color as keyof typeof colMap];
-              return (
-                <div key={item.name} className="glass-card rounded-xl border border-white/10 p-4 flex flex-col gap-3" style={{ minHeight: '130px' }}>
-                  <div className={`w-10 h-10 rounded-lg ${col.bg} flex items-center justify-center`}>
-                    <Icon name={item.icon} className={`${col.icon} text-[20px]`} />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-white text-sm">{item.name}</h4>
-                    <p className="mt-1 text-xs text-on-surface-variant">{item.description}</p>
-                  </div>
-                </div>
-              );
-            })}
+          {/* Tímové úlohy accordion */}
+          <div>
+            <button onClick={() => toggleSection('ulohy')} className="w-full flex justify-between items-center py-1">
+              <h2 className="font-headline-md text-headline-md text-on-surface">Tímové úlohy</h2>
+              <div className="flex items-center gap-2">
+                <span className="text-primary text-label-md">{teamTasks.length}</span>
+                <Icon name="chevron_right" className={`text-pink-500 text-[22px] transition-transform duration-300 ${expanded.has('ulohy') ? 'rotate-90' : ''}`} />
+              </div>
+            </button>
+            {expanded.has('ulohy') && (
+              <div className="grid grid-cols-2 gap-4 mt-5">
+                {teamTasks.map((item) => {
+                  const colMap = {
+                    primary:   { bg: 'bg-primary-container/20', icon: 'text-primary' },
+                    secondary: { bg: 'bg-secondary-container/30', icon: 'text-secondary' },
+                  };
+                  const col = colMap[item.color as keyof typeof colMap];
+                  return (
+                    <div key={item.name} className="glass-card rounded-xl border border-white/10 p-4 flex flex-col gap-3" style={{ minHeight: '130px' }}>
+                      <div className={`w-10 h-10 rounded-lg ${col.bg} flex items-center justify-center`}>
+                        <Icon name={item.icon} className={`${col.icon} text-[20px]`} />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-white text-sm">{item.name}</h4>
+                        <p className="mt-1 text-xs text-on-surface-variant">{item.description}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </section>
 
         {/* ── WELLNESS ──────────────────────────────────────── */}
         <section id="wellness" className="fade-hidden">
-          <h2 className="font-headline-md text-headline-md text-on-surface mb-5">Wellness & Relax</h2>
-          <div className="space-y-3">
-            {[
-              { icon: 'pool',          iconCls: 'text-blue-400',   bgCls: 'bg-blue-500/10',   title: 'Bazény & Wellness', text: 'Dostupné počas poobedného bloku (17:00–19:30). Pozície 11–14 na mape.' },
-              { icon: 'fitness_center', iconCls: 'text-purple-400', bgCls: 'bg-purple-500/10', title: 'Gym',               text: 'Fitness centrum pre individuálny tréning. Pozícia 5 na mape.'          },
-              { icon: 'restaurant',    iconCls: 'text-amber-400',  bgCls: 'bg-amber-500/10',  title: 'Olym-Pic',          text: 'Reštaurácia — obedy a večera. Pozícia 7 na mape.'                     },
-            ].map((item) => (
-              <div key={item.title} className="glass-card rounded-xl p-4 flex items-start gap-4 hover:border-pink-500/20 transition-all">
-                <div className={`w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center ${item.bgCls}`}>
-                  <Icon name={item.icon} className={`text-[24px] ${item.iconCls}`} />
+          <button onClick={() => toggleSection('wellness')} className="w-full flex justify-between items-center py-1">
+            <h2 className="font-headline-md text-headline-md text-on-surface">Wellness & Relax</h2>
+            <Icon name="chevron_right" className={`text-pink-500 text-[22px] transition-transform duration-300 ${expanded.has('wellness') ? 'rotate-90' : ''}`} />
+          </button>
+          {expanded.has('wellness') && (
+            <div className="space-y-3 mt-5">
+              {[
+                { icon: 'pool',          iconCls: 'text-blue-400',   bgCls: 'bg-blue-500/10',   title: 'Bazény & Wellness', text: 'Dostupné počas poobedného bloku (17:00–19:30). Pozície 11–14 na mape.' },
+                { icon: 'fitness_center', iconCls: 'text-purple-400', bgCls: 'bg-purple-500/10', title: 'Gym',               text: 'Fitness centrum pre individuálny tréning. Pozícia 5 na mape.'          },
+                { icon: 'restaurant',    iconCls: 'text-amber-400',  bgCls: 'bg-amber-500/10',  title: 'Olym-Pic',          text: 'Reštaurácia — obedy a večera. Pozícia 7 na mape.'                     },
+              ].map((item) => (
+                <div key={item.title} className="glass-card rounded-xl p-4 flex items-start gap-4 hover:border-pink-500/20 transition-all">
+                  <div className={`w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center ${item.bgCls}`}>
+                    <Icon name={item.icon} className={`text-[24px] ${item.iconCls}`} />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-white">{item.title}</h3>
+                    <p className="mt-1 text-body-sm text-on-surface-variant">{item.text}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-white">{item.title}</h3>
-                  <p className="mt-1 text-body-sm text-on-surface-variant">{item.text}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </section>
 
         {/* ── PRAKTICKÉ INFO ────────────────────────────────── */}
