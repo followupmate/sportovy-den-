@@ -170,14 +170,11 @@ export default function Page() {
 
       {/* ── HEADER ────────────────────────────────────────────── */}
       <header className="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/10 shadow-lg flex justify-between items-center px-5 h-16">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border border-white/20">
-            <Icon name="person" className="text-[20px] text-white" />
-          </div>
-          <span className="text-sm font-bold text-slate-400">Tribe Member</span>
+        <div className="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border border-white/20">
+          <Icon name="person" className="text-[20px] text-white" />
         </div>
         <h1 className="text-base font-extrabold tracking-tighter text-slate-50 uppercase">Športový deň 2026</h1>
-        <button className="text-slate-400 hover:bg-white/5 transition-colors p-2 rounded-full">
+        <button className="text-pink-500 hover:bg-white/5 transition-colors p-2 rounded-full">
           <Icon name="menu" />
         </button>
       </header>
@@ -191,9 +188,9 @@ export default function Page() {
             style={{
               borderRadius: '16px',
               background: 'linear-gradient(135deg, #0a1128 0%, #1a1040 100%)',
-              minHeight: '200px',
+              minHeight: '240px',
               margin: '0 16px',
-              padding: '20px',
+              padding: '28px',
             }}
           >
             {/* Premium badge */}
@@ -212,7 +209,7 @@ export default function Page() {
 
             {/* Athlete SVG */}
             <svg viewBox="0 0 120 220" xmlns="http://www.w3.org/2000/svg"
-              style={{ position: 'absolute', right: 0, bottom: 0, height: '200px', opacity: 0.9, zIndex: 1, filter: 'drop-shadow(0 0 12px rgba(226,0,116,0.4))' }}>
+              style={{ position: 'absolute', right: 0, bottom: 0, height: '240px', opacity: 0.9, zIndex: 1, filter: 'drop-shadow(0 0 12px rgba(226,0,116,0.4))' }}>
               <circle cx="82" cy="26" r="15" fill="#ffb1c6"/>
               <line x1="82" y1="41" x2="82" y2="50" stroke="#ffb1c6" strokeWidth="6" strokeLinecap="round"/>
               <path d="M82 50 Q78 72 70 95" stroke="#e20074" strokeWidth="9" fill="none" strokeLinecap="round"/>
@@ -225,12 +222,18 @@ export default function Page() {
             </svg>
 
             {/* Text content */}
-            <div className="relative z-20 pt-8">
-              <h1 style={{ fontFamily: 'Manrope', fontSize: '32px', fontWeight: 700, color: 'white', lineHeight: 1.1, marginBottom: '12px' }}>
+            <div className="relative z-20 pt-10">
+              <h1 style={{ fontFamily: 'Manrope', fontSize: '42px', fontWeight: 800, color: 'white', lineHeight: 1.05, marginBottom: '16px' }}>
                 Športový deň<br />2026
               </h1>
-              <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)', margin: '3px 0' }}>📅 14–15 May 2026</p>
-              <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)', margin: '3px 0' }}>📍 x-bionic® sphere, Šamorín</p>
+              <div className="flex items-center gap-1.5 text-[13px] text-white/70 mt-1">
+                <Icon name="calendar_today" className="text-[14px] text-white/60" />
+                <span>14–15 May 2026</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-[13px] text-white/70 mt-1">
+                <Icon name="location_on" className="text-[14px] text-white/60" />
+                <span>x-bionic® sphere, Šamorín</span>
+              </div>
             </div>
           </div>
         </section>
@@ -259,19 +262,19 @@ export default function Page() {
 
         {/* ── INFO CARDS ────────────────────────────────────── */}
         <section className="fade-hidden space-y-3">
-          {/* Location — full width */}
-          <div className="glass-panel p-4 rounded-2xl flex justify-between items-start hover:border-pink-500/30 transition-all cursor-pointer" style={{ minHeight: '80px' }}>
-            <div className="flex gap-3 items-start">
-              <div className="p-2 bg-pink-500/10 rounded-lg flex-shrink-0">
+          {/* Location — full width, tall vertical layout */}
+          <div className="glass-panel p-5 rounded-2xl flex flex-col justify-between hover:border-pink-500/30 transition-all cursor-pointer" style={{ minHeight: '140px' }}>
+            <div className="flex justify-between items-start">
+              <div className="p-2 bg-pink-500/10 rounded-lg">
                 <Icon name="map" className="text-pink-500" />
               </div>
-              <div>
-                <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold mb-1">Location</p>
-                <h3 className="font-bold text-white">x-bionic® sphere</h3>
-                <p className="text-body-sm text-on-surface-variant">Dubová 33, Šamorín</p>
-              </div>
+              <Icon name="north_east" className="text-white/20 text-[20px]" />
             </div>
-            <Icon name="north_east" className="text-white/20 text-[20px] mt-1" />
+            <div>
+              <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Location</p>
+              <h3 className="font-bold text-white mt-1">x-bionic® sphere</h3>
+              <p className="text-body-sm text-on-surface-variant">Dubová 33, Šamorín</p>
+            </div>
           </div>
 
           {/* Dates + Check-in — 2 column */}
