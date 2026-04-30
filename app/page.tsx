@@ -110,10 +110,10 @@ const tournaments = [
 ];
 
 const teamTasks = [
-  { name: 'Bludisko',        description: 'Spoločná tímová úloha.'                            },
-  { name: 'Lyže pre piatich', description: 'Koordinačná aktivita vyžadujúca spoluprácu.'     },
-  { name: 'Letné sane',      description: 'Zábavná tímová úloha s pohybovým prvkom.'         },
-  { name: 'Amazonka',        description: 'Spoločná aktivita / výzva pre tímy.'               },
+  { name: 'Bludisko',         description: 'Spoločná tímová úloha.',                       icon: 'route',           color: 'primary'   },
+  { name: 'Lyže pre piatich', description: 'Koordinačná aktivita vyžadujúca spoluprácu.', icon: 'downhill_skiing', color: 'secondary' },
+  { name: 'Letné sane',       description: 'Zábavná tímová úloha s pohybovým prvkom.',     icon: 'sled',            color: 'primary'   },
+  { name: 'Amazonka',         description: 'Spoločná aktivita / výzva pre tímy.',           icon: 'forest',          color: 'secondary' },
 ];
 
 const mapPoints = [
@@ -131,11 +131,21 @@ const navItems = [
   { label: 'Wellness',   href: '#wellness',   icon: 'spa'            },
 ];
 
+const menuItems = [
+  { label: 'Program',        href: '#program',        icon: 'calendar_today' },
+  { label: 'Mapa',           href: '#mapa',           icon: 'map'            },
+  { label: 'Disciplíny',     href: '#discipliny',     icon: 'sports_kabaddi' },
+  { label: 'Turnaje',        href: '#turnaje',        icon: 'emoji_events'   },
+  { label: 'Wellness',       href: '#wellness',       icon: 'spa'            },
+  { label: 'Praktické info', href: '#prakticke-info', icon: 'info'           },
+];
+
 export default function Page() {
   const [activeDay, setActiveDay] = useState(0);
   const [liveStatus, setLiveStatus] = useState<LiveStatus | null>(null);
-  const [discFilter, setDiscFilter] = useState('all');
   const [activeSection, setActiveSection] = useState('program');
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [mapTab, setMapTab] = useState<'areal' | 'budovy'>('areal');
 
   useEffect(() => {
     const update = () => setLiveStatus(computeLive(new Date()));
@@ -174,10 +184,41 @@ export default function Page() {
           <Icon name="person" className="text-[20px] text-white" />
         </div>
         <h1 className="text-base font-extrabold tracking-tighter text-slate-50 uppercase">Športový deň 2026</h1>
-        <button className="text-pink-500 hover:bg-white/5 transition-colors p-2 rounded-full">
+        <button onClick={() => setMenuOpen(true)} className="text-pink-500 hover:bg-white/5 transition-colors p-2 rounded-full">
           <Icon name="menu" />
         </button>
       </header>
+
+      {/* ── BURGER MENU OVERLAY ───────────────────────────────── */}
+      {menuOpen && (
+        <div className="fixed inset-0 z-[100] flex">
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setMenuOpen(false)} />
+          {/* Drawer */}
+          <div className="relative ml-auto w-72 h-full flex flex-col"
+            style={{ background: 'rgba(17,20,21,0.97)', backdropFilter: 'blur(20px)', borderLeft: '1px solid rgba(255,255,255,0.08)' }}>
+            <div className="flex items-center justify-between px-5 h-16 border-b border-white/10">
+              <span className="text-sm font-bold text-white uppercase tracking-wider">Navigácia</span>
+              <button onClick={() => setMenuOpen(false)} className="text-slate-400 hover:text-white p-2 rounded-full hover:bg-white/5 transition-colors">
+                <Icon name="close" />
+              </button>
+            </div>
+            <nav className="flex flex-col p-4 gap-1">
+              {menuItems.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center gap-4 px-4 py-3.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
+                >
+                  <Icon name={item.icon} className="text-pink-500 text-[22px]" />
+                  <span className="text-base font-semibold">{item.label}</span>
+                </a>
+              ))}
+            </nav>
+          </div>
+        </div>
+      )}
 
       <main className="pt-20 pb-28 px-5 max-w-md mx-auto space-y-10">
 
@@ -193,12 +234,12 @@ export default function Page() {
               padding: '28px',
             }}
           >
-            {/* Premium badge */}
+            {/* Badge */}
             <span
               className="absolute top-3 left-3 z-20 text-white font-bold uppercase tracking-[0.05em]"
               style={{ background: '#e20074', fontSize: '11px', padding: '4px 12px', borderRadius: '999px' }}
             >
-              PREMIUM EVENT
+              HOME EXPERIENCE TRIBE
             </span>
 
             {/* Left-to-right gradient so text stays readable */}
@@ -241,7 +282,7 @@ export default function Page() {
         {/* ── HORIZONTAL PILL TABS ─────────────────────────── */}
         <section className="fade-hidden -mx-5 px-4">
           <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
-            {navItems.map((item) => {
+            {menuItems.map((item) => {
               const isActive = activeSection === item.href.slice(1);
               return (
                 <a
@@ -262,47 +303,29 @@ export default function Page() {
 
         {/* ── INFO CARDS ────────────────────────────────────── */}
         <section className="fade-hidden space-y-3">
-          {/* Location — full width, tall vertical layout */}
-          <div className="glass-panel p-5 rounded-2xl flex flex-col justify-between hover:border-pink-500/30 transition-all cursor-pointer" style={{ minHeight: '140px' }}>
+          {/* Location — full width, tall vertical layout, tappable to navigate */}
+          <a
+            href="https://www.google.com/maps/dir/?api=1&destination=x-bionic+sphere,+%C5%A0amor%C3%ADn,+Slovakia"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block glass-panel p-5 rounded-2xl flex flex-col justify-between hover:border-pink-500/30 transition-all"
+            style={{ minHeight: '140px' }}
+          >
             <div className="flex justify-between items-start">
               <div className="p-2 bg-pink-500/10 rounded-lg">
                 <Icon name="map" className="text-pink-500" />
               </div>
-              <Icon name="north_east" className="text-white/20 text-[20px]" />
+              <Icon name="north_east" className="text-pink-500/50 text-[20px]" />
             </div>
             <div>
-              <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Location</p>
+              <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Location · Navigovať</p>
               <h3 className="font-bold text-white mt-1">x-bionic® sphere</h3>
               <p className="text-body-sm text-on-surface-variant">Dubová 33, Šamorín</p>
             </div>
-          </div>
+          </a>
 
-          {/* Dates + Check-in — 2 column */}
-          <div className="grid grid-cols-2 gap-3">
-            <div className="glass-panel p-4 rounded-2xl flex flex-col gap-3 hover:border-pink-500/30 transition-all cursor-pointer">
-              <div className="p-2 bg-pink-500/10 rounded-lg w-max">
-                <Icon name="event" className="text-pink-500" />
-              </div>
-              <div>
-                <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Dates</p>
-                <h3 className="font-bold text-white mt-1">14–15 May</h3>
-                <p className="text-body-sm text-on-surface-variant">2026</p>
-              </div>
-            </div>
-            <div className="glass-panel p-4 rounded-2xl flex flex-col gap-3 hover:border-pink-500/30 transition-all cursor-pointer">
-              <div className="p-2 bg-pink-500/10 rounded-lg w-max">
-                <Icon name="login" className="text-pink-500" />
-              </div>
-              <div>
-                <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Check-in</p>
-                <h3 className="font-bold text-white mt-1">From 15:00</h3>
-                <p className="text-body-sm text-on-surface-variant">Main Lobby</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Parking — full width */}
-          <div className="glass-panel p-4 rounded-2xl flex gap-3 items-center hover:border-pink-500/30 transition-all cursor-pointer">
+          {/* Parking — full width, right after Location */}
+          <div className="glass-panel p-4 rounded-2xl flex gap-3 items-center hover:border-pink-500/30 transition-all">
             <div className="p-2 bg-pink-500/10 rounded-lg flex-shrink-0">
               <Icon name="local_parking" className="text-pink-500" />
             </div>
@@ -312,56 +335,32 @@ export default function Page() {
               <p className="text-body-sm text-on-surface-variant">Free for guests</p>
             </div>
           </div>
-        </section>
 
-        {/* ── MAP PLACEHOLDER ───────────────────────────────── */}
-        <section className="fade-hidden">
-          <div
-            className="relative overflow-hidden flex items-center justify-center"
-            style={{ height: '160px', borderRadius: '16px', background: '#1a2238' }}
-          >
-            {/* Subtle grid pattern */}
-            <div className="absolute inset-0 opacity-10"
-              style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
-            <a
-              href="https://maps.google.com/?q=x-bionic+sphere+Samorin"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative z-10 flex items-center gap-2 text-white font-bold px-6 py-3 rounded-full shadow-2xl hover:scale-105 transition-transform"
-              style={{ background: '#e20074' }}
-            >
-              <Icon name="explore" className="text-[20px]" />
-              Open Interactive Map
-            </a>
-          </div>
-        </section>
-
-        {/* ── HLAVNÉ DISCIPLÍNY PREVIEW ─────────────────────── */}
-        <section className="fade-hidden">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="font-headline-md text-headline-md text-on-surface">Hlavné disciplíny</h2>
-            <a href="#discipliny" className="text-sm font-bold hover:underline" style={{ color: '#e20074' }}>Zobraziť všetko</a>
-          </div>
-          <div className="space-y-3">
-            {[
-              { icon: 'pool',         bg: '#0d4f6c', title: 'Plavecká štafeta',  meta: '14. Mája · 09:00 · Olympic Pool' },
-              { icon: 'sports_score', bg: '#4a1d5c', title: 'Futbalový turnaj',  meta: '15. Mája · 13:00 · Hlavné ihrisko' },
-            ].map((item) => (
-              <div key={item.title} className="glass-panel rounded-2xl flex gap-4 items-center p-4">
-                <div
-                  className="flex-shrink-0 flex items-center justify-center rounded-xl"
-                  style={{ width: '64px', height: '64px', background: item.bg, borderRadius: '12px' }}
-                >
-                  <Icon name={item.icon} className="text-white text-[28px]" />
-                </div>
-                <div>
-                  <h4 className="font-headline-sm text-white text-[16px]">{item.title}</h4>
-                  <p className="text-body-sm text-on-surface-variant mt-0.5">{item.meta}</p>
-                </div>
+          {/* Dates + Check-in — 2 column */}
+          <div className="grid grid-cols-2 gap-3">
+            <div className="glass-panel p-4 rounded-2xl flex flex-col gap-3 hover:border-pink-500/30 transition-all">
+              <div className="p-2 bg-pink-500/10 rounded-lg w-max">
+                <Icon name="event" className="text-pink-500" />
               </div>
-            ))}
+              <div>
+                <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Dates</p>
+                <h3 className="font-bold text-white mt-1">14–15 May</h3>
+                <p className="text-body-sm text-on-surface-variant">2026</p>
+              </div>
+            </div>
+            <div className="glass-panel p-4 rounded-2xl flex flex-col gap-3 hover:border-pink-500/30 transition-all">
+              <div className="p-2 bg-pink-500/10 rounded-lg w-max">
+                <Icon name="login" className="text-pink-500" />
+              </div>
+              <div>
+                <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Check-in</p>
+                <h3 className="font-bold text-white mt-1">From 11:00</h3>
+                <p className="text-body-sm text-on-surface-variant">Pozícia 29</p>
+              </div>
+            </div>
           </div>
         </section>
+
 
         {/* ── LIVE STATUS ───────────────────────────────────── */}
         {liveStatus !== null && (
@@ -446,28 +445,6 @@ export default function Page() {
         {/* ── PROGRAM TIMELINE ──────────────────────────────── */}
         <section id="program" className="fade-hidden">
 
-          {/* Hero banner */}
-          <div className="relative rounded-2xl overflow-hidden mb-6" style={{ minHeight: '200px' }}>
-            <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: "url('https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800')" }}
-            />
-            <div
-              className="absolute inset-0"
-              style={{ background: 'linear-gradient(to right, rgba(10,17,40,0.85) 40%, transparent)' }}
-            />
-            <div className="relative z-10 p-6 flex flex-col justify-end h-full" style={{ minHeight: '200px' }}>
-              <span className="inline-block mb-3 px-3 py-1 rounded-full text-white text-[10px] font-bold uppercase tracking-widest w-max" style={{ background: '#e20074' }}>
-                Premium Event
-              </span>
-              <h2 className="text-[32px] font-bold leading-tight text-white mb-2">Športový deň 2026</h2>
-              <div className="flex flex-wrap gap-4 text-white/70 text-sm">
-                <span>📅 14–15 May 2026</span>
-                <span>📍 x-bionic® sphere, Šamorín</span>
-              </div>
-            </div>
-          </div>
-
           <div className="flex justify-between items-end mb-5">
             <h2 className="font-headline-md text-headline-md text-on-surface">Program</h2>
             <span className="text-primary text-label-md">{dayBlocks[activeDay].blocks.length} blokov</span>
@@ -530,9 +507,45 @@ export default function Page() {
 
         {/* ── MAPA ──────────────────────────────────────────── */}
         <section id="mapa" className="fade-hidden">
-          <h2 className="font-headline-md text-headline-md text-on-surface mb-5">Mapa areálu</h2>
+          <h2 className="font-headline-md text-headline-md text-on-surface mb-4">Mapa areálu</h2>
 
-          <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar mb-4">
+          {/* Map tab switcher */}
+          <div className="flex gap-2 mb-4 p-1 bg-slate-900/50 rounded-xl border border-white/5">
+            <button
+              onClick={() => setMapTab('areal')}
+              className={`flex-1 py-2.5 px-3 rounded-lg text-sm font-bold transition-all ${mapTab === 'areal' ? 'bg-primary-container text-white' : 'text-slate-400 hover:bg-white/5'}`}
+            >
+              Areál
+            </button>
+            <button
+              onClick={() => setMapTab('budovy')}
+              className={`flex-1 py-2.5 px-3 rounded-lg text-sm font-bold transition-all ${mapTab === 'budovy' ? 'bg-primary-container text-white' : 'text-slate-400 hover:bg-white/5'}`}
+            >
+              Budovy & Reštaurácie
+            </button>
+          </div>
+
+          {/* Map image */}
+          <div className="rounded-2xl overflow-hidden border border-white/10 relative">
+            {mapTab === 'areal' ? (
+              <img
+                src="/mapa-xbionic.jpg"
+                alt="Mapa areálu x-bionic® sphere"
+                className="w-full object-cover"
+                style={{ maxHeight: '320px', objectPosition: 'center' }}
+              />
+            ) : (
+              <img
+                src="/mapa-budovy.jpg"
+                alt="Mapa budov a reštaurácií x-bionic® sphere"
+                className="w-full object-cover"
+                style={{ maxHeight: '320px', objectPosition: 'center' }}
+              />
+            )}
+          </div>
+
+          {/* Key locations + nav links */}
+          <div className="mt-4 flex gap-2 overflow-x-auto pb-2 no-scrollbar">
             {mapPoints.map((pt) => (
               <div key={pt.label} className="flex-shrink-0 glass-panel px-3 py-2 rounded-full flex items-center gap-2">
                 <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary-container text-[10px] font-bold text-white">
@@ -544,15 +557,28 @@ export default function Page() {
             ))}
           </div>
 
-          <div className="rounded-2xl overflow-hidden border border-white/10">
-            <iframe
-              title="x-bionic® sphere mapa"
-              className="w-full"
-              height={260}
-              src="https://maps.google.com/maps?q=x-bionic+sphere+Samorin+Slovakia&output=embed"
-              loading="lazy"
-              style={{ border: 0 }}
-            />
+          {/* Navigation links */}
+          <div className="mt-3 grid grid-cols-2 gap-3">
+            <a
+              href="https://www.google.com/maps/dir/?api=1&destination=x-bionic+sphere,+%C5%A0amor%C3%ADn,+Slovakia"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm text-white transition-opacity hover:opacity-90"
+              style={{ background: '#e20074' }}
+            >
+              <Icon name="navigation" className="text-[18px]" />
+              Navigovať sem
+            </a>
+            <a
+              href="https://www.google.com/maps/dir/?api=1&destination=Olym-Pick+Restaurant+x-bionic+sphere+%C5%A0amor%C3%ADn"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm transition-colors"
+              style={{ background: 'rgba(29,32,33,0.7)', border: '1px solid rgba(255,255,255,0.08)', color: '#e3bdc5' }}
+            >
+              <Icon name="restaurant" className="text-[18px] text-pink-500" />
+              Olym-Pic
+            </a>
           </div>
         </section>
 
@@ -563,19 +589,8 @@ export default function Page() {
             <span className="text-primary text-label-md">{disciplines.length} aktivít</span>
           </div>
 
-          <div className="flex gap-2 flex-wrap mb-4">
-            {['all', 'Presnosť', 'Outdoor', 'Sila'].map((f) => (
-              <button key={f} onClick={() => setDiscFilter(f)}
-                className={`rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-wider transition-colors ${
-                  discFilter === f ? 'bg-primary-container text-white' : 'glass-panel text-on-surface-variant hover:bg-white/5'
-                }`}>
-                {f === 'all' ? 'Všetky' : f}
-              </button>
-            ))}
-          </div>
-
           <div className="grid grid-cols-2 gap-4">
-            {disciplines.filter((d) => discFilter === 'all' || d.badge === discFilter).map((item) => {
+            {disciplines.map((item) => {
               const colMap = {
                 primary:   { bg: 'bg-primary-container/20', text: 'text-primary',   badge: 'bg-primary/20 text-primary'     },
                 secondary: { bg: 'bg-secondary-container/30', text: 'text-secondary', badge: 'bg-secondary-container/40 text-secondary' },
@@ -641,30 +656,37 @@ export default function Page() {
                   style={{ background: 'linear-gradient(rgba(10,17,40,0.75), rgba(10,17,40,0.75))' }}
                 />
                 {/* Content */}
-                <div className="relative z-10 px-5 flex items-center justify-between w-full">
-                  <div>
-                    <h3 className="font-headline-sm text-white">{item.name}</h3>
-                    <p className="text-primary font-bold text-label-md uppercase tracking-widest mt-1">
-                      {item.location} · {item.time}
-                    </p>
-                    <p className="text-slate-400 text-xs mt-1 italic">{item.note}</p>
-                  </div>
-                  <button className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-primary-container transition-colors flex-shrink-0 ml-4">
-                    <Icon name="chevron_right" className="text-white" />
-                  </button>
+                <div className="relative z-10 px-5 w-full">
+                  <h3 className="font-headline-sm text-white">{item.name}</h3>
+                  <p className="text-primary font-bold text-label-md uppercase tracking-widest mt-1">
+                    {item.location} · {item.time}
+                  </p>
+                  <p className="text-slate-400 text-xs mt-1 italic">{item.note}</p>
                 </div>
               </div>
             ))}
           </div>
 
           <h3 className="font-headline-sm text-on-surface mb-4">Tímové úlohy</h3>
-          <div className="grid grid-cols-2 gap-3">
-            {teamTasks.map((item) => (
-              <div key={item.name} className="bg-surface-container-low border border-white/10 p-4 rounded-xl">
-                <h4 className="text-sm font-semibold text-white">{item.name}</h4>
-                <p className="mt-1 text-xs text-slate-500">{item.description}</p>
-              </div>
-            ))}
+          <div className="grid grid-cols-2 gap-4">
+            {teamTasks.map((item) => {
+              const colMap = {
+                primary:   { bg: 'bg-primary-container/20', icon: 'text-primary' },
+                secondary: { bg: 'bg-secondary-container/30', icon: 'text-secondary' },
+              };
+              const col = colMap[item.color as keyof typeof colMap];
+              return (
+                <div key={item.name} className="glass-card rounded-xl border border-white/10 p-4 flex flex-col gap-3" style={{ minHeight: '130px' }}>
+                  <div className={`w-10 h-10 rounded-lg ${col.bg} flex items-center justify-center`}>
+                    <Icon name={item.icon} className={`${col.icon} text-[20px]`} />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white text-sm">{item.name}</h4>
+                    <p className="mt-1 text-xs text-on-surface-variant">{item.description}</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
 
