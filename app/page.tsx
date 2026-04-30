@@ -556,7 +556,7 @@ export default function Page() {
               Navigovať sem
             </a>
             <a
-              href="https://www.google.com/maps/dir/?api=1&destination=Olym-Pick+Restaurant+x-bionic+sphere+%C5%A0amor%C3%ADn"
+              href="https://www.x-bionicsphere.com/restauracie/olym-pick/"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm transition-colors"
@@ -564,6 +564,16 @@ export default function Page() {
             >
               <Icon name="restaurant" className="text-[18px] text-pink-500" />
               Olym-Pic
+            </a>
+            <a
+              href="https://www.x-bionicsphere.com/restauracie/legends-bar/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm transition-colors col-span-2"
+              style={{ background: 'rgba(29,32,33,0.7)', border: '1px solid rgba(255,255,255,0.08)', color: '#e3bdc5' }}
+            >
+              <Icon name="local_bar" className="text-[18px] text-pink-500" />
+              Legends&apos; Bar
             </a>
           </div>
         </section>
