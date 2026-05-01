@@ -197,10 +197,32 @@ export default function Page() {
 
       {/* ── HEADER ────────────────────────────────────────────── */}
       <header className="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/10 shadow-lg flex justify-between items-center px-5 h-16">
-        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-white hover:bg-white/5 transition-colors p-2 rounded-full">
+        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-white hover:bg-white/5 transition-colors p-2 rounded-full flex-shrink-0">
           <Icon name="home" className="text-[22px]" />
         </button>
-        <button onClick={() => setMenuOpen(true)} className="text-pink-500 hover:bg-white/5 transition-colors p-2 rounded-full">
+
+        {/* Compact countdown */}
+        {liveStatus?.phase === 'upcoming' && (() => {
+          const { d, h, m } = formatCountdown(liveStatus.msLeft);
+          return (
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-2 w-2 flex-shrink-0">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-pink-500 opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-pink-500" />
+              </span>
+              <div className="flex gap-2 text-xs font-bold text-slate-200">
+                <span>{d}<span className="text-slate-500 font-normal ml-0.5">d</span></span>
+                <span>{String(h).padStart(2,'0')}<span className="text-slate-500 font-normal ml-0.5">h</span></span>
+                <span>{String(m).padStart(2,'0')}<span className="text-slate-500 font-normal ml-0.5">m</span></span>
+              </div>
+            </div>
+          );
+        })()}
+        {liveStatus?.phase === 'active' && (
+          <span className="px-3 py-1 rounded-full text-[11px] font-bold text-white uppercase tracking-wider" style={{ background: '#e20074' }}>● LIVE</span>
+        )}
+
+        <button onClick={() => setMenuOpen(true)} className="text-pink-500 hover:bg-white/5 transition-colors p-2 rounded-full flex-shrink-0">
           <Icon name="menu" />
         </button>
       </header>
@@ -362,85 +384,6 @@ export default function Page() {
         </section>
 
 
-        {/* ── LIVE STATUS ───────────────────────────────────── */}
-        {liveStatus !== null && (
-          <section>
-            {liveStatus.phase === 'upcoming' && (() => {
-              const { d, h, m } = formatCountdown(liveStatus.msLeft);
-              return (
-                <div className="glass-card rounded-2xl p-5 relative overflow-hidden">
-                  <div className="absolute -right-8 -top-8 w-32 h-32 bg-primary-container/20 blur-3xl rounded-full pointer-events-none" />
-                  <div className="relative z-10">
-                    <div className="flex items-center gap-2 mb-4">
-                      <span className="relative flex h-2.5 w-2.5">
-                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-pink-500 opacity-60" />
-                        <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-pink-500" />
-                      </span>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-pink-500">Do štartu eventu</span>
-                    </div>
-                    <div className="grid grid-cols-3 gap-3 mb-5">
-                      {[{ v: d, l: 'dní' }, { v: h, l: 'hodín' }, { v: m, l: 'minút' }].map(({ v, l }) => (
-                        <div key={l} className="rounded-xl bg-white/5 py-3 text-center">
-                          <div className="text-2xl font-bold text-white">{String(v).padStart(2, '0')}</div>
-                          <div className="text-[10px] text-slate-500 mt-0.5">{l}</div>
-                        </div>
-                      ))}
-                    </div>
-                    <a href={icsDataUri} download="sportovy-den-2026.ics"
-                      className="flex items-center justify-center gap-2 rounded-xl bg-primary-container px-4 py-3 text-sm font-bold text-white hover:opacity-90 transition-opacity">
-                      <Icon name="download" className="text-[20px]" />
-                      Pridať do kalendára
-                    </a>
-                  </div>
-                </div>
-              );
-            })()}
-
-            {liveStatus.phase === 'active' && (() => {
-              const cur = dayBlocks[liveStatus.dayIndex].blocks[liveStatus.blockIndex];
-              const next = dayBlocks[liveStatus.dayIndex].blocks[liveStatus.blockIndex + 1];
-              const later = dayBlocks[liveStatus.dayIndex].blocks[liveStatus.blockIndex + 2];
-              return (
-                <div className="glass-card rounded-2xl p-5">
-                  <div className="flex items-center gap-2 mb-4">
-                    <span className="relative flex h-2.5 w-2.5">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-pink-500 opacity-60" />
-                      <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-pink-500" />
-                    </span>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-pink-500">Práve teraz</span>
-                  </div>
-                  <div className="grid grid-cols-3 gap-3">
-                    <div className="col-span-2 rounded-xl bg-primary-container/10 p-3 border border-primary-container/20">
-                      <div className="text-[10px] font-bold uppercase tracking-wider text-pink-500">Teraz</div>
-                      <div className="mt-1 font-semibold text-white">{cur.title}</div>
-                      <div className="mt-0.5 text-xs text-slate-400">{cur.time}</div>
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      {next && (
-                        <div className="rounded-xl bg-white/5 p-2">
-                          <div className="text-[9px] font-bold uppercase tracking-wider text-slate-500">Ďalší</div>
-                          <div className="mt-0.5 text-xs font-medium text-slate-300 leading-tight">{next.title}</div>
-                        </div>
-                      )}
-                      {later && (
-                        <div className="rounded-xl bg-white/5 p-2 opacity-50">
-                          <div className="text-[9px] font-bold uppercase tracking-wider text-slate-500">Neskôr</div>
-                          <div className="mt-0.5 text-xs font-medium text-slate-400 leading-tight">{later.title}</div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              );
-            })()}
-
-            {liveStatus.phase === 'ended' && (
-              <div className="glass-card rounded-2xl p-4 text-center text-sm text-slate-400">
-                Event sa skončil — ďakujeme za účasť! 🎉
-              </div>
-            )}
-          </section>
-        )}
 
         {/* ── PROGRAM TIMELINE ──────────────────────────────── */}
         <section id="program" className="fade-hidden">
