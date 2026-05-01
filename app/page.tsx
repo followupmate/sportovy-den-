@@ -197,38 +197,41 @@ export default function Page() {
     <div className="min-h-screen bg-surface font-body-md text-on-surface">
 
       {/* ── HEADER ────────────────────────────────────────────── */}
-      <header className="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/10 shadow-lg flex justify-between items-center px-5 h-16">
-        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-white hover:bg-white/5 transition-colors p-2 rounded-full flex-shrink-0">
-          <Icon name="home" className="text-[22px]" />
-        </button>
+      <header className="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/10 shadow-lg flex items-center px-5 h-16">
+        {/* Left group: home + countdown */}
+        <div className="flex items-center gap-3 flex-1">
+          <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-white hover:bg-white/5 transition-colors p-2 rounded-full flex-shrink-0">
+            <Icon name="home" className="text-[22px]" />
+          </button>
 
-        {/* Compact countdown */}
-        {liveStatus?.phase === 'upcoming' && (() => {
-          const { d, h, m, s } = formatCountdown(liveStatus.msLeft);
-          const segments = [
-            { val: String(d),                 unit: 'd' },
-            { val: String(h).padStart(2,'0'), unit: 'h' },
-            { val: String(m).padStart(2,'0'), unit: 'm' },
-            { val: String(s).padStart(2,'0'), unit: 's' },
-          ];
-          return (
-            <div className="flex items-center gap-1">
-              <span className="relative flex h-1.5 w-1.5 flex-shrink-0 mr-1">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-pink-500 opacity-60" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-pink-500" />
-              </span>
-              {segments.map(({ val, unit }) => (
-                <div key={unit} className="flex flex-col items-center rounded-md px-1.5 py-1 text-center" style={{ background: 'rgba(226,0,116,0.1)', minWidth: '27px' }}>
-                  <span className="text-[13px] font-bold text-white leading-none tabular-nums">{val}</span>
-                  <span className="text-[8px] uppercase tracking-wide leading-none mt-0.5" style={{ color: '#e20074' }}>{unit}</span>
-                </div>
-              ))}
-            </div>
-          );
-        })()}
-        {liveStatus?.phase === 'active' && (
-          <span className="px-3 py-1 rounded-full text-[11px] font-bold text-white uppercase tracking-wider" style={{ background: '#e20074' }}>● LIVE</span>
-        )}
+          {/* Compact countdown */}
+          {liveStatus?.phase === 'upcoming' && (() => {
+            const { d, h, m, s } = formatCountdown(liveStatus.msLeft);
+            const segments = [
+              { val: String(d),                 unit: 'd' },
+              { val: String(h).padStart(2,'0'), unit: 'h' },
+              { val: String(m).padStart(2,'0'), unit: 'm' },
+              { val: String(s).padStart(2,'0'), unit: 's' },
+            ];
+            return (
+              <div className="flex items-center gap-1">
+                <span className="relative flex h-1.5 w-1.5 flex-shrink-0 mr-1">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-pink-500 opacity-60" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-pink-500" />
+                </span>
+                {segments.map(({ val, unit }) => (
+                  <div key={unit} className="flex items-baseline rounded-md px-2 py-1" style={{ background: 'rgba(226,0,116,0.1)' }}>
+                    <span className="text-[13px] font-bold text-white leading-none tabular-nums">{val}</span>
+                    <span className="text-[9px] font-bold leading-none ml-0.5" style={{ color: '#e20074' }}>{unit}</span>
+                  </div>
+                ))}
+              </div>
+            );
+          })()}
+          {liveStatus?.phase === 'active' && (
+            <span className="px-3 py-1 rounded-full text-[11px] font-bold text-white uppercase tracking-wider" style={{ background: '#e20074' }}>● LIVE</span>
+          )}
+        </div>
 
         <button onClick={() => setMenuOpen(true)} className="text-pink-500 hover:bg-white/5 transition-colors p-2 rounded-full flex-shrink-0">
           <Icon name="menu" />
