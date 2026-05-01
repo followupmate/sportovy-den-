@@ -18,7 +18,8 @@ function formatCountdown(ms: number) {
   const d = Math.floor(ms / 86_400_000);
   const h = Math.floor((ms % 86_400_000) / 3_600_000);
   const m = Math.floor((ms % 3_600_000) / 60_000);
-  return { d, h, m };
+  const s = Math.floor((ms % 60_000) / 1_000);
+  return { d, h, m, s };
 }
 
 function computeLive(now: Date): LiveStatus {
@@ -167,7 +168,7 @@ export default function Page() {
   useEffect(() => {
     const update = () => setLiveStatus(computeLive(new Date()));
     update();
-    const id = setInterval(update, 30_000);
+    const id = setInterval(update, 1_000);
     return () => clearInterval(id);
   }, []);
 
@@ -203,18 +204,25 @@ export default function Page() {
 
         {/* Compact countdown */}
         {liveStatus?.phase === 'upcoming' && (() => {
-          const { d, h, m } = formatCountdown(liveStatus.msLeft);
+          const { d, h, m, s } = formatCountdown(liveStatus.msLeft);
+          const segments = [
+            { val: String(d),                 unit: 'd' },
+            { val: String(h).padStart(2,'0'), unit: 'h' },
+            { val: String(m).padStart(2,'0'), unit: 'm' },
+            { val: String(s).padStart(2,'0'), unit: 's' },
+          ];
           return (
-            <div className="flex items-center gap-2">
-              <span className="relative flex h-2 w-2 flex-shrink-0">
+            <div className="flex items-center gap-1">
+              <span className="relative flex h-1.5 w-1.5 flex-shrink-0 mr-1">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-pink-500 opacity-60" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-pink-500" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-pink-500" />
               </span>
-              <div className="flex gap-2 text-xs font-bold text-slate-200">
-                <span>{d}<span className="text-slate-500 font-normal ml-0.5">d</span></span>
-                <span>{String(h).padStart(2,'0')}<span className="text-slate-500 font-normal ml-0.5">h</span></span>
-                <span>{String(m).padStart(2,'0')}<span className="text-slate-500 font-normal ml-0.5">m</span></span>
-              </div>
+              {segments.map(({ val, unit }) => (
+                <div key={unit} className="flex flex-col items-center rounded-md px-1.5 py-1 text-center" style={{ background: 'rgba(226,0,116,0.1)', minWidth: '27px' }}>
+                  <span className="text-[13px] font-bold text-white leading-none tabular-nums">{val}</span>
+                  <span className="text-[8px] uppercase tracking-wide leading-none mt-0.5" style={{ color: '#e20074' }}>{unit}</span>
+                </div>
+              ))}
             </div>
           );
         })()}
