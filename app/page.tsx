@@ -214,7 +214,7 @@ export default function Page() {
               { val: String(s).padStart(2,'0'), unit: 's' },
             ];
             return (
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-0.5">
                 <span className="relative flex h-1.5 w-1.5 flex-shrink-0 mr-1">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-pink-500 opacity-60" />
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-pink-500" />
