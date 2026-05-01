@@ -214,15 +214,11 @@ export default function Page() {
               { val: String(s).padStart(2,'0'), unit: 's' },
             ];
             return (
-              <div className="flex items-center gap-0.5">
-                <span className="relative flex h-1.5 w-1.5 flex-shrink-0 mr-1">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-pink-500 opacity-60" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-pink-500" />
-                </span>
+              <div className="flex items-center gap-px">
                 {segments.map(({ val, unit }) => (
                   <div key={unit} className="flex items-baseline rounded-md px-2 py-1" style={{ background: 'rgba(226,0,116,0.1)' }}>
                     <span className="text-[13px] font-bold text-white leading-none tabular-nums">{val}</span>
-                    <span className="text-[9px] font-bold leading-none ml-0.5" style={{ color: '#e20074' }}>{unit}</span>
+                    <span className="text-[10px] font-extrabold leading-none ml-0.5" style={{ color: '#e20074' }}>{unit}</span>
                   </div>
                 ))}
               </div>
@@ -303,28 +299,6 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ── HORIZONTAL PILL TABS ─────────────────────────── */}
-        <section className="fade-hidden -mx-5 px-4">
-          <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
-            {menuItems.map((item) => {
-              const isActive = activeSection === item.href.slice(1);
-              return (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => expandSection(item.href)}
-                  className="flex-shrink-0 px-5 py-2.5 rounded-full text-sm font-bold transition-colors"
-                  style={isActive
-                    ? { background: 'transparent', color: '#e20074', border: '1.5px solid #e20074' }
-                    : { background: 'rgba(29,32,33,0.7)', color: '#e3bdc5', border: '1px solid rgba(255,255,255,0.08)' }
-                  }
-                >
-                  {item.label}
-                </a>
-              );
-            })}
-          </div>
-        </section>
 
         {/* ── INFO CARDS ────────────────────────────────────── */}
         <section className="fade-hidden space-y-3">
