@@ -330,23 +330,31 @@ export default function Page() {
 
           {/* Dates + Check-in — 2 column */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="glass-panel p-4 rounded-2xl flex flex-col gap-3 hover:border-pink-500/30 transition-all">
-              <div className="p-2 bg-pink-500/10 rounded-lg w-max">
-                <Icon name="event" className="text-pink-500" />
+            <a
+              href={icsDataUri}
+              download="sportovy-den-2026.ics"
+              className="glass-panel p-4 rounded-2xl flex flex-col justify-between hover:border-pink-500/30 transition-all"
+              style={{ minHeight: '120px' }}
+            >
+              <div className="flex justify-between items-start">
+                <div className="p-2 bg-pink-500/10 rounded-lg w-max">
+                  <Icon name="event" className="text-pink-500" />
+                </div>
+                <Icon name="download" className="text-white/20 text-[18px]" />
               </div>
               <div>
                 <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Dates</p>
                 <h3 className="font-bold text-white mt-1">14–15 May</h3>
-                <p className="text-body-sm text-on-surface-variant">2026</p>
+                <p className="text-[10px] text-pink-500/70 mt-1 font-semibold">+ Pridať do kalen.</p>
               </div>
-            </div>
+            </a>
             <div className="glass-panel p-4 rounded-2xl flex flex-col gap-3 hover:border-pink-500/30 transition-all">
               <div className="p-2 bg-pink-500/10 rounded-lg w-max">
                 <Icon name="login" className="text-pink-500" />
               </div>
               <div>
                 <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Check-in</p>
-                <h3 className="font-bold text-white mt-1">From 11:00</h3>
+                <h3 className="font-bold text-white mt-1">From 15:00</h3>
                 <p className="text-body-sm text-on-surface-variant">Pozícia 29</p>
               </div>
             </div>
