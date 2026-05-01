@@ -162,7 +162,7 @@ export default function Page() {
       '#prakticke-info': ['prakticke-info'],
     };
     const ids = map[href];
-    if (ids) setExpanded(prev => { const next = new Set(prev); ids.forEach(id => next.add(id)); return next; });
+    setExpanded(ids ? new Set(ids) : new Set());
   };
 
   useEffect(() => {
