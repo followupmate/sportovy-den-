@@ -207,19 +207,19 @@ export default function Page() {
           {/* Compact countdown */}
           {liveStatus?.phase === 'upcoming' && (() => {
             const { d, h, m, s } = formatCountdown(liveStatus.msLeft);
-            const segments = [
-              { val: String(d),                 unit: 'd' },
-              { val: String(h).padStart(2,'0'), unit: 'h' },
-              { val: String(m).padStart(2,'0'), unit: 'm' },
-              { val: String(s).padStart(2,'0'), unit: 's' },
-            ];
             return (
-              <div className="flex items-center gap-px">
-                {segments.map(({ val, unit }) => (
-                  <div key={unit} className="flex items-baseline rounded-md px-2 py-1" style={{ background: 'rgba(226,0,116,0.1)' }}>
-                    <span className="text-[13px] font-bold text-white leading-none tabular-nums">{val}</span>
-                    <span className="text-[10px] font-extrabold leading-none ml-0.5" style={{ color: '#e20074' }}>{unit}</span>
-                  </div>
+              <div className="flex items-baseline gap-1.5">
+                {[
+                  { val: String(d),                 unit: 'd' },
+                  { val: String(h).padStart(2,'0'), unit: 'h' },
+                  { val: String(m).padStart(2,'0'), unit: 'm' },
+                  { val: String(s).padStart(2,'0'), unit: 's' },
+                ].map(({ val, unit }, i) => (
+                  <span key={unit} className="flex items-baseline">
+                    {i > 0 && <span className="text-white/15 text-[11px] mr-1.5">·</span>}
+                    <span className="text-[15px] font-bold text-white tabular-nums leading-none">{val}</span>
+                    <span className="text-[10px] font-bold ml-0.5 leading-none" style={{ color: '#e20074' }}>{unit}</span>
+                  </span>
                 ))}
               </div>
             );
@@ -669,7 +669,14 @@ export default function Page() {
                   Čo si priniesť
                 </h3>
                 <ul className="space-y-2">
-                  {['Športové oblečenie a vhodná obuv', 'Veci do bazéna / wellness', 'Oblečenie na večerný program'].map((item) => (
+                  {[
+                    'Športové oblečenie a vhodná obuv',
+                    'Veci do bazéna / wellness',
+                    'Oblečenie na večerný program',
+                    'Náhradné tričko / ponožky',
+                    'Čiapka / šiltovka (pri slnku)',
+                    'Dobrá nálada a ochota zapojiť sa do aktivít',
+                  ].map((item) => (
                     <li key={item} className="flex items-center gap-2 text-sm text-slate-300">
                       <Icon name="check_circle" className="text-[16px] text-primary-container" />
                       {item}
@@ -736,6 +743,7 @@ export default function Page() {
             <a
               key={item.href}
               href={item.href}
+              onClick={() => expandSection(item.href)}
               className={`flex flex-col items-center justify-center transition-all duration-300 ${isActive ? 'text-pink-500 scale-110' : 'text-slate-500 hover:text-pink-400'}`}
             >
               <span className="relative">
