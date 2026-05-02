@@ -118,11 +118,20 @@ const teamTasks = [
 ];
 
 const mapPoints = [
-  { label: 'Šport. zóna', number: '29' },
-  { label: 'Olym-Pic',    number: '7'  },
-  { label: 'Gym',         number: '5'  },
-  { label: 'Wellness',    number: '11–14' },
+  { label: 'Šport. zóna',  number: '29'    },
+  { label: 'Olym-Pic',     number: '7'     },
+  { label: 'Gym',          number: '5'     },
+  { label: 'Wellness',     number: '11–14' },
+  { label: "Legends' Bar", number: '8'     },
 ];
+
+const mapPins: Record<string, { x: number; y: number; label: string; number: string }> = {
+  pos29: { x:  970, y:  395, label: 'Šport. zóna',  number: '29' },
+  pos7:  { x: 1040, y:  810, label: 'Olym-Pic',     number: '7'  },
+  pos8:  { x: 1075, y:  850, label: "Legends' Bar", number: '8'  },
+  pos5:  { x:  910, y:  800, label: 'Gym',          number: '5'  },
+  pos11: { x: 1055, y:  735, label: 'Wellness',     number: '11' },
+};
 
 const navItems = [
   { label: 'Program',    href: '#program',        icon: 'calendar_today' },
@@ -147,6 +156,7 @@ export default function Page() {
   const [activeSection, setActiveSection] = useState('program');
   const [menuOpen, setMenuOpen] = useState(false);
   const [mapTab, setMapTab] = useState<'areal' | 'budovy'>('areal');
+  const [selectedMapPin, setSelectedMapPin] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const toggleSection = (id: string) => setExpanded(prev =>
     prev.has(id) ? new Set() : new Set([id])
@@ -398,36 +408,91 @@ export default function Page() {
             </button>
           </div>
 
-          {/* Map image */}
+          {/* Map image + SVG overlay */}
           <div className="rounded-2xl overflow-hidden border border-white/10 relative">
-            {mapTab === 'areal' ? (
-              <img
-                src="/mapa-xbionic.jpg"
-                alt="Mapa areálu x-bionic® sphere"
-                className="w-full object-cover"
-                style={{ maxHeight: '320px', objectPosition: 'center' }}
-              />
-            ) : (
-              <img
-                src="/mapa-budovy.jpg"
-                alt="Mapa budov a reštaurácií x-bionic® sphere"
-                className="w-full object-cover"
-                style={{ maxHeight: '320px', objectPosition: 'center' }}
-              />
+            <img
+              src={mapTab === 'areal' ? '/mapa-xbionic.jpg' : '/mapa-budovy.jpg'}
+              alt="Mapa areálu x-bionic® sphere"
+              className="w-full object-cover"
+              style={{ maxHeight: '320px', objectPosition: 'center' }}
+            />
+            {mapTab === 'areal' && (
+              <svg
+                className="absolute inset-0 w-full h-full"
+                viewBox="0 0 1536 1314"
+                preserveAspectRatio="xMidYMid slice"
+                style={{ pointerEvents: 'none' }}
+              >
+                {/* Prerušovaná trasa k pozícii 29 */}
+                {selectedMapPin && selectedMapPin !== 'pos29' && mapPins[selectedMapPin] && (
+                  <line
+                    x1={mapPins[selectedMapPin].x} y1={mapPins[selectedMapPin].y}
+                    x2={mapPins.pos29.x}           y2={mapPins.pos29.y}
+                    stroke="#e20074" strokeWidth="4" strokeDasharray="14,7"
+                    strokeLinecap="round" opacity="0.9"
+                  />
+                )}
+                {/* Piny */}
+                {Object.entries(mapPins).map(([id, pin]) => {
+                  const isSel  = selectedMapPin === id;
+                  const isBase = id === 'pos29';
+                  return (
+                    <g key={id} style={{ pointerEvents: 'all', cursor: 'pointer' }}
+                      onClick={() => setSelectedMapPin(selectedMapPin === id ? null : id)}>
+                      {isSel && <circle cx={pin.x} cy={pin.y} r="36" fill="#e20074" opacity="0.18" />}
+                      <circle cx={pin.x} cy={pin.y} r={isSel ? 24 : 18}
+                        fill={isSel || isBase ? '#e20074' : 'rgba(226,0,116,0.72)'}
+                        stroke="white" strokeWidth="2.5" />
+                      <text x={pin.x} y={pin.y + 5} textAnchor="middle"
+                        fill="white" fontSize="14" fontWeight="bold"
+                        style={{ fontFamily: 'sans-serif', userSelect: 'none' }}>
+                        {pin.number}
+                      </text>
+                    </g>
+                  );
+                })}
+              </svg>
             )}
           </div>
 
-          {/* Key locations + nav links */}
-          <div className="mt-4 flex gap-2 overflow-x-auto pb-2 no-scrollbar">
-            {mapPoints.map((pt) => (
-              <div key={pt.label} className="flex-shrink-0 glass-panel px-3 py-2 rounded-full flex items-center gap-2">
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary-container text-[10px] font-bold text-white">
-                  {pt.number.length <= 2 ? pt.number : '·'}
+          {/* Selected pin info */}
+          {selectedMapPin && mapPins[selectedMapPin] && (
+            <div className="mt-3 flex items-center gap-3 glass-panel rounded-xl px-4 py-3">
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-pink-500 text-[11px] font-bold text-white flex-shrink-0">
+                {mapPins[selectedMapPin].number}
+              </span>
+              <span className="text-sm font-semibold text-white">{mapPins[selectedMapPin].label}</span>
+              {selectedMapPin !== 'pos29' && (
+                <span className="ml-auto text-[11px] text-pink-400 font-medium flex items-center gap-1">
+                  <Icon name="near_me" className="text-[14px]" />trasa → poz. 29
                 </span>
-                <span className="text-xs font-medium text-slate-300">{pt.label}</span>
-                {pt.number.length > 2 && <span className="text-xs text-slate-500">({pt.number})</span>}
-              </div>
-            ))}
+              )}
+            </div>
+          )}
+
+          {/* Key locations pill carousel */}
+          <div className="mt-4 flex gap-2 overflow-x-auto pb-2 no-scrollbar">
+            {mapPoints.map((pt) => {
+              const pinId    = `pos${pt.number.replace(/[–\-].*/, '')}`;
+              const isSel    = selectedMapPin === pinId;
+              return (
+                <button
+                  key={pt.label}
+                  onClick={() => setSelectedMapPin(isSel ? null : pinId)}
+                  className={`flex-shrink-0 px-3 py-2 rounded-full flex items-center gap-2 transition-all ${
+                    isSel ? 'bg-pink-500/15 border border-pink-500' : 'glass-panel'
+                  }`}
+                >
+                  <span className={`flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold ${
+                    isSel ? 'bg-pink-500 text-white' : 'bg-primary-container text-white'
+                  }`}>
+                    {pt.number.length <= 2 ? pt.number : '·'}
+                  </span>
+                  <span className={`text-xs font-medium ${isSel ? 'text-pink-400' : 'text-slate-300'}`}>{pt.label}</span>
+                  {pt.number.length > 2 && !isSel && <span className="text-xs text-slate-500">({pt.number})</span>}
+                </button>
+              );
+            })}
           </div>
 
           {/* Navigation links */}
