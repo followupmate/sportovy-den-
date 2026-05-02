@@ -109,3 +109,15 @@ body {
   transform-origin: center;
   animation: pin-pulse 1.4s ease-out 0.7s infinite;
 }
+
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-track {
+  display: flex;
+  white-space: nowrap;
+  will-change: transform;
+  animation: ticker 20s linear infinite;
+}

@@ -247,7 +247,7 @@ export default function Page() {
 
   const visibleAnns = announcements.filter(a => a.active && !dismissedIds.has(a.id));
   const showCountdownRow = liveStatus?.phase === 'upcoming' || liveStatus?.phase === 'active';
-  const bannerRowCount = (showCountdownRow ? 1 : 0) + visibleAnns.length;
+  const showBanner = showCountdownRow || visibleAnns.length > 0;
 
   return (
     <div className="min-h-screen bg-surface font-body-md text-on-surface">
@@ -275,65 +275,73 @@ export default function Page() {
         </div>
       </header>
 
-      {/* ── ANNOUNCEMENT BANNER ───────────────────────────────── */}
-      {bannerRowCount > 0 && (
-        <div className="fixed top-16 w-full z-40">
+      {/* ── ANNOUNCEMENT TICKER ───────────────────────────────── */}
+      {showBanner && (
+        <div className="fixed top-16 w-full z-40 overflow-hidden"
+          style={{ background: 'rgba(226,0,116,0.10)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(226,0,116,0.25)' }}>
+          <div className="ticker-track" style={{ animationDuration: `${20 + visibleAnns.length * 10}s` }}>
+            {[0, 1].map(copy => (
+              <span key={copy} className="inline-flex items-center shrink-0">
 
-          {/* Countdown / LIVE row */}
-          {liveStatus?.phase === 'upcoming' && (() => {
-            const { d, h, m, s } = formatCountdown(liveStatus.msLeft);
-            return (
-              <div className="flex items-center gap-3 px-4 py-3"
-                style={{ background: 'rgba(226,0,116,0.10)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(226,0,116,0.25)' }}>
-                <span className="text-[20px] flex-shrink-0" style={{ color: '#e20074' }}><Icon name="timer" /></span>
-                <div className="flex items-baseline gap-1.5 flex-1">
-                  <span className="text-[10px] uppercase tracking-[0.1em] font-semibold text-white/40 mr-1">do začiatku</span>
-                  {[
-                    { val: String(d),                  unit: 'd' },
-                    { val: String(h).padStart(2, '0'), unit: 'h' },
-                    { val: String(m).padStart(2, '0'), unit: 'm' },
-                    { val: String(s).padStart(2, '0'), unit: 's' },
-                  ].map(({ val, unit }, i) => (
-                    <span key={unit} className="flex items-baseline">
-                      {i > 0 && <span className="text-white/15 text-[11px] mr-1.5">·</span>}
-                      <span className="text-[17px] font-bold text-white tabular-nums leading-none">{val}</span>
-                      <span className="text-[11px] font-bold ml-0.5 leading-none" style={{ color: '#e20074' }}>{unit}</span>
+                {/* Countdown */}
+                {liveStatus?.phase === 'upcoming' && (() => {
+                  const { d, h, m, s } = formatCountdown(liveStatus.msLeft);
+                  return (
+                    <span className="inline-flex items-center gap-2 px-5 py-3">
+                      <span className="text-[18px] leading-none" style={{ color: '#e20074' }}><Icon name="timer" /></span>
+                      <span className="inline-flex items-baseline gap-1">
+                        <span className="text-[10px] uppercase tracking-widest text-white/40 mr-1">do začiatku</span>
+                        {[
+                          { val: String(d),                  unit: 'd' },
+                          { val: String(h).padStart(2, '0'), unit: 'h' },
+                          { val: String(m).padStart(2, '0'), unit: 'm' },
+                          { val: String(s).padStart(2, '0'), unit: 's' },
+                        ].map(({ val, unit }, i) => (
+                          <span key={unit} className="inline-flex items-baseline">
+                            {i > 0 && <span className="text-white/15 text-xs mx-1">·</span>}
+                            <span className="text-base font-bold text-white tabular-nums">{val}</span>
+                            <span className="text-[10px] font-bold ml-0.5" style={{ color: '#e20074' }}>{unit}</span>
+                          </span>
+                        ))}
+                      </span>
                     </span>
-                  ))}
-                </div>
-              </div>
-            );
-          })()}
-          {liveStatus?.phase === 'active' && (
-            <div className="flex items-center gap-3 px-4 py-3"
-              style={{ background: 'rgba(226,0,116,0.10)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(226,0,116,0.25)' }}>
-              <span className="w-2 h-2 rounded-full bg-pink-500 animate-pulse flex-shrink-0" />
-              <span className="text-sm font-bold text-white uppercase tracking-wider">LIVE – event prebieha</span>
-            </div>
-          )}
+                  );
+                })()}
 
-          {/* Manual announcements */}
-          {visibleAnns.map((ann) => {
-            const cfg = {
-              info:    { icon: 'campaign',     bg: 'rgba(226,0,116,0.12)',  border: 'rgba(226,0,116,0.35)',  text: '#e20074' },
-              warning: { icon: 'warning',      bg: 'rgba(249,115,22,0.12)', border: 'rgba(249,115,22,0.35)', text: '#fb923c' },
-              success: { icon: 'check_circle', bg: 'rgba(34,197,94,0.12)',  border: 'rgba(34,197,94,0.35)',  text: '#4ade80' },
-            }[ann.type];
-            return (
-              <div key={ann.id} className="flex items-center gap-3 px-4 py-3"
-                style={{ background: cfg.bg, backdropFilter: 'blur(12px)', borderBottom: `1px solid ${cfg.border}` }}>
-                <span className="text-[20px] flex-shrink-0" style={{ color: cfg.text }}><Icon name={cfg.icon} /></span>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-white leading-snug">{ann.text}</p>
-                  {ann.time && <p className="text-[11px] mt-0.5 font-medium" style={{ color: cfg.text }}>{ann.time}</p>}
-                </div>
-                <button onClick={() => dismissAnn(ann.id)}
-                  className="flex-shrink-0 p-1.5 rounded-full hover:bg-white/10 transition-colors" aria-label="Zavrieť">
-                  <Icon name="close" className="text-[18px] text-white/40" />
-                </button>
-              </div>
-            );
-          })}
+                {/* LIVE */}
+                {liveStatus?.phase === 'active' && (
+                  <span className="inline-flex items-center gap-2 px-5 py-3">
+                    <span className="w-2 h-2 rounded-full bg-pink-500 animate-pulse shrink-0" />
+                    <span className="text-sm font-bold text-white uppercase tracking-wider">LIVE – event prebieha</span>
+                  </span>
+                )}
+
+                {/* Separator */}
+                {showCountdownRow && visibleAnns.length > 0 && (
+                  <span className="text-white/25 select-none px-3">·</span>
+                )}
+
+                {/* Manual announcements */}
+                {visibleAnns.map((ann, i) => {
+                  const colorMap = { info: '#e20074', warning: '#fb923c', success: '#4ade80' } as const;
+                  const iconMap  = { info: 'campaign', warning: 'warning', success: 'check_circle' } as const;
+                  return (
+                    <span key={ann.id} className="inline-flex items-center gap-2 px-5 py-3">
+                      {i > 0 && <span className="text-white/25 select-none mr-3">·</span>}
+                      <span className="text-[18px] leading-none" style={{ color: colorMap[ann.type] }}><Icon name={iconMap[ann.type]} /></span>
+                      <span className="text-sm font-semibold text-white">
+                        {ann.text}
+                        {ann.time && <span className="text-[11px] font-medium ml-2" style={{ color: colorMap[ann.type] }}>{ann.time}</span>}
+                      </span>
+                    </span>
+                  );
+                })}
+
+                {/* Gap before loop repeats */}
+                <span className="inline-block w-20 shrink-0" />
+              </span>
+            ))}
+          </div>
         </div>
       )}
 
@@ -368,7 +376,7 @@ export default function Page() {
         </div>
       )}
 
-      <main className="pb-28 px-5 max-w-md mx-auto space-y-10" style={{ paddingTop: `${80 + bannerRowCount * 52}px` }}>
+      <main className="pb-28 px-5 max-w-md mx-auto space-y-10" style={{ paddingTop: showBanner ? '128px' : '80px' }}>
 
         {/* ── HERO BANNER ───────────────────────────────────── */}
         <section className="fade-hidden -mx-5">
