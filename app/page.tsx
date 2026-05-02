@@ -148,11 +148,9 @@ export default function Page() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [mapTab, setMapTab] = useState<'areal' | 'budovy'>('areal');
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
-  const toggleSection = (id: string) => setExpanded(prev => {
-    const next = new Set(prev);
-    if (next.has(id)) next.delete(id); else next.add(id);
-    return next;
-  });
+  const toggleSection = (id: string) => setExpanded(prev =>
+    prev.has(id) ? new Set() : new Set([id])
+  );
 
   const expandSection = (href: string) => {
     const map: Record<string, string[]> = {
@@ -198,30 +196,39 @@ export default function Page() {
 
       {/* ── HEADER ────────────────────────────────────────────── */}
       <header className="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/10 shadow-lg flex items-center px-5 h-16">
-        {/* Left group: home + countdown */}
-        <div className="flex items-center gap-3 flex-1">
-          <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-white hover:bg-white/5 transition-colors p-2 rounded-full flex-shrink-0">
+        {/* Left */}
+        <div className="flex-1">
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="text-white p-2 rounded-full flex-shrink-0 transition-colors hover:bg-white/5"
+            style={{ border: '1.5px solid rgba(226,0,116,0.35)' }}
+          >
             <Icon name="home" className="text-[22px]" />
           </button>
+        </div>
 
-          {/* Compact countdown */}
+        {/* Center: countdown */}
+        <div className="flex flex-col items-center">
           {liveStatus?.phase === 'upcoming' && (() => {
             const { d, h, m, s } = formatCountdown(liveStatus.msLeft);
             return (
-              <div className="flex items-baseline gap-1.5">
-                {[
-                  { val: String(d),                 unit: 'd' },
-                  { val: String(h).padStart(2,'0'), unit: 'h' },
-                  { val: String(m).padStart(2,'0'), unit: 'm' },
-                  { val: String(s).padStart(2,'0'), unit: 's' },
-                ].map(({ val, unit }, i) => (
-                  <span key={unit} className="flex items-baseline">
-                    {i > 0 && <span className="text-white/15 text-[11px] mr-1.5">·</span>}
-                    <span className="text-[15px] font-bold text-white tabular-nums leading-none">{val}</span>
-                    <span className="text-[10px] font-bold ml-0.5 leading-none" style={{ color: '#e20074' }}>{unit}</span>
-                  </span>
-                ))}
-              </div>
+              <>
+                <span className="text-[9px] uppercase tracking-[0.12em] font-semibold text-white/35 leading-none mb-1">do začiatku</span>
+                <div className="flex items-baseline gap-1.5">
+                  {[
+                    { val: String(d),                 unit: 'd' },
+                    { val: String(h).padStart(2,'0'), unit: 'h' },
+                    { val: String(m).padStart(2,'0'), unit: 'm' },
+                    { val: String(s).padStart(2,'0'), unit: 's' },
+                  ].map(({ val, unit }, i) => (
+                    <span key={unit} className="flex items-baseline">
+                      {i > 0 && <span className="text-white/15 text-[11px] mr-1.5">·</span>}
+                      <span className="text-[15px] font-bold text-white tabular-nums leading-none">{val}</span>
+                      <span className="text-[10px] font-bold ml-0.5 leading-none" style={{ color: '#e20074' }}>{unit}</span>
+                    </span>
+                  ))}
+                </div>
+              </>
             );
           })()}
           {liveStatus?.phase === 'active' && (
@@ -229,9 +236,12 @@ export default function Page() {
           )}
         </div>
 
-        <button onClick={() => setMenuOpen(true)} className="text-pink-500 hover:bg-white/5 transition-colors p-2 rounded-full flex-shrink-0">
-          <Icon name="menu" />
-        </button>
+        {/* Right */}
+        <div className="flex-1 flex justify-end">
+          <button onClick={() => setMenuOpen(true)} className="text-pink-500 hover:bg-white/5 transition-colors p-2 rounded-full flex-shrink-0">
+            <Icon name="menu" />
+          </button>
+        </div>
       </header>
 
       {/* ── BURGER MENU OVERLAY ───────────────────────────────── */}
