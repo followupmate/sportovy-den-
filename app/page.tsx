@@ -118,19 +118,23 @@ const teamTasks = [
 ];
 
 const mapPoints = [
-  { label: 'Šport. zóna',  number: '29'    },
-  { label: 'Olym-Pic',     number: '7'     },
-  { label: 'Gym',          number: '5'     },
-  { label: 'Wellness',     number: '11–14' },
-  { label: "Legends' Bar", number: '8'     },
+  { label: 'Šport. zóna',  number: '29' },
+  { label: 'Olym-Pic',     number: '7'  },
+  { label: 'Gym',          number: '5'  },
+  { label: 'Wellness',     number: '11' },
+  { label: 'Krytý bazén',  number: '12' },
+  { label: 'Vonk. bazén',  number: '14' },
+  { label: "Legends' Bar", number: '8'  },
 ];
 
 const mapPins: Record<string, { x: number; y: number; label: string; number: string }> = {
-  pos29: { x:  970, y:  395, label: 'Šport. zóna',  number: '29' },
-  pos7:  { x: 1040, y:  810, label: 'Olym-Pic',     number: '7'  },
-  pos8:  { x: 1075, y:  850, label: "Legends' Bar", number: '8'  },
-  pos5:  { x:  910, y:  800, label: 'Gym',          number: '5'  },
-  pos11: { x: 1055, y:  735, label: 'Wellness',     number: '11' },
+  pos29: { x: 1152, y:  717, label: 'Šport. zóna',  number: '29' },
+  pos5:  { x: 1054, y:  811, label: 'Gym',          number: '5'  },
+  pos11: { x:  932, y:  846, label: 'Wellness',     number: '11' },
+  pos12: { x:  852, y:  827, label: 'Krytý bazén',  number: '12' },
+  pos7:  { x: 1030, y:  870, label: 'Olym-Pic',     number: '7'  },
+  pos8:  { x: 1053, y:  910, label: "Legends' Bar", number: '8'  },
+  pos14: { x:  768, y:  838, label: 'Vonk. bazén',  number: '14' },
 };
 
 const navItems = [
