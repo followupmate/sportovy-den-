@@ -96,12 +96,12 @@ const dayBlocks = [
 ];
 
 const disciplines = [
-  { name: 'Lukostreľba',  description: 'Zameraj a zasiahni stred terča.',  badge: 'Presnosť', icon: 'target',         color: 'primary',   image: 'https://images.unsplash.com/photo-1555597673-b21d5c935865?w=400' },
-  { name: 'Vzduchovka',   description: 'Športová streľba na pevný terč.',  badge: 'Presnosť', icon: 'crossword',      color: 'primary',   image: 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=400' },
-  { name: 'Airsoft',      description: 'Dynamická strelnica v teréne.',     badge: 'Outdoor',  icon: 'shield',         color: 'secondary', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400' },
-  { name: 'Penalty',      description: 'Prekonaj brankára v súboji.',       badge: 'Presnosť', icon: 'sports_soccer',  color: 'primary',   image: 'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=400' },
-  { name: 'Hod oštepom',  description: 'Klasická atletická disciplína.',    badge: 'Sila',     icon: 'fitness_center', color: 'neutral',   image: 'https://images.unsplash.com/photo-1591491634026-6cc1d8a0c542?w=400' },
-  { name: 'Discgolf',     description: 'Trať s košmi v areáli parku.',      badge: 'Outdoor',  icon: 'sports',         color: 'secondary', image: 'https://images.unsplash.com/photo-1547041547050-1b6add6db0ef?w=400', pending: true },
+  { name: 'Lukostreľba',  description: 'Zameraj a zasiahni stred terča.',  badge: 'Presnosť', icon: 'target',         color: 'primary',   image: '/discipliny/lukostrelbba.jpg' },
+  { name: 'Vzduchovka',   description: 'Športová streľba na pevný terč.',  badge: 'Presnosť', icon: 'crossword',      color: 'primary',   image: '/discipliny/vzduchovka.jpg'   },
+  { name: 'Airsoft',      description: 'Dynamická strelnica v teréne.',     badge: 'Outdoor',  icon: 'shield',         color: 'secondary', image: '/discipliny/airsoft.jpg'       },
+  { name: 'Penalty',      description: 'Prekonaj brankára v súboji.',       badge: 'Presnosť', icon: 'sports_soccer',  color: 'primary',   image: '/discipliny/penalty.jpg'       },
+  { name: 'Hod oštepom',  description: 'Klasická atletická disciplína.',    badge: 'Sila',     icon: 'fitness_center', color: 'neutral',   image: '/discipliny/hod-ostepom.jpg'  },
+  { name: 'Discgolf',     description: 'Trať s košmi v areáli parku.',      badge: 'Outdoor',  icon: 'sports',         color: 'secondary', image: '/discipliny/discgolf.jpg',     pending: true },
 ];
 
 const tournaments = [
@@ -378,71 +378,6 @@ export default function Page() {
           </div>
         </section>
 
-
-
-        {/* ── PROGRAM TIMELINE ──────────────────────────────── */}
-        <section id="program" className="fade-hidden">
-
-          <div className="flex justify-between items-end mb-5">
-            <h2 className="font-headline-md text-headline-md text-on-surface">Program</h2>
-            <span className="text-primary text-label-md">{dayBlocks[activeDay].blocks.length} blokov</span>
-          </div>
-
-          {/* Day tabs */}
-          <div className="flex gap-3 p-1 bg-slate-900/50 rounded-xl border border-white/5 mb-6">
-            {dayBlocks.map((day, i) => (
-              <button
-                key={day.day}
-                onClick={() => setActiveDay(i)}
-                className={`flex-1 py-3 px-4 rounded-lg font-label-lg text-center transition-all active:scale-95 ${
-                  activeDay === i
-                    ? 'bg-primary-container text-on-primary-container shadow-lg'
-                    : 'text-slate-400 hover:bg-white/5'
-                }`}
-              >
-                {day.day} <span className="opacity-60 text-xs">{day.date}</span>
-              </button>
-            ))}
-          </div>
-
-          {/* Timeline */}
-          <div className="space-y-4 relative timeline-line">
-            {dayBlocks[activeDay].blocks.map((block, idx) => {
-              const cfg = blockTypeConfig[block.type];
-              const isLive = liveStatus?.phase === 'active' && liveStatus.dayIndex === activeDay && liveStatus.blockIndex === idx;
-              return (
-                <div key={idx} className="relative flex gap-4 items-start">
-                  <div className={`relative z-10 w-10 h-10 flex-shrink-0 rounded-full border-2 border-primary-container bg-slate-950 flex items-center justify-center ${isLive ? 'shadow-[0_0_15px_rgba(226,0,116,0.4)]' : ''}`}>
-                    <Icon name={'icon' in block ? (block as {icon: string}).icon : cfg.icon} className="text-primary-container text-[20px]" />
-                  </div>
-                  <div className={`flex-1 glass-card rounded-xl p-4 transition-all hover:border-pink-500/20 ${cfg.accent} ${isLive ? 'border-primary-container/30' : ''}`}>
-                    <div className="flex justify-between items-start mb-1">
-                      <span className="font-label-md text-primary-container">{block.time.split(' – ')[0]}</span>
-                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${cfg.badgeCls}`}>{cfg.label}</span>
-                    </div>
-                    <h3 className="font-semibold text-slate-50">{block.title}</h3>
-                    {block.location && (
-                      <div className="flex items-center gap-1 mt-2 text-slate-400">
-                        <Icon name="location_on" className="text-[16px]" />
-                        <span className="text-body-sm">{block.location}</span>
-                      </div>
-                    )}
-                    {isLive && (
-                      <div className="mt-2 flex items-center gap-1.5">
-                        <span className="relative flex h-1.5 w-1.5">
-                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-pink-500 opacity-75" />
-                          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-pink-500" />
-                        </span>
-                        <span className="text-[10px] font-bold text-pink-500 uppercase tracking-wider">Práve teraz</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
         {/* ── MAPA ──────────────────────────────────────────── */}
         <section id="mapa" className="fade-hidden">
           <h2 className="font-headline-md text-headline-md text-on-surface mb-4">Mapa areálu</h2>
@@ -527,6 +462,69 @@ export default function Page() {
               <Icon name="navigation" className="text-[18px]" />
               Navigovať sem
             </a>
+          </div>
+        </section>
+
+        {/* ── PROGRAM TIMELINE ──────────────────────────────── */}
+        <section id="program" className="fade-hidden">
+
+          <div className="flex justify-between items-end mb-5">
+            <h2 className="font-headline-md text-headline-md text-on-surface">Program</h2>
+            <span className="text-primary text-label-md">{dayBlocks[activeDay].blocks.length} blokov</span>
+          </div>
+
+          {/* Day tabs */}
+          <div className="flex gap-3 p-1 bg-slate-900/50 rounded-xl border border-white/5 mb-6">
+            {dayBlocks.map((day, i) => (
+              <button
+                key={day.day}
+                onClick={() => setActiveDay(i)}
+                className={`flex-1 py-3 px-4 rounded-lg font-label-lg text-center transition-all active:scale-95 ${
+                  activeDay === i
+                    ? 'bg-primary-container text-on-primary-container shadow-lg'
+                    : 'text-slate-400 hover:bg-white/5'
+                }`}
+              >
+                {day.day} <span className="opacity-60 text-xs">{day.date}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Timeline */}
+          <div className="space-y-4 relative timeline-line">
+            {dayBlocks[activeDay].blocks.map((block, idx) => {
+              const cfg = blockTypeConfig[block.type];
+              const isLive = liveStatus?.phase === 'active' && liveStatus.dayIndex === activeDay && liveStatus.blockIndex === idx;
+              return (
+                <div key={idx} className="relative flex gap-4 items-start">
+                  <div className={`relative z-10 w-10 h-10 flex-shrink-0 rounded-full border-2 border-primary-container bg-slate-950 flex items-center justify-center ${isLive ? 'shadow-[0_0_15px_rgba(226,0,116,0.4)]' : ''}`}>
+                    <Icon name={'icon' in block ? (block as {icon: string}).icon : cfg.icon} className="text-primary-container text-[20px]" />
+                  </div>
+                  <div className={`flex-1 glass-card rounded-xl p-4 transition-all hover:border-pink-500/20 ${cfg.accent} ${isLive ? 'border-primary-container/30' : ''}`}>
+                    <div className="flex justify-between items-start mb-1">
+                      <span className="font-label-md text-primary-container">{block.time.split(' – ')[0]}</span>
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${cfg.badgeCls}`}>{cfg.label}</span>
+                    </div>
+                    <h3 className="font-semibold text-slate-50">{block.title}</h3>
+                    {block.location && (
+                      <div className="flex items-center gap-1 mt-2 text-slate-400">
+                        <Icon name="location_on" className="text-[16px]" />
+                        <span className="text-body-sm">{block.location}</span>
+                      </div>
+                    )}
+                    {isLive && (
+                      <div className="mt-2 flex items-center gap-1.5">
+                        <span className="relative flex h-1.5 w-1.5">
+                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-pink-500 opacity-75" />
+                          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-pink-500" />
+                        </span>
+                        <span className="text-[10px] font-bold text-pink-500 uppercase tracking-wider">Práve teraz</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
 
