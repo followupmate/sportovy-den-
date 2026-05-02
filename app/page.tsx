@@ -129,7 +129,7 @@ const mapPoints = [
 ];
 
 const mapPins: Record<string, { x: number; y: number; label: string; number: string }> = {
-  pos1:  { x: 1048, y:  760, label: 'Hotel / Check-in', number: '1'  },
+  pos1:  { x: 1092, y:  840, label: 'Hotel / Check-in', number: '1'  },
   pos29: { x: 1152, y:  717, label: 'Šport. zóna',      number: '29' },
   pos5:  { x: 1054, y:  811, label: 'Gym',              number: '5'  },
   pos11: { x:  932, y:  846, label: 'Wellness',         number: '11' },
@@ -217,9 +217,9 @@ export default function Page() {
         <div className="flex-1">
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="flex-shrink-0 transition-opacity hover:opacity-75"
+            className="text-white hover:bg-white/5 transition-colors p-2 rounded-full flex-shrink-0"
           >
-            <img src="/logo.png" alt="Home" className="h-8 w-auto" />
+            <Icon name="home" className="text-[22px]" />
           </button>
         </div>
 
