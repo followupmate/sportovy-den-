@@ -92,3 +92,12 @@ body {
   opacity: 1;
   transform: none;
 }
+
+@keyframes draw-route {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+
+.map-route {
+  animation: draw-route 0.65s ease-out forwards;
+}
