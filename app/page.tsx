@@ -105,9 +105,9 @@ const disciplines = [
 ];
 
 const tournaments = [
-  { name: 'Futbal',     location: 'Main Field',     note: 'Presný rozpis bude riešený na mieste s agentúrou.', pending: true, image: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600' },
-  { name: 'Volejbal',   location: 'Main Field',     note: 'Presný rozpis bude riešený na mieste s agentúrou.', pending: true, image: 'https://images.unsplash.com/photo-1547347298-4074fc3086f0?w=600' },
-  { name: 'Streetball', location: 'Concrete Court', note: 'Presný rozpis bude riešený na mieste s agentúrou.', pending: true, image: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600' },
+  { name: 'Futbal',     location: 'Main Field',     note: 'Presný rozpis bude riešený na mieste s agentúrou.', pending: true, image: '/turnaje/futbal.jpg'     },
+  { name: 'Volejbal',   location: 'Main Field',     note: 'Presný rozpis bude riešený na mieste s agentúrou.', pending: true, image: '/turnaje/volejbal.jpg'   },
+  { name: 'Streetball', location: 'Concrete Court', note: 'Presný rozpis bude riešený na mieste s agentúrou.', pending: true, image: '/turnaje/streetball.jpg' },
 ];
 
 const teamTasks = [
@@ -215,10 +215,9 @@ export default function Page() {
         <div className="flex-1">
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="text-white p-2 rounded-full flex-shrink-0 transition-colors hover:bg-white/5"
-            style={{ border: '1.5px solid rgba(226,0,116,0.35)' }}
+            className="flex-shrink-0 transition-opacity hover:opacity-75"
           >
-            <Icon name="home" className="text-[22px]" />
+            <img src="/logo.png" alt="Home" className="h-8 w-auto" />
           </button>
         </div>
 
