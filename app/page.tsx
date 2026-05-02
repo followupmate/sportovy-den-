@@ -118,10 +118,11 @@ const teamTasks = [
 ];
 
 const mapPoints = [
-  { label: 'Šport. zóna', number: '29' },
-  { label: 'Olym-Pic',    number: '7'  },
-  { label: 'Gym',         number: '5'  },
-  { label: 'Wellness',    number: '11–14' },
+  { label: 'Šport. zóna',  number: '29'    },
+  { label: 'Olym-Pic',     number: '7'     },
+  { label: 'Gym',          number: '5'     },
+  { label: 'Wellness',     number: '11–14' },
+  { label: "Legends' Bar", number: '8'     },
 ];
 
 const navItems = [
