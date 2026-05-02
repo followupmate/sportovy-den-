@@ -214,37 +214,35 @@ export default function Page() {
       {/* ── HEADER ────────────────────────────────────────────── */}
       <header className="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/10 shadow-lg flex items-center px-5 h-16">
         {/* Left */}
-        <div className="flex-1">
+        <div className="flex-1 flex items-center">
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="text-white hover:bg-white/5 transition-colors p-2 rounded-full flex-shrink-0"
+            className="text-pink-500 hover:bg-white/5 transition-colors p-2 rounded-full flex-shrink-0"
           >
             <Icon name="home" className="text-[22px]" />
           </button>
         </div>
 
         {/* Center: countdown */}
-        <div className="flex flex-col items-center">
+        <div className="flex items-center">
           {liveStatus?.phase === 'upcoming' && (() => {
             const { d, h, m, s } = formatCountdown(liveStatus.msLeft);
             return (
-              <>
-                <span className="text-[9px] uppercase tracking-[0.12em] font-semibold text-white/35 leading-none mb-1">do začiatku</span>
-                <div className="flex items-baseline gap-1.5">
-                  {[
-                    { val: String(d),                 unit: 'd' },
-                    { val: String(h).padStart(2,'0'), unit: 'h' },
-                    { val: String(m).padStart(2,'0'), unit: 'm' },
-                    { val: String(s).padStart(2,'0'), unit: 's' },
-                  ].map(({ val, unit }, i) => (
-                    <span key={unit} className="flex items-baseline">
-                      {i > 0 && <span className="text-white/15 text-[11px] mr-1.5">·</span>}
-                      <span className="text-[15px] font-bold text-white tabular-nums leading-none">{val}</span>
-                      <span className="text-[10px] font-bold ml-0.5 leading-none" style={{ color: '#e20074' }}>{unit}</span>
-                    </span>
-                  ))}
-                </div>
-              </>
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-[9px] uppercase tracking-[0.1em] font-semibold text-white/30 leading-none mr-0.5">do začiatku</span>
+                {[
+                  { val: String(d),                 unit: 'd' },
+                  { val: String(h).padStart(2,'0'), unit: 'h' },
+                  { val: String(m).padStart(2,'0'), unit: 'm' },
+                  { val: String(s).padStart(2,'0'), unit: 's' },
+                ].map(({ val, unit }, i) => (
+                  <span key={unit} className="flex items-baseline">
+                    {i > 0 && <span className="text-white/15 text-[11px] mr-1.5">·</span>}
+                    <span className="text-[15px] font-bold text-white tabular-nums leading-none">{val}</span>
+                    <span className="text-[10px] font-bold ml-0.5 leading-none" style={{ color: '#e20074' }}>{unit}</span>
+                  </span>
+                ))}
+              </div>
             );
           })()}
           {liveStatus?.phase === 'active' && (
@@ -253,7 +251,7 @@ export default function Page() {
         </div>
 
         {/* Right */}
-        <div className="flex-1 flex justify-end">
+        <div className="flex-1 flex items-center justify-end">
           <button onClick={() => setMenuOpen(true)} className="text-pink-500 hover:bg-white/5 transition-colors p-2 rounded-full flex-shrink-0">
             <Icon name="menu" />
           </button>
