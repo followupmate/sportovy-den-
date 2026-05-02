@@ -157,6 +157,27 @@ const menuItems = [
   { label: 'Wellness',       href: '#wellness',       icon: 'spa'            },
 ];
 
+type AnnouncementType = 'info' | 'warning' | 'success';
+type Announcement = {
+  id: string;
+  text: string;
+  time?: string;
+  type: AnnouncementType;
+  active: boolean;
+};
+
+// ── OZNAMY – edituj počas eventu, potom git push ──────────────
+const announcements: Announcement[] = [
+  // Príklad:
+  // {
+  //   id: 'ann-001',
+  //   text: 'Večera začína o 19:30 v Olym-Pic (pos. 7).',
+  //   time: '19:15',
+  //   type: 'info',
+  //   active: true,
+  // },
+];
+
 export default function Page() {
   const [activeDay, setActiveDay] = useState(0);
   const [liveStatus, setLiveStatus] = useState<LiveStatus | null>(null);
@@ -165,6 +186,7 @@ export default function Page() {
   const [mapTab, setMapTab] = useState<'areal' | 'budovy'>('areal');
   const [selectedMapPin, setSelectedMapPin] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  const [dismissedIds, setDismissedIds] = useState<Set<string>>(new Set());
   const toggleSection = (id: string) => setExpanded(prev =>
     prev.has(id) ? new Set() : new Set([id])
   );
@@ -178,6 +200,14 @@ export default function Page() {
     };
     const ids = map[href];
     setExpanded(ids ? new Set(ids) : new Set());
+  };
+
+  const dismissAnn = (id: string) => {
+    setDismissedIds(prev => {
+      const next = new Set(prev).add(id);
+      try { sessionStorage.setItem('dismissed-ann', JSON.stringify([...next])); } catch { /* noop */ }
+      return next;
+    });
   };
 
   useEffect(() => {
@@ -207,6 +237,15 @@ export default function Page() {
     ids.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
     return () => obs.disconnect();
   }, []);
+
+  useEffect(() => {
+    try {
+      const stored = sessionStorage.getItem('dismissed-ann');
+      if (stored) setDismissedIds(new Set(JSON.parse(stored)));
+    } catch { /* noop */ }
+  }, []);
+
+  const visibleAnns = announcements.filter(a => a.active && !dismissedIds.has(a.id));
 
   return (
     <div className="min-h-screen bg-surface font-body-md text-on-surface">
@@ -258,6 +297,33 @@ export default function Page() {
         </div>
       </header>
 
+      {/* ── ANNOUNCEMENT BANNER ───────────────────────────────── */}
+      {visibleAnns.length > 0 && (
+        <div className="fixed top-16 w-full z-40">
+          {visibleAnns.map((ann) => {
+            const cfg = {
+              info:    { icon: 'campaign',     bg: 'rgba(226,0,116,0.12)',  border: 'rgba(226,0,116,0.35)',  text: '#e20074' },
+              warning: { icon: 'warning',      bg: 'rgba(249,115,22,0.12)', border: 'rgba(249,115,22,0.35)', text: '#fb923c' },
+              success: { icon: 'check_circle', bg: 'rgba(34,197,94,0.12)',  border: 'rgba(34,197,94,0.35)',  text: '#4ade80' },
+            }[ann.type];
+            return (
+              <div key={ann.id} className="flex items-center gap-3 px-4 py-3"
+                style={{ background: cfg.bg, backdropFilter: 'blur(12px)', borderBottom: `1px solid ${cfg.border}` }}>
+                <Icon name={cfg.icon} className="text-[20px] flex-shrink-0" style={{ color: cfg.text }} />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-white leading-snug">{ann.text}</p>
+                  {ann.time && <p className="text-[11px] mt-0.5 font-medium" style={{ color: cfg.text }}>{ann.time}</p>}
+                </div>
+                <button onClick={() => dismissAnn(ann.id)}
+                  className="flex-shrink-0 p-1.5 rounded-full hover:bg-white/10 transition-colors" aria-label="Zavrieť">
+                  <Icon name="close" className="text-[18px] text-white/40" />
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
       {/* ── BURGER MENU OVERLAY ───────────────────────────────── */}
       {menuOpen && (
         <div className="fixed inset-0 z-[100] flex">
@@ -289,7 +355,7 @@ export default function Page() {
         </div>
       )}
 
-      <main className="pt-20 pb-28 px-5 max-w-md mx-auto space-y-10">
+      <main className={`${visibleAnns.length > 0 ? 'pt-[132px]' : 'pt-20'} pb-28 px-5 max-w-md mx-auto space-y-10`}>
 
         {/* ── HERO BANNER ───────────────────────────────────── */}
         <section className="fade-hidden -mx-5">
@@ -766,10 +832,10 @@ export default function Page() {
           )}
         </section>
 
-        {/* ── KONTAKT ───────────────────────────────────────── */}
+        {/* ── KONTAKT & OZNAMY ──────────────────────────────── */}
         <section id="kontakt" className="fade-hidden">
-          <h2 className="font-headline-md text-headline-md text-on-surface mb-5">Kontakt</h2>
-          <div className="glass-card rounded-2xl p-5">
+          <h2 className="font-headline-md text-headline-md text-on-surface mb-5">Kontakt & Oznamy</h2>
+          <div className="glass-card rounded-2xl p-5 mb-4">
             <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-4">Hlavný kontakt</p>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center">
@@ -780,6 +846,35 @@ export default function Page() {
                 <a href="tel:0915991413" className="text-sm text-slate-400 hover:text-pink-400 transition-colors">0915 991 413</a>
               </div>
             </div>
+          </div>
+          <div className="glass-card rounded-2xl p-5">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-4">Oznamy</p>
+            {announcements.length === 0 ? (
+              <p className="text-sm text-slate-500">Zatiaľ žiadne oznamy.</p>
+            ) : (
+              <div className="flex flex-col gap-3">
+                {[...announcements].reverse().map((ann) => {
+                  const cfg = {
+                    info:    { icon: 'campaign',     text: '#e20074' },
+                    warning: { icon: 'warning',      text: '#fb923c' },
+                    success: { icon: 'check_circle', text: '#4ade80' },
+                  }[ann.type];
+                  return (
+                    <div key={ann.id} className={`flex items-start gap-3 ${!ann.active ? 'opacity-40' : ''}`}>
+                      <Icon name={cfg.icon} className="text-[18px] flex-shrink-0 mt-0.5"
+                        style={{ color: ann.active ? cfg.text : '#6b7280' }} />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm text-white leading-snug">{ann.text}</p>
+                        <div className="flex items-center gap-2 mt-0.5">
+                          {ann.time && <span className="text-[11px] text-slate-500">{ann.time}</span>}
+                          {!ann.active && <span className="text-[11px] text-slate-600">archív</span>}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </section>
 
