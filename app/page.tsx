@@ -285,7 +285,7 @@ export default function Page() {
             return (
               <div className="flex items-center gap-3 px-4 py-3"
                 style={{ background: 'rgba(226,0,116,0.10)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(226,0,116,0.25)' }}>
-                <Icon name="timer" className="text-[20px] flex-shrink-0" style={{ color: '#e20074' }} />
+                <span className="text-[20px] flex-shrink-0" style={{ color: '#e20074' }}><Icon name="timer" /></span>
                 <div className="flex items-baseline gap-1.5 flex-1">
                   <span className="text-[10px] uppercase tracking-[0.1em] font-semibold text-white/40 mr-1">do začiatku</span>
                   {[
@@ -322,7 +322,7 @@ export default function Page() {
             return (
               <div key={ann.id} className="flex items-center gap-3 px-4 py-3"
                 style={{ background: cfg.bg, backdropFilter: 'blur(12px)', borderBottom: `1px solid ${cfg.border}` }}>
-                <Icon name={cfg.icon} className="text-[20px] flex-shrink-0" style={{ color: cfg.text }} />
+                <span className="text-[20px] flex-shrink-0" style={{ color: cfg.text }}><Icon name={cfg.icon} /></span>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-semibold text-white leading-snug">{ann.text}</p>
                   {ann.time && <p className="text-[11px] mt-0.5 font-medium" style={{ color: cfg.text }}>{ann.time}</p>}
@@ -874,8 +874,7 @@ export default function Page() {
                   }[ann.type];
                   return (
                     <div key={ann.id} className={`flex items-start gap-3 ${!ann.active ? 'opacity-40' : ''}`}>
-                      <Icon name={cfg.icon} className="text-[18px] flex-shrink-0 mt-0.5"
-                        style={{ color: ann.active ? cfg.text : '#6b7280' }} />
+                      <span className="text-[18px] flex-shrink-0 mt-0.5" style={{ color: ann.active ? cfg.text : '#6b7280' }}><Icon name={cfg.icon} /></span>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm text-white leading-snug">{ann.text}</p>
                         <div className="flex items-center gap-2 mt-0.5">
