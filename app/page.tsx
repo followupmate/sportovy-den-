@@ -131,10 +131,19 @@ const mapPins: Record<string, { x: number; y: number; label: string; number: str
   pos29: { x: 1152, y:  717, label: 'Šport. zóna',  number: '29' },
   pos5:  { x: 1054, y:  811, label: 'Gym',          number: '5'  },
   pos11: { x:  932, y:  846, label: 'Wellness',     number: '11' },
-  pos12: { x:  852, y:  827, label: 'Krytý bazén',  number: '12' },
+  pos12: { x:  890, y:  856, label: 'Krytý bazén',  number: '12' },
   pos7:  { x: 1030, y:  870, label: 'Olym-Pic',     number: '7'  },
   pos8:  { x: 1053, y:  910, label: "Legends' Bar", number: '8'  },
-  pos14: { x:  768, y:  838, label: 'Vonk. bazén',  number: '14' },
+  pos14: { x:  825, y:  869, label: 'Vonk. bazén',  number: '14' },
+};
+
+const mapRoutes: Record<string, [number, number][]> = {
+  pos5:  [[1054,811],[1100,778],[1152,717]],
+  pos7:  [[1030,870],[1095,835],[1128,778],[1152,717]],
+  pos8:  [[1053,910],[1100,868],[1128,800],[1152,717]],
+  pos11: [[932,846],[990,820],[1068,774],[1152,717]],
+  pos12: [[890,856],[958,832],[1042,788],[1152,717]],
+  pos14: [[825,869],[898,852],[988,822],[1078,772],[1152,717]],
 };
 
 const navItems = [
@@ -427,13 +436,17 @@ export default function Page() {
                 preserveAspectRatio="xMidYMid slice"
                 style={{ pointerEvents: 'none' }}
               >
-                {/* Prerušovaná trasa k pozícii 29 */}
-                {selectedMapPin && selectedMapPin !== 'pos29' && mapPins[selectedMapPin] && (
-                  <line
-                    x1={mapPins[selectedMapPin].x} y1={mapPins[selectedMapPin].y}
-                    x2={mapPins.pos29.x}           y2={mapPins.pos29.y}
-                    stroke="#e20074" strokeWidth="4" strokeDasharray="14,7"
-                    strokeLinecap="round" opacity="0.9"
+                {/* Animovaná trasa k pozícii 29 */}
+                {selectedMapPin && selectedMapPin !== 'pos29' && mapRoutes[selectedMapPin] && (
+                  <polyline
+                    key={selectedMapPin}
+                    points={mapRoutes[selectedMapPin].map(([x,y]) => `${x},${y}`).join(' ')}
+                    fill="none"
+                    stroke="#e20074" strokeWidth="5"
+                    strokeLinecap="round" strokeLinejoin="round"
+                    opacity="0.9" pathLength="1"
+                    strokeDasharray="1"
+                    className="map-route"
                   />
                 )}
                 {/* Piny */}
@@ -443,12 +456,12 @@ export default function Page() {
                   return (
                     <g key={id} style={{ pointerEvents: 'all', cursor: 'pointer' }}
                       onClick={() => setSelectedMapPin(selectedMapPin === id ? null : id)}>
-                      {isSel && <circle cx={pin.x} cy={pin.y} r="36" fill="#e20074" opacity="0.18" />}
-                      <circle cx={pin.x} cy={pin.y} r={isSel ? 24 : 18}
+                      {isSel && <circle cx={pin.x} cy={pin.y} r="26" fill="#e20074" opacity="0.18" />}
+                      <circle cx={pin.x} cy={pin.y} r={isSel ? 18 : 14}
                         fill={isSel || isBase ? '#e20074' : 'rgba(226,0,116,0.72)'}
-                        stroke="white" strokeWidth="2.5" />
+                        stroke="white" strokeWidth="2" />
                       <text x={pin.x} y={pin.y + 5} textAnchor="middle"
-                        fill="white" fontSize="14" fontWeight="bold"
+                        fill="white" fontSize="13" fontWeight="bold"
                         style={{ fontFamily: 'sans-serif', userSelect: 'none' }}>
                         {pin.number}
                       </text>
