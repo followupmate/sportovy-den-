@@ -246,6 +246,8 @@ export default function Page() {
   }, []);
 
   const visibleAnns = announcements.filter(a => a.active && !dismissedIds.has(a.id));
+  const showCountdownRow = liveStatus?.phase === 'upcoming' || liveStatus?.phase === 'active';
+  const bannerRowCount = (showCountdownRow ? 1 : 0) + visibleAnns.length;
 
   return (
     <div className="min-h-screen bg-surface font-body-md text-on-surface">
@@ -262,32 +264,8 @@ export default function Page() {
           </button>
         </div>
 
-        {/* Center: countdown */}
-        <div className="flex items-center">
-          {liveStatus?.phase === 'upcoming' && (() => {
-            const { d, h, m, s } = formatCountdown(liveStatus.msLeft);
-            return (
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-[9px] uppercase tracking-[0.1em] font-semibold text-white/30 leading-none mr-0.5">do začiatku</span>
-                {[
-                  { val: String(d),                 unit: 'd' },
-                  { val: String(h).padStart(2,'0'), unit: 'h' },
-                  { val: String(m).padStart(2,'0'), unit: 'm' },
-                  { val: String(s).padStart(2,'0'), unit: 's' },
-                ].map(({ val, unit }, i) => (
-                  <span key={unit} className="flex items-baseline">
-                    {i > 0 && <span className="text-white/15 text-[11px] mr-1.5">·</span>}
-                    <span className="text-[15px] font-bold text-white tabular-nums leading-none">{val}</span>
-                    <span className="text-[10px] font-bold ml-0.5 leading-none" style={{ color: '#e20074' }}>{unit}</span>
-                  </span>
-                ))}
-              </div>
-            );
-          })()}
-          {liveStatus?.phase === 'active' && (
-            <span className="px-3 py-1 rounded-full text-[11px] font-bold text-white uppercase tracking-wider" style={{ background: '#e20074' }}>● LIVE</span>
-          )}
-        </div>
+        {/* Center: empty – countdown moved to announcement banner */}
+        <div />
 
         {/* Right */}
         <div className="flex-1 flex items-center justify-end">
@@ -298,8 +276,43 @@ export default function Page() {
       </header>
 
       {/* ── ANNOUNCEMENT BANNER ───────────────────────────────── */}
-      {visibleAnns.length > 0 && (
+      {bannerRowCount > 0 && (
         <div className="fixed top-16 w-full z-40">
+
+          {/* Countdown / LIVE row */}
+          {liveStatus?.phase === 'upcoming' && (() => {
+            const { d, h, m, s } = formatCountdown(liveStatus.msLeft);
+            return (
+              <div className="flex items-center gap-3 px-4 py-3"
+                style={{ background: 'rgba(226,0,116,0.10)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(226,0,116,0.25)' }}>
+                <Icon name="timer" className="text-[20px] flex-shrink-0" style={{ color: '#e20074' }} />
+                <div className="flex items-baseline gap-1.5 flex-1">
+                  <span className="text-[10px] uppercase tracking-[0.1em] font-semibold text-white/40 mr-1">do začiatku</span>
+                  {[
+                    { val: String(d),                  unit: 'd' },
+                    { val: String(h).padStart(2, '0'), unit: 'h' },
+                    { val: String(m).padStart(2, '0'), unit: 'm' },
+                    { val: String(s).padStart(2, '0'), unit: 's' },
+                  ].map(({ val, unit }, i) => (
+                    <span key={unit} className="flex items-baseline">
+                      {i > 0 && <span className="text-white/15 text-[11px] mr-1.5">·</span>}
+                      <span className="text-[17px] font-bold text-white tabular-nums leading-none">{val}</span>
+                      <span className="text-[11px] font-bold ml-0.5 leading-none" style={{ color: '#e20074' }}>{unit}</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
+          {liveStatus?.phase === 'active' && (
+            <div className="flex items-center gap-3 px-4 py-3"
+              style={{ background: 'rgba(226,0,116,0.10)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(226,0,116,0.25)' }}>
+              <span className="w-2 h-2 rounded-full bg-pink-500 animate-pulse flex-shrink-0" />
+              <span className="text-sm font-bold text-white uppercase tracking-wider">LIVE – event prebieha</span>
+            </div>
+          )}
+
+          {/* Manual announcements */}
           {visibleAnns.map((ann) => {
             const cfg = {
               info:    { icon: 'campaign',     bg: 'rgba(226,0,116,0.12)',  border: 'rgba(226,0,116,0.35)',  text: '#e20074' },
@@ -355,7 +368,7 @@ export default function Page() {
         </div>
       )}
 
-      <main className={`${visibleAnns.length > 0 ? 'pt-[132px]' : 'pt-20'} pb-28 px-5 max-w-md mx-auto space-y-10`}>
+      <main className="pb-28 px-5 max-w-md mx-auto space-y-10" style={{ paddingTop: `${80 + bannerRowCount * 52}px` }}>
 
         {/* ── HERO BANNER ───────────────────────────────────── */}
         <section className="fade-hidden -mx-5">
