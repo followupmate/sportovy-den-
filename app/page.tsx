@@ -343,6 +343,7 @@ export default function Page() {
                     <span className="inline-flex items-center gap-2 px-5 py-3">
                       <span className="text-[18px] leading-none" style={{ color: '#e20074' }}><Icon name={icon} /></span>
                       <span className="text-sm text-white">
+                        <span className="text-white/40 text-[11px] mr-1.5">Šamorín</span>
                         <span className="font-bold">{weather.temp}°C</span>
                         <span className="text-white/50 mx-1.5">·</span>
                         <span className="text-white/70">{desc}</span>
@@ -374,8 +375,8 @@ export default function Page() {
                   );
                 })}
 
-                {/* Gap before loop repeats */}
-                <span className="inline-block w-20 shrink-0" />
+                {/* Gap before loop repeats – must be ≥ viewport width so copy 2 is never visible during copy 1 */}
+                <span className="inline-block shrink-0" style={{ width: '100vw' }} />
               </span>
             ))}
           </div>
