@@ -137,14 +137,6 @@ const mapPins: Record<string, { x: number; y: number; label: string; number: str
   pos14: { x:  825, y:  869, label: 'Vonk. bazén',  number: '14' },
 };
 
-const mapRoutes: Record<string, [number, number][]> = {
-  pos5:  [[1054,811],[1100,778],[1152,717]],
-  pos7:  [[1030,870],[1095,835],[1128,778],[1152,717]],
-  pos8:  [[1053,910],[1100,868],[1128,800],[1152,717]],
-  pos11: [[932,846],[990,820],[1068,774],[1152,717]],
-  pos12: [[890,856],[958,832],[1042,788],[1152,717]],
-  pos14: [[825,869],[898,852],[988,822],[1078,772],[1152,717]],
-};
 
 const navItems = [
   { label: 'Program',    href: '#program',        icon: 'calendar_today' },
@@ -436,19 +428,6 @@ export default function Page() {
                 preserveAspectRatio="xMidYMid slice"
                 style={{ pointerEvents: 'none' }}
               >
-                {/* Animovaná trasa k pozícii 29 */}
-                {selectedMapPin && selectedMapPin !== 'pos29' && mapRoutes[selectedMapPin] && (
-                  <polyline
-                    key={selectedMapPin}
-                    points={mapRoutes[selectedMapPin].map(([x,y]) => `${x},${y}`).join(' ')}
-                    fill="none"
-                    stroke="#e20074" strokeWidth="5"
-                    strokeLinecap="round" strokeLinejoin="round"
-                    opacity="0.9" pathLength="1"
-                    strokeDasharray="1"
-                    className="map-route"
-                  />
-                )}
                 {/* Piny */}
                 {Object.entries(mapPins).map(([id, pin]) => {
                   const isSel  = selectedMapPin === id;
@@ -456,7 +435,10 @@ export default function Page() {
                   return (
                     <g key={id} style={{ pointerEvents: 'all', cursor: 'pointer' }}
                       onClick={() => setSelectedMapPin(selectedMapPin === id ? null : id)}>
-                      {isSel && <circle cx={pin.x} cy={pin.y} r="26" fill="#e20074" opacity="0.18" />}
+                      {isSel && <>
+                        <circle cx={pin.x} cy={pin.y} r="18" fill="none" stroke="#e20074" strokeWidth="2.5" className="map-pin-pulse" />
+                        <circle cx={pin.x} cy={pin.y} r="18" fill="none" stroke="#e20074" strokeWidth="2.5" className="map-pin-pulse-delay" />
+                      </>}
                       <circle cx={pin.x} cy={pin.y} r={isSel ? 18 : 14}
                         fill={isSel || isBase ? '#e20074' : 'rgba(226,0,116,0.72)'}
                         stroke="white" strokeWidth="2" />
@@ -471,21 +453,6 @@ export default function Page() {
               </svg>
             )}
           </div>
-
-          {/* Selected pin info */}
-          {selectedMapPin && mapPins[selectedMapPin] && (
-            <div className="mt-3 flex items-center gap-3 glass-panel rounded-xl px-4 py-3">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-pink-500 text-[11px] font-bold text-white flex-shrink-0">
-                {mapPins[selectedMapPin].number}
-              </span>
-              <span className="text-sm font-semibold text-white">{mapPins[selectedMapPin].label}</span>
-              {selectedMapPin !== 'pos29' && (
-                <span className="ml-auto text-[11px] text-pink-400 font-medium flex items-center gap-1">
-                  <Icon name="near_me" className="text-[14px]" />trasa → poz. 29
-                </span>
-              )}
-            </div>
-          )}
 
           {/* Key locations pill carousel */}
           <div className="mt-4 flex gap-2 overflow-x-auto pb-2 no-scrollbar">
