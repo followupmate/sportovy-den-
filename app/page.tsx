@@ -118,23 +118,25 @@ const teamTasks = [
 ];
 
 const mapPoints = [
-  { label: 'Šport. zóna',  number: '29' },
-  { label: 'Olym-Pic',     number: '7'  },
-  { label: 'Gym',          number: '5'  },
-  { label: 'Wellness',     number: '11' },
-  { label: 'Krytý bazén',  number: '12' },
-  { label: 'Vonk. bazén',  number: '14' },
-  { label: "Legends' Bar", number: '8'  },
+  { label: 'Hotel / Check-in', number: '1'  },
+  { label: 'Šport. zóna',      number: '29' },
+  { label: 'Olym-Pic',         number: '7'  },
+  { label: 'Gym',              number: '5'  },
+  { label: 'Wellness',         number: '11' },
+  { label: 'Krytý bazén',      number: '12' },
+  { label: 'Vonk. bazén',      number: '14' },
+  { label: "Legends' Bar",     number: '8'  },
 ];
 
 const mapPins: Record<string, { x: number; y: number; label: string; number: string }> = {
-  pos29: { x: 1152, y:  717, label: 'Šport. zóna',  number: '29' },
-  pos5:  { x: 1054, y:  811, label: 'Gym',          number: '5'  },
-  pos11: { x:  932, y:  846, label: 'Wellness',     number: '11' },
-  pos12: { x:  890, y:  856, label: 'Krytý bazén',  number: '12' },
-  pos7:  { x: 1030, y:  870, label: 'Olym-Pic',     number: '7'  },
-  pos8:  { x: 1053, y:  910, label: "Legends' Bar", number: '8'  },
-  pos14: { x:  825, y:  869, label: 'Vonk. bazén',  number: '14' },
+  pos1:  { x: 1048, y:  760, label: 'Hotel / Check-in', number: '1'  },
+  pos29: { x: 1152, y:  717, label: 'Šport. zóna',      number: '29' },
+  pos5:  { x: 1054, y:  811, label: 'Gym',              number: '5'  },
+  pos11: { x:  932, y:  846, label: 'Wellness',         number: '11' },
+  pos12: { x:  890, y:  856, label: 'Krytý bazén',      number: '12' },
+  pos7:  { x: 1030, y:  870, label: 'Olym-Pic',         number: '7'  },
+  pos8:  { x: 1053, y:  910, label: "Legends' Bar",     number: '8'  },
+  pos14: { x:  825, y:  869, label: 'Vonk. bazén',      number: '14' },
 };
 
 
@@ -386,7 +388,7 @@ export default function Page() {
               <div>
                 <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Check-in</p>
                 <h3 className="font-bold text-white mt-1">From 15:00</h3>
-                <p className="text-body-sm text-on-surface-variant">Pozícia 29</p>
+                <p className="text-body-sm text-on-surface-variant">Poz. 1 · Hotel</p>
               </div>
             </div>
           </div>
