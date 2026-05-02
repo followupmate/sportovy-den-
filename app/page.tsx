@@ -53,6 +53,18 @@ function computeLive(now: Date): LiveStatus {
   return { phase: 'ended' };
 }
 
+function getWeatherInfo(code: number): { icon: string; desc: string } {
+  if (code === 0)          return { icon: 'wb_sunny',          desc: 'Jasno'              };
+  if (code <= 2)           return { icon: 'partly_cloudy_day', desc: 'Čiastočne oblačno'  };
+  if (code === 3)          return { icon: 'cloud',             desc: 'Zamračené'          };
+  if (code <= 48)          return { icon: 'foggy',             desc: 'Hmla'               };
+  if (code <= 57)          return { icon: 'rainy',             desc: 'Mrholenie'          };
+  if (code <= 67)          return { icon: 'rainy',             desc: 'Dážď'               };
+  if (code <= 77)          return { icon: 'weather_snowy',     desc: 'Sneženie'           };
+  if (code <= 82)          return { icon: 'rainy',             desc: 'Prehánky'           };
+  return                          { icon: 'thunderstorm',      desc: 'Búrka'              };
+}
+
 const icsContent = [
   'BEGIN:VCALENDAR', 'VERSION:2.0',
   'BEGIN:VEVENT',
@@ -187,6 +199,7 @@ export default function Page() {
   const [selectedMapPin, setSelectedMapPin] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const [dismissedIds, setDismissedIds] = useState<Set<string>>(new Set());
+  const [weather, setWeather] = useState<{ temp: number; code: number; wind: number } | null>(null);
   const toggleSection = (id: string) => setExpanded(prev =>
     prev.has(id) ? new Set() : new Set([id])
   );
@@ -245,9 +258,25 @@ export default function Page() {
     } catch { /* noop */ }
   }, []);
 
+  useEffect(() => {
+    const fetchWeather = async () => {
+      try {
+        const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=47.9956&longitude=17.3095&current=temperature_2m,weather_code,wind_speed_10m&timezone=Europe%2FBerlin');
+        const data = await res.json();
+        setWeather({
+          temp: Math.round(data.current.temperature_2m),
+          code: data.current.weather_code,
+          wind: Math.round(data.current.wind_speed_10m),
+        });
+      } catch { /* noop – no weather if offline */ }
+    };
+    fetchWeather();
+    const id = setInterval(fetchWeather, 10 * 60 * 1000);
+    return () => clearInterval(id);
+  }, []);
+
   const visibleAnns = announcements.filter(a => a.active && !dismissedIds.has(a.id));
-  const showCountdownRow = liveStatus?.phase === 'upcoming' || liveStatus?.phase === 'active';
-  const showBanner = showCountdownRow || visibleAnns.length > 0;
+  const showBanner = weather !== null || visibleAnns.length > 0;
 
   return (
     <div className="min-h-screen bg-surface font-body-md text-on-surface">
@@ -264,8 +293,32 @@ export default function Page() {
           </button>
         </div>
 
-        {/* Center: empty – countdown moved to announcement banner */}
-        <div />
+        {/* Center: countdown */}
+        <div className="flex items-center">
+          {liveStatus?.phase === 'upcoming' && (() => {
+            const { d, h, m, s } = formatCountdown(liveStatus.msLeft);
+            return (
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-[9px] uppercase tracking-[0.1em] font-semibold text-white/30 leading-none mr-0.5">do začiatku</span>
+                {[
+                  { val: String(d),                  unit: 'd' },
+                  { val: String(h).padStart(2, '0'), unit: 'h' },
+                  { val: String(m).padStart(2, '0'), unit: 'm' },
+                  { val: String(s).padStart(2, '0'), unit: 's' },
+                ].map(({ val, unit }, i) => (
+                  <span key={unit} className="flex items-baseline">
+                    {i > 0 && <span className="text-white/15 text-[11px] mr-1.5">·</span>}
+                    <span className="text-[15px] font-bold text-white tabular-nums leading-none">{val}</span>
+                    <span className="text-[10px] font-bold ml-0.5 leading-none" style={{ color: '#e20074' }}>{unit}</span>
+                  </span>
+                ))}
+              </div>
+            );
+          })()}
+          {liveStatus?.phase === 'active' && (
+            <span className="px-3 py-1 rounded-full text-[11px] font-bold text-white uppercase tracking-wider" style={{ background: '#e20074' }}>● LIVE</span>
+          )}
+        </div>
 
         {/* Right */}
         <div className="flex-1 flex items-center justify-end">
@@ -283,41 +336,25 @@ export default function Page() {
             {[0, 1].map(copy => (
               <span key={copy} className="inline-flex items-center shrink-0">
 
-                {/* Countdown */}
-                {liveStatus?.phase === 'upcoming' && (() => {
-                  const { d, h, m, s } = formatCountdown(liveStatus.msLeft);
+                {/* Weather */}
+                {weather !== null && (() => {
+                  const { icon, desc } = getWeatherInfo(weather.code);
                   return (
                     <span className="inline-flex items-center gap-2 px-5 py-3">
-                      <span className="text-[18px] leading-none" style={{ color: '#e20074' }}><Icon name="timer" /></span>
-                      <span className="inline-flex items-baseline gap-1">
-                        <span className="text-[10px] uppercase tracking-widest text-white/40 mr-1">do začiatku</span>
-                        {[
-                          { val: String(d),                  unit: 'd' },
-                          { val: String(h).padStart(2, '0'), unit: 'h' },
-                          { val: String(m).padStart(2, '0'), unit: 'm' },
-                          { val: String(s).padStart(2, '0'), unit: 's' },
-                        ].map(({ val, unit }, i) => (
-                          <span key={unit} className="inline-flex items-baseline">
-                            {i > 0 && <span className="text-white/15 text-xs mx-1">·</span>}
-                            <span className="text-base font-bold text-white tabular-nums">{val}</span>
-                            <span className="text-[10px] font-bold ml-0.5" style={{ color: '#e20074' }}>{unit}</span>
-                          </span>
-                        ))}
+                      <span className="text-[18px] leading-none" style={{ color: '#e20074' }}><Icon name={icon} /></span>
+                      <span className="text-sm text-white">
+                        <span className="font-bold">{weather.temp}°C</span>
+                        <span className="text-white/50 mx-1.5">·</span>
+                        <span className="text-white/70">{desc}</span>
+                        <span className="text-white/50 mx-1.5">·</span>
+                        <span className="text-white/50 text-[11px]">💨 {weather.wind} km/h</span>
                       </span>
                     </span>
                   );
                 })()}
 
-                {/* LIVE */}
-                {liveStatus?.phase === 'active' && (
-                  <span className="inline-flex items-center gap-2 px-5 py-3">
-                    <span className="w-2 h-2 rounded-full bg-pink-500 animate-pulse shrink-0" />
-                    <span className="text-sm font-bold text-white uppercase tracking-wider">LIVE – event prebieha</span>
-                  </span>
-                )}
-
-                {/* Separator */}
-                {showCountdownRow && visibleAnns.length > 0 && (
+                {/* Separator weather → announcements */}
+                {weather !== null && visibleAnns.length > 0 && (
                   <span className="text-white/25 select-none px-3">·</span>
                 )}
 
