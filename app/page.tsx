@@ -336,6 +336,10 @@ export default function Page() {
             {[0, 1].map(copy => (
               <span key={copy} className="inline-flex items-center shrink-0">
 
+                {/* Label */}
+                <span className="text-[10px] font-bold uppercase tracking-widest pl-5 pr-3" style={{ color: '#e20074' }}>Oznamy</span>
+                <span className="text-white/20 text-xs">·</span>
+
                 {/* Weather */}
                 {weather !== null && (() => {
                   const { icon, desc } = getWeatherInfo(weather.code);
@@ -900,9 +904,25 @@ export default function Page() {
               <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center">
                 <Icon name="person" className="text-white text-[20px]" />
               </div>
-              <div>
+              <div className="flex-1">
                 <div className="font-semibold text-white">Marek</div>
                 <a href="tel:0915991413" className="text-sm text-slate-400 hover:text-pink-400 transition-colors">0915 991 413</a>
+              </div>
+              <div className="flex gap-2">
+                <a href="tel:0915991413"
+                  className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/10 transition-colors"
+                  aria-label="Zavolať">
+                  <Icon name="call" className="text-[20px] text-slate-400" />
+                </a>
+                <a href="https://wa.me/421915991413"
+                  target="_blank" rel="noopener noreferrer"
+                  className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/10 transition-colors"
+                  aria-label="WhatsApp">
+                  <svg viewBox="0 0 24 24" className="w-5 h-5" fill="#4ade80">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.556 4.121 1.523 5.854L.057 23.882a.5.5 0 0 0 .61.61l6.101-1.474A11.942 11.942 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.9a9.878 9.878 0 0 1-5.034-1.376l-.36-.214-3.733.902.935-3.64-.235-.374A9.866 9.866 0 0 1 2.1 12C2.1 6.533 6.533 2.1 12 2.1c5.467 0 9.9 4.433 9.9 9.9 0 5.467-4.433 9.9-9.9 9.9z"/>
+                  </svg>
+                </a>
               </div>
             </div>
           </div>
