@@ -336,6 +336,10 @@ export default function Page() {
             {[0, 1].map(copy => (
               <span key={copy} className="inline-flex items-center shrink-0">
 
+                {/* Label */}
+                <span className="text-[10px] font-bold uppercase tracking-widest pl-5 pr-3" style={{ color: '#e20074' }}>Oznamy</span>
+                <span className="text-white/20 text-xs">·</span>
+
                 {/* Weather */}
                 {weather !== null && (() => {
                   const { icon, desc } = getWeatherInfo(weather.code);
