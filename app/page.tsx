@@ -89,12 +89,12 @@ const dayBlocks = [
     day: 'Deň 1',
     date: '14.5.',
     blocks: [
-      { time: '11:00 – 11:30', title: 'Príchod, registrácia',      type: 'info'     as BlockType, location: 'Pozícia 29'        },
-      { time: '11:30 – 12:30', title: 'Privítanie + obed',          type: 'food'     as BlockType, location: 'Olym-Pic · poz. 2' },
-      { time: '13:00 – 17:00', title: 'Športový program',           type: 'sport'    as BlockType, location: 'Areál · poz. 29'   },
-      { time: '17:00 – 19:30', title: 'Wellness / bazén / gym',     type: 'wellness' as BlockType, location: 'Poz. 5, 11–14'     },
-      { time: '19:30 – 21:00', title: 'Večera',                     type: 'food'     as BlockType, location: 'Olym-Pic'          },
-      { time: '21:00 – 02:00', title: 'Večerný kvíz',               type: 'free'     as BlockType, location: "Legends' Bar"               },
+      { time: '11:00 – 12:30', title: 'Príchod a registrácia',   type: 'info'     as BlockType, location: 'Pozícia 29',        note: 'Prosíme vás, aby ste prichádzali priebežne v tomto čase. Vyhneme sa tak radom pri registrácii a všetci sa v pokoji stihnete naobedovať.' },
+      { time: '11:30 – 13:00', title: 'Spoločný obed',            type: 'food'     as BlockType, location: 'Olym-Pic · poz. 2', note: 'Reštaurácia bude pripravená pre prichádzajúcich hostí.' },
+      { time: '13:15 – 17:00', title: 'Štart aktivít',            type: 'sport'    as BlockType, location: 'Areál · poz. 29',   note: 'O tomto čase sa už všetci stretneme v športovom oblečení priamo na športovisku.' },
+      { time: '17:00 – 19:30', title: 'Wellness / bazén / gym',   type: 'wellness' as BlockType, location: 'Poz. 5, 11–14'     },
+      { time: '19:30 – 21:00', title: 'Večera',                   type: 'food'     as BlockType, location: 'Olym-Pic'          },
+      { time: '21:00 – 02:00', title: 'Večerný kvíz',             type: 'free'     as BlockType, location: "Legends' Bar"      },
     ],
   },
   {
@@ -688,6 +688,9 @@ export default function Page() {
                         <Icon name="location_on" className="text-[16px]" />
                         <span className="text-body-sm">{block.location}</span>
                       </div>
+                    )}
+                    {'note' in block && block.note && (
+                      <p className="text-[12px] text-slate-500 mt-2 leading-relaxed">{(block as {note: string}).note}</p>
                     )}
                     {isLive && (
                       <div className="mt-2 flex items-center gap-1.5">
