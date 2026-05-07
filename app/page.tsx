@@ -825,8 +825,8 @@ export default function Page() {
           {expanded.has('wellness') && (
             <div className="space-y-3 mt-5">
               {[
-                { icon: 'pool',          iconCls: 'text-blue-400',   bgCls: 'bg-blue-500/10',   title: 'Bazény & Wellness', text: 'Vstup do wellness je možný z vnútornej časti hotela. Pre vstup do bazéna využite vonkajší vstup. Vstup do bazéna, gymu a wellness je možný len pre účastníkov, ktorí si danú aktivitu vybrali. Dostupné 17:00–19:30, pozície 11–14.' },
-                { icon: 'fitness_center', iconCls: 'text-purple-400', bgCls: 'bg-purple-500/10', title: 'Gym',               text: 'Fitness centrum pre individuálny tréning. Vstup len pre účastníkov s touto aktivitou. Pozícia 5 na mape.'          },
+                { icon: 'pool',          iconCls: 'text-blue-400',   bgCls: 'bg-blue-500/10',   title: 'Bazény & Wellness', text: 'Vstup do wellness je možný z vnútornej časti hotela. Pre vstup do bazéna využite vonkajší vstup.' },
+                { icon: 'fitness_center', iconCls: 'text-purple-400', bgCls: 'bg-purple-500/10', title: 'Gym',               text: 'Fitness centrum pre individuálny tréning. Pozícia 5 na mape.'          },
                 { icon: 'local_bar',      iconCls: 'text-amber-400',  bgCls: 'bg-amber-500/10',  title: "Legends' Bar",      text: "Večerný program a relax. Pozícia 8 na mape."                      },
               ].map((item) => (
                 <div key={item.title} className="glass-card rounded-xl p-4 flex items-start gap-4 hover:border-pink-500/20 transition-all">
@@ -839,6 +839,9 @@ export default function Page() {
                   </div>
                 </div>
               ))}
+              <p className="text-[12px] text-slate-500 leading-relaxed px-1">
+                Vstup do bazéna, gymu a wellness je možný len pre účastníkov, ktorí si danú aktivitu vybrali. Dostupné 17:00–19:30, pozície 11–14.
+              </p>
             </div>
           )}
         </section>
