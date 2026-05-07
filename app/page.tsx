@@ -679,7 +679,7 @@ export default function Page() {
                   </div>
                   <div className={`flex-1 glass-card rounded-xl p-4 transition-all hover:border-pink-500/20 ${cfg.accent} ${isLive ? 'border-primary-container/30' : ''}`}>
                     <div className="flex justify-between items-start mb-1">
-                      <span className="font-label-md text-primary-container">{block.time.split(' – ')[0]}</span>
+                      <span className="font-label-md text-primary-container">{block.time}</span>
                       <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${cfg.badgeCls}`}>{cfg.label}</span>
                     </div>
                     <h3 className="font-semibold text-slate-50">{block.title}</h3>
@@ -825,7 +825,7 @@ export default function Page() {
           {expanded.has('wellness') && (
             <div className="space-y-3 mt-5">
               {[
-                { icon: 'pool',          iconCls: 'text-blue-400',   bgCls: 'bg-blue-500/10',   title: 'Bazény & Wellness', text: 'Dostupné počas poobedného bloku (17:00–19:30). Pozície 11–14 na mape.' },
+                { icon: 'pool',          iconCls: 'text-blue-400',   bgCls: 'bg-blue-500/10',   title: 'Bazény & Wellness', text: 'Vstup do wellness je možný z vnútornej časti hotela. Pre vstup do bazéna využite vonkajší vstup.' },
                 { icon: 'fitness_center', iconCls: 'text-purple-400', bgCls: 'bg-purple-500/10', title: 'Gym',               text: 'Fitness centrum pre individuálny tréning. Pozícia 5 na mape.'          },
                 { icon: 'local_bar',      iconCls: 'text-amber-400',  bgCls: 'bg-amber-500/10',  title: "Legends' Bar",      text: "Večerný program a relax. Pozícia 8 na mape."                      },
               ].map((item) => (
@@ -839,6 +839,9 @@ export default function Page() {
                   </div>
                 </div>
               ))}
+              <p className="text-[12px] text-slate-500 leading-relaxed px-1">
+                Vstup do bazéna, gymu a wellness je možný len pre účastníkov, ktorí si danú aktivitu vybrali. Dostupné 17:00–19:30, pozície 11–14.
+              </p>
             </div>
           )}
         </section>
@@ -856,18 +859,19 @@ export default function Page() {
                   <Icon name="backpack" className="text-primary-container text-[20px]" />
                   Čo si priniesť
                 </h3>
-                <ul className="space-y-2">
+                <ul className="space-y-3">
                   {[
-                    'Športové oblečenie a vhodná obuv',
-                    'Veci do bazéna / wellness',
-                    'Oblečenie na večerný program',
-                    'Náhradné tričko / ponožky',
-                    'Čiapka / šiltovka (pri slnku)',
-                    'Dobrá nálada a ochota zapojiť sa do aktivít',
+                    { icon: 'sports',                    label: 'Na šport',              text: 'Pohodlné športové oblečenie a vhodná športová obuv – ideálne taká, čo zvládne outdoor aj indoor.'       },
+                    { icon: 'checkroom',                 label: 'Pre istotu',             text: 'Náhradné tričká a ponožky na prezlečenie – po výkone padnú vhod.'                                        },
+                    { icon: 'pool',                      label: 'Do vody',                text: 'Plavky a šľapky, ak máte vybrané vodné aktivity alebo plánujete využiť wellness.'                        },
+                    { icon: 'wb_sunny',                  label: 'Slnko',                  text: 'Šiltovku alebo čiapku a opaľovací krém, ak nám bude priať slnko.'                                        },
+                    { icon: 'rainy',                     label: 'Dážď',                   text: 'Pršiplášť alebo nepremokavú bundu, ak by nás prekvapil dážď.'                                            },
+                    { icon: 'nightlife',                 label: 'Na večer',               text: 'Neformálne oblečenie na večerný program a spoločnú zábavu.'                                              },
+                    { icon: 'sentiment_very_satisfied',  label: 'To najdôležitejšie',     text: 'Dobrú náladu a chuť zapojiť sa do spoločných aktivít!'                                                   },
                   ].map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-sm text-slate-300">
-                      <Icon name="check_circle" className="text-[16px] text-primary-container" />
-                      {item}
+                    <li key={item.label} className="flex items-start gap-2.5 text-sm text-slate-300">
+                      <Icon name={item.icon} className="text-[17px] text-primary-container flex-shrink-0 mt-0.5" />
+                      <span><span className="font-semibold text-white">{item.label}: </span>{item.text}</span>
                     </li>
                   ))}
                 </ul>
