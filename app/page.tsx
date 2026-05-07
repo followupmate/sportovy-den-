@@ -102,7 +102,7 @@ const dayBlocks = [
     date: '15.5.',
     blocks: [
       { time: '09:00 – 12:00', title: 'Bicykel / beh / prechádzka', type: 'sport' as BlockType, location: 'Danubiana', icon: 'directions_bike' },
-      { time: '12:00',          title: 'Ukončenie a presun domov',   type: 'info'  as BlockType                       },
+      { time: '12:00',          title: 'Ukončenie a presun domov',   type: 'info'  as BlockType, badge: 'Check-out' },
     ],
   },
 ];
