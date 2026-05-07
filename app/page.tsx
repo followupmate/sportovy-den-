@@ -94,7 +94,7 @@ const dayBlocks = [
       { time: '13:15 – 17:00', title: 'Štart aktivít',            type: 'sport'    as BlockType, location: 'Areál · poz. 29',   note: 'O tomto čase sa už všetci stretneme v športovom oblečení priamo na športovisku.' },
       { time: '17:00 – 19:30', title: 'Wellness / bazén / gym',   type: 'wellness' as BlockType, location: 'Poz. 5, 11–14'     },
       { time: '19:30 – 21:00', title: 'Večera',                   type: 'food'     as BlockType, location: 'Olym-Pic'          },
-      { time: '21:00 – 02:00', title: 'Večerný kvíz',             type: 'free'     as BlockType, location: "Legends' Bar"      },
+      { time: '21:00 – 02:00', title: 'Večerný kvíz & voľný program', type: 'free' as BlockType, location: "Legends' Bar"      },
     ],
   },
   {
