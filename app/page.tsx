@@ -89,7 +89,7 @@ const dayBlocks = [
     day: 'Deň 1',
     date: '14.5.',
     blocks: [
-      { time: '11:00 – 12:30', title: 'Príchod a registrácia',   type: 'info'     as BlockType, location: 'Pozícia 29',        note: 'Prosíme vás, aby ste prichádzali priebežne v tomto čase. Vyhneme sa tak radom pri registrácii a všetci sa v pokoji stihnete naobedovať.' },
+      { time: '11:00 – 12:30', title: 'Príchod a registrácia',   type: 'info'     as BlockType, location: 'Pozícia 29',        badge: 'Príchod', note: 'Prosíme vás, aby ste prichádzali priebežne v tomto čase. Vyhneme sa tak radom pri registrácii a všetci sa v pokoji stihnete naobedovať.' },
       { time: '11:30 – 13:00', title: 'Spoločný obed',            type: 'food'     as BlockType, location: 'Olym-Pic · poz. 2', note: 'Reštaurácia bude pripravená pre prichádzajúcich hostí.' },
       { time: '13:15 – 17:00', title: 'Štart aktivít',            type: 'sport'    as BlockType, location: 'Areál · poz. 29',   note: 'O tomto čase sa už všetci stretneme v športovom oblečení priamo na športovisku.' },
       { time: '17:00 – 19:30', title: 'Wellness / bazén / gym',   type: 'wellness' as BlockType, location: 'Poz. 5, 11–14'     },
@@ -680,7 +680,7 @@ export default function Page() {
                   <div className={`flex-1 glass-card rounded-xl p-4 transition-all hover:border-pink-500/20 ${cfg.accent} ${isLive ? 'border-primary-container/30' : ''}`}>
                     <div className="flex justify-between items-start mb-1">
                       <span className="font-label-md text-primary-container">{block.time}</span>
-                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${cfg.badgeCls}`}>{cfg.label}</span>
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${cfg.badgeCls}`}>{'badge' in block ? (block as {badge: string}).badge : cfg.label}</span>
                     </div>
                     <h3 className="font-semibold text-slate-50">{block.title}</h3>
                     {block.location && (
