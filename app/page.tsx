@@ -679,7 +679,7 @@ export default function Page() {
                   </div>
                   <div className={`flex-1 glass-card rounded-xl p-4 transition-all hover:border-pink-500/20 ${cfg.accent} ${isLive ? 'border-primary-container/30' : ''}`}>
                     <div className="flex justify-between items-start mb-1">
-                      <span className="font-label-md text-primary-container">{block.time.split(' – ')[0]}</span>
+                      <span className="font-label-md text-primary-container">{block.time}</span>
                       <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${cfg.badgeCls}`}>{cfg.label}</span>
                     </div>
                     <h3 className="font-semibold text-slate-50">{block.title}</h3>
