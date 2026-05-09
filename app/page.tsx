@@ -180,14 +180,12 @@ type Announcement = {
 
 // ── OZNAMY – edituj počas eventu, potom git push ──────────────
 const announcements: Announcement[] = [
-  // Príklad:
-  // {
-  //   id: 'ann-001',
-  //   text: 'Večera začína o 19:30 v Olym-Pic (pos. 7).',
-  //   time: '19:15',
-  //   type: 'info',
-  //   active: true,
-  // },
+  {
+    id: 'ann-001',
+    text: 'Pre lepšiu orientáciu v areáli sledujte orientačné tabule.',
+    type: 'info',
+    active: true,
+  },
 ];
 
 export default function Page() {
@@ -825,7 +823,7 @@ export default function Page() {
           {expanded.has('wellness') && (
             <div className="space-y-3 mt-5">
               {[
-                { icon: 'pool',          iconCls: 'text-blue-400',   bgCls: 'bg-blue-500/10',   title: 'Bazény & Wellness', text: 'Vstup do wellness je možný z vnútornej časti hotela. Pre vstup do bazéna využite vonkajší vstup.' },
+                { icon: 'pool',          iconCls: 'text-blue-400',   bgCls: 'bg-blue-500/10',   title: 'Bazény & Wellness', text: 'Vstup do wellness je možný z vnútornej časti hotela. Pre vstup do bazéna využite vonkajší vstup. Pri návšteve bazéna môžete využiť aj novootvorený termálny bazén v areáli.' },
                 { icon: 'fitness_center', iconCls: 'text-purple-400', bgCls: 'bg-purple-500/10', title: 'Gym',               text: 'Fitness centrum pre individuálny tréning. Pozícia 5 na mape.'          },
                 { icon: 'local_bar',      iconCls: 'text-amber-400',  bgCls: 'bg-amber-500/10',  title: "Legends' Bar",      text: "Večerný program a relax. Pozícia 8 na mape."                      },
               ].map((item) => (
