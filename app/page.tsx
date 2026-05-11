@@ -182,7 +182,7 @@ type Announcement = {
 const announcements: Announcement[] = [
   {
     id: 'ann-001',
-    text: 'Pre lepšiu orientáciu v areáli sledujte orientačné tabule.',
+    text: 'Pre lepšiu orientáciu v areáli sledujte navigačné tabule.',
     type: 'info',
     active: true,
   },

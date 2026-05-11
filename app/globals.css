@@ -122,3 +122,9 @@ body {
   will-change: transform;
   animation: ticker 20s linear infinite;
 }
+
+@media (max-width: 768px) {
+  .ticker-track {
+    animation-duration: 14s !important;
+  }
+}
