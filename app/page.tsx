@@ -182,7 +182,7 @@ type Announcement = {
 const announcements: Announcement[] = [
   {
     id: 'ann-001',
-    text: 'Pre lepšiu orientáciu v areáli sledujte orientačné tabule.',
+    text: 'Pre lepšiu orientáciu v areáli sledujte navigačné tabule.',
     type: 'info',
     active: true,
   },
@@ -435,7 +435,7 @@ export default function Page() {
               <span className="inline-block mb-4 text-white font-bold uppercase tracking-[0.05em]" style={{ background: '#e20074', fontSize: '11px', padding: '4px 12px', borderRadius: '999px' }}>
                 HOME EXPERIENCE TRIBE
               </span>
-              <h1 style={{ fontFamily: 'Manrope', fontSize: '42px', fontWeight: 800, color: 'white', lineHeight: 1.05, marginBottom: '16px' }}>
+              <h1 style={{ fontSize: '42px', fontWeight: 800, color: 'white', lineHeight: 1.05, marginBottom: '16px' }}>
                 Športový deň<br />2026
               </h1>
               <div className="flex items-center gap-1.5 text-[13px] text-white/70 mt-1">
@@ -825,7 +825,7 @@ export default function Page() {
               {[
                 { icon: 'pool',          iconCls: 'text-blue-400',   bgCls: 'bg-blue-500/10',   title: 'Bazény & Wellness', text: 'Vstup do wellness je možný z vnútornej časti hotela. Pre vstup do bazéna využite vonkajší vstup. Pri návšteve bazéna môžete využiť aj novootvorený termálny bazén v areáli.' },
                 { icon: 'fitness_center', iconCls: 'text-purple-400', bgCls: 'bg-purple-500/10', title: 'Gym',               text: 'Fitness centrum pre individuálny tréning. Pozícia 5 na mape.'          },
-                { icon: 'local_bar',      iconCls: 'text-amber-400',  bgCls: 'bg-amber-500/10',  title: "Legends' Bar",      text: "Večerný program a relax. Pozícia 8 na mape."                      },
+                { icon: 'local_bar',      iconCls: 'text-amber-400',  bgCls: 'bg-amber-500/10',  title: "Legends' Bar",      text: "Večerný program a relax. Počas večera bude možné využiť aj bowling a biliard. Pozícia 8 na mape." },
               ].map((item) => (
                 <div key={item.title} className="glass-card rounded-xl p-4 flex items-start gap-4 hover:border-pink-500/20 transition-all">
                   <div className={`w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center ${item.bgCls}`}>
