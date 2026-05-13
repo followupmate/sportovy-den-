@@ -23,8 +23,8 @@ function formatCountdown(ms: number) {
 }
 
 function computeLive(now: Date): LiveStatus {
-  const EVENT_START = new Date('2026-05-14T11:00:00');
-  const EVENT_END   = new Date('2026-05-15T13:00:00');
+  const EVENT_START = new Date('2026-05-14T11:00:00+02:00');
+  const EVENT_END   = new Date('2026-05-15T13:00:00+02:00');
   if (now < EVENT_START) return { phase: 'upcoming', msLeft: EVENT_START.getTime() - now.getTime() };
   if (now >= EVENT_END)  return { phase: 'ended' };
 
