@@ -91,7 +91,7 @@ const dayBlocks = [
     date: '15.5.',
     blocks: [
       { time: '07:00 – 10:00', title: 'Raňajky',                    type: 'food'  as BlockType, location: 'Olym-Pic · poz. 2', note: 'Raňajky sú k dispozícii v Olym-Pic od 7:00 do 10:00.' },
-      { time: '09:00 – 12:00', title: 'Bicykel / beh / prechádzka', type: 'sport' as BlockType, location: 'Danubiana', icon: 'directions_bike' },
+      { time: '09:00 – 12:00', title: 'Voľný program',               type: 'free'  as BlockType, location: 'Areál' },
       { time: '12:00',          title: 'Ukončenie a presun domov',   type: 'info'  as BlockType, badge: 'Check-out' },
     ],
   },
@@ -170,8 +170,8 @@ type Announcement = {
 
 // ── OZNAMY – edituj počas eventu, potom git push ──────────────
 const announcements: Announcement[] = [
-  { id: 'ann-003', text: 'O 20:00 sa všetci stretneme v Legends\' Bar.', type: 'info', active: true },
-  { id: 'ann-004', text: 'O 20:00 sa všetci stretneme v Legends\' Bar.', type: 'info', active: true },
+  { id: 'ann-005', text: 'Bicykle (15.5.) sú pre nepriaznivé počasie zrušené.', type: 'warning', active: true },
+  { id: 'ann-006', text: 'Bicykle (15.5.) sú pre nepriaznivé počasie zrušené.', type: 'warning', active: true },
 ];
 
 export default function Page() {
