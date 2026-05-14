@@ -53,17 +53,6 @@ function computeLive(now: Date): LiveStatus {
   return { phase: 'ended' };
 }
 
-function getWeatherInfo(code: number): { icon: string; desc: string } {
-  if (code === 0)          return { icon: 'wb_sunny',          desc: 'Jasno'              };
-  if (code <= 2)           return { icon: 'partly_cloudy_day', desc: 'Čiastočne oblačno'  };
-  if (code === 3)          return { icon: 'cloud',             desc: 'Zamračené'          };
-  if (code <= 48)          return { icon: 'foggy',             desc: 'Hmla'               };
-  if (code <= 57)          return { icon: 'rainy',             desc: 'Mrholenie'          };
-  if (code <= 67)          return { icon: 'rainy',             desc: 'Dážď'               };
-  if (code <= 77)          return { icon: 'weather_snowy',     desc: 'Sneženie'           };
-  if (code <= 82)          return { icon: 'rainy',             desc: 'Prehánky'           };
-  return                          { icon: 'thunderstorm',      desc: 'Búrka'              };
-}
 
 const icsContent = [
   'BEGIN:VCALENDAR', 'VERSION:2.0',
@@ -194,7 +183,6 @@ export default function Page() {
   const [selectedMapPin, setSelectedMapPin] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const [dismissedIds, setDismissedIds] = useState<Set<string>>(new Set());
-  const [weather, setWeather] = useState<{ temp: number; code: number; wind: number } | null>(null);
   const toggleSection = (id: string) => setExpanded(prev =>
     prev.has(id) ? new Set() : new Set([id])
   );
@@ -253,25 +241,8 @@ export default function Page() {
     } catch { /* noop */ }
   }, []);
 
-  useEffect(() => {
-    const fetchWeather = async () => {
-      try {
-        const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=47.9956&longitude=17.3095&current=temperature_2m,weather_code,wind_speed_10m&timezone=Europe%2FBerlin');
-        const data = await res.json();
-        setWeather({
-          temp: Math.round(data.current.temperature_2m),
-          code: data.current.weather_code,
-          wind: Math.round(data.current.wind_speed_10m),
-        });
-      } catch { /* noop – no weather if offline */ }
-    };
-    fetchWeather();
-    const id = setInterval(fetchWeather, 10 * 60 * 1000);
-    return () => clearInterval(id);
-  }, []);
-
   const visibleAnns = announcements.filter(a => a.active && !dismissedIds.has(a.id));
-  const showBanner = weather !== null || visibleAnns.length > 0;
+  const showBanner = visibleAnns.length > 0;
 
   return (
     <div className="min-h-screen bg-surface font-body-md text-on-surface">
@@ -334,29 +305,6 @@ export default function Page() {
                 {/* Label */}
                 <span className="text-[10px] font-bold uppercase tracking-widest pl-5 pr-3" style={{ color: '#e20074' }}>Oznamy</span>
                 <span className="text-white/20 text-xs">·</span>
-
-                {/* Weather */}
-                {weather !== null && (() => {
-                  const { icon, desc } = getWeatherInfo(weather.code);
-                  return (
-                    <span className="inline-flex items-center gap-2 px-5 py-3">
-                      <span className="text-[18px] leading-none" style={{ color: '#e20074' }}><Icon name={icon} /></span>
-                      <span className="text-sm text-white">
-                        <span className="text-white/40 text-[11px] mr-1.5">Šamorín</span>
-                        <span className="font-bold">{weather.temp}°C</span>
-                        <span className="text-white/50 mx-1.5">·</span>
-                        <span className="text-white/70">{desc}</span>
-                        <span className="text-white/50 mx-1.5">·</span>
-                        <span className="text-white/50 text-[11px]">💨 {weather.wind} km/h</span>
-                      </span>
-                    </span>
-                  );
-                })()}
-
-                {/* Separator weather → announcements */}
-                {weather !== null && visibleAnns.length > 0 && (
-                  <span className="text-white/25 select-none px-3">·</span>
-                )}
 
                 {/* Manual announcements */}
                 {visibleAnns.map((ann, i) => {
