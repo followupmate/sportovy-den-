@@ -81,9 +81,9 @@ const dayBlocks = [
       { time: '11:00 – 12:30', title: 'Príchod a registrácia',   type: 'info'     as BlockType, location: 'Pozícia 1 · Hotel',    badge: 'Príchod', note: 'Prosíme vás, aby ste prichádzali priebežne v tomto čase. Vyhneme sa tak radom pri registrácii a všetci sa v pokoji stihnete naobedovať.' },
       { time: '11:30 – 13:00', title: 'Obed',                        type: 'food'     as BlockType, location: 'Olym-Pic · poz. 2', note: 'Reštaurácia bude pripravená pre prichádzajúcich hostí.' },
       { time: '13:00 – 17:00', title: 'Štart aktivít',            type: 'sport'    as BlockType, location: 'Areál · poz. 29',   note: 'O tomto čase sa už všetci stretneme v športovom oblečení priamo na športovisku.' },
-      { time: '17:00 – 19:30', title: 'Wellness / bazén / gym',   type: 'wellness' as BlockType, location: 'Poz. 5, 11–14'     },
-      { time: '19:30 – 21:00', title: 'Večera',                   type: 'food'     as BlockType, location: 'Olym-Pic'          },
-      { time: '21:00 – 02:00', title: 'Večerný kvíz & voľný program', type: 'free' as BlockType, location: "Legends' Bar"      },
+      { time: '17:00 – 19:00', title: 'Wellness / bazén / gym',   type: 'wellness' as BlockType, location: 'Poz. 5, 11–14'     },
+      { time: '19:00 – 20:00', title: 'Večera',                   type: 'food'     as BlockType, location: 'Olym-Pic'          },
+      { time: '20:00 – 02:00', title: 'Večerný kvíz & voľný program', type: 'free' as BlockType, location: "Legends' Bar"      },
     ],
   },
   {
