@@ -101,6 +101,7 @@ const dayBlocks = [
     day: 'Deň 2',
     date: '15.5.',
     blocks: [
+      { time: '07:00 – 10:00', title: 'Raňajky',                    type: 'food'  as BlockType, location: 'Olym-Pic · poz. 2', note: 'Raňajky sú k dispozícii v Olym-Pic od 7:00 do 10:00.' },
       { time: '09:00 – 12:00', title: 'Bicykel / beh / prechádzka', type: 'sport' as BlockType, location: 'Danubiana', icon: 'directions_bike' },
       { time: '12:00',          title: 'Ukončenie a presun domov',   type: 'info'  as BlockType, badge: 'Check-out' },
     ],
