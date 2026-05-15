@@ -171,8 +171,8 @@ type Announcement = {
 
 // ── OZNAMY – edituj počas eventu, potom git push ──────────────
 const announcements: Announcement[] = [
-  { id: 'ann-007', text: 'Športový deň je ukončený. Ďakujeme, že ste boli s nami – dúfame, že ste si to užili!', type: 'success', active: true },
-  { id: 'ann-008', text: 'Športový deň je ukončený. Ďakujeme, že ste boli s nami – dúfame, že ste si to užili!', type: 'success', active: true },
+  { id: 'ann-007', text: 'Športový deň je ukončený. Ďakujeme, že ste boli s nami!', type: 'success', active: true },
+  { id: 'ann-008', text: 'Športový deň je ukončený. Ďakujeme, že ste boli s nami!', type: 'success', active: true },
 ];
 
 export default function Page() {
