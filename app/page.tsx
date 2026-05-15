@@ -32,6 +32,7 @@ function computeLive(now: Date): LiveStatus {
   for (let di = 0; di < dayBlocks.length; di++) {
     for (let bi = 0; bi < dayBlocks[di].blocks.length; bi++) {
       const [startStr, endStr] = dayBlocks[di].blocks[bi].time.split(' – ');
+      if (!endStr) continue;
       const [sh, sm] = startStr.split(':').map(Number);
       const [eh, em] = endStr.split(':').map(Number);
       const base = new Date(dayDates[di]);
